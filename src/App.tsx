@@ -1,18 +1,21 @@
 import { useState, useEffect } from "react";
 import { Note } from "./types";
+import { config } from "./config/env";
 
 function App() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [notes, setNotes] = useState<Note[]>([]);
 
+  console.log(config.mode);
+  console.log(config.api_url_notes);
   useEffect(() => {
     fetchNotes();
   }, []);
 
   const fetchNotes = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/notes");
+      const response = await fetch(config.api_url_notes);
       const data: Note[] = await response.json();
       setNotes(data);
     } catch (error) {
@@ -23,7 +26,7 @@ function App() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await fetch("http://localhost:3000/api/notes", {
+      await fetch(config.api_url_notes, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title, content }),
