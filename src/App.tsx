@@ -7,8 +7,6 @@ function App() {
   const [content, setContent] = useState("");
   const [notes, setNotes] = useState<Note[]>([]);
 
-  console.log(config.mode);
-  console.log(config.api_url_notes);
   useEffect(() => {
     fetchNotes();
   }, []);
