@@ -7,7 +7,7 @@ on:
 
 env:
   AWS_S3_BUCKET: s3-aws-frontend-test
-  SOURCE_DIR: './build'
+  SOURCE_DIR: './dist'
 
 jobs:
   build:
