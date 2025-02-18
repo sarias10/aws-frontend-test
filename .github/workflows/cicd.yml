@@ -27,5 +27,5 @@ jobs:
         run: npm run build
       
       - name: Sync files to S3
-        RUN: |
+        run: |
             aws s3 sync ${{ env.SOURCE_DIR }} se://${{ env.AWS_S3_BUCKET }}/ --delete --exclude '.*git*'
