@@ -1,4 +1,4 @@
-name: Deploy React Application
+name: Build and Deploy React Application
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
   SOURCE_DIR: './dist'
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
@@ -40,13 +40,9 @@ jobs:
       - name: Build project
         run: npm run build # Genera los archivos en la carpeta dist/
   
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
       - name: Sync files to S3
         run: |
-            aws s3 sync ${{ env.SOURCE_DIR }} s3://${{ env.AWS_S3_BUCKET }}/ --delete
+          aws s3 sync ${{ env.SOURCE_DIR }} s3://${{ env.AWS_S3_BUCKET }}/ --delete
       
       - name: Invalidate CloudFront Cache
         run: |
