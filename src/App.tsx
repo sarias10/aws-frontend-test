@@ -42,7 +42,6 @@ function App() {
   return (
     <div>
       <h1>Notes</h1>
-      sergio
       <form onSubmit={handleSubmit}>
         <input
           type="text"
