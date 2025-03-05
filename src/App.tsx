@@ -1,7 +1,8 @@
-import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom';
-import { Login } from './components/Login';
-import { Layout } from './components/Layout';
-import { Register } from './components/Register';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Login } from './components/Login/Login';
+import { Layout } from './Layout/Layout';
+import { Register } from './components/Register/Register';
+import { PageNotFound } from './components/PageNotFound/PageNotFound';
 
 const router = createBrowserRouter([
     {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
     {
         path: '/register',
         element: <Register />
+    },
+    {
+        path: '*',
+        element: <PageNotFound />
     },
 ]
 );
