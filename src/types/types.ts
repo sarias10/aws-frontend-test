@@ -18,3 +18,9 @@ export type NoteContextType = {
 export interface NoteProp {
     note: Note;
 };
+
+export interface SignUpFormState {
+    username: string;
+    name: string;
+    password: string;
+};

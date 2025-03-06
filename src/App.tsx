@@ -1,15 +1,14 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Login } from './components/Login/Login';
-import { Layout } from './Layout/Layout';
-import { Register } from './components/Register/Register';
+import { SignUp } from './components/SignUp/SignUp';
 import { PageNotFound } from './components/PageNotFound/PageNotFound';
 import { NoteProvider } from './context/noteContext';
-import { NotesContainer } from './components/NotesContainer/NotesContainer';
+import { Home } from './components/Home/Home';
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <NotesContainer />
+        element: <Home />
     },
     {
         path: '/login',
@@ -17,7 +16,7 @@ const router = createBrowserRouter([
     },
     {
         path: '/register',
-        element: <Register />
+        element: <SignUp />
     },
     {
         path: '*',

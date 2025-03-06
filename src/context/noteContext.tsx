@@ -15,7 +15,6 @@ export const NoteProvider = ({ children }: PropsWithChildren<object>) => {
         getNotes();
     },
     []);
-    console.log('notes',notes);
     const saveNote = (note: Note) => {
         const newNote: Note = {
             id: Math.random(),
