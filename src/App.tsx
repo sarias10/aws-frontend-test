@@ -3,11 +3,13 @@ import { Login } from './components/Login/Login';
 import { Layout } from './Layout/Layout';
 import { Register } from './components/Register/Register';
 import { PageNotFound } from './components/PageNotFound/PageNotFound';
+import { NoteProvider } from './context/noteContext';
+import { NotesContainer } from './components/NotesContainer/NotesContainer';
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Layout />
+        element: <NotesContainer />
     },
     {
         path: '/login',
@@ -26,9 +28,9 @@ const router = createBrowserRouter([
 
 const App = () => {
     return (
-        <>
+        <NoteProvider>
             <RouterProvider router={router} />
-        </>
+        </NoteProvider>
     );
 };
 

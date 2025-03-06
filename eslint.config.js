@@ -38,6 +38,8 @@ export default tseslint.config(
         '@stylistic/object-curly-spacing': ['error', 'always'],
         '@stylistic/array-bracket-spacing': ['error', 'always'],
 
+        //"@typescript-eslint/explicit-function-return-type": "warn", // Las funciones siempre deben tener un tipo de devuelta
+
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': [
         'warn',
