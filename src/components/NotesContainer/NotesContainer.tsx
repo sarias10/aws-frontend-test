@@ -11,10 +11,13 @@ export const NotesContainer = () => {
     const { notes } = noteContext;
     return (
         <>
-            {notes.map((note: Note) => (
-                <NoteCard key={note.id} note={note} />
-            ))
-            }
+            <h1>Public notes</h1>
+            <ul>
+                {notes.map((note: Note) => (
+                    <li><NoteCard key={note.id} note={note} /></li>
+                ))
+                }
+            </ul>
         </>
     );
 };
