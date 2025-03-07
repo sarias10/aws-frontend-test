@@ -35,7 +35,7 @@ jobs:
         run: npm install # Instala las dependencias del proyecto
 
       - name: Create .env.production
-        run: echo "VITE_API_URL_NOTES=${{ vars.VITE_API_URL_NOTES }}" > .env.production
+        run: echo "VITE_API_URL=${{ vars.VITE_API_URL }}" > .env.production
 
       - name: Build project
         run: npm run build # Genera los archivos en la carpeta dist/
