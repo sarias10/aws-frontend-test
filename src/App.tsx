@@ -5,6 +5,8 @@ import { PageNotFound } from './components/PageNotFound/PageNotFound';
 import { NoteProvider } from './context/noteContext';
 import { Home } from './components/Home/Home';
 import { AuthContextProvider } from './context/authContext';
+import { Protected } from './routes/Protected';
+import { UserProfile } from './components/User/UserProfile';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -12,6 +14,9 @@ const router = createBrowserRouter(
             <Route index element={<Home/>} />
             <Route path='login' element={<Login/>} />
             <Route path='signup' element={<SignUp/>}/>
+            <Route element={<Protected/>}>
+                <Route path='/user-profile' element={<UserProfile/>} />
+            </Route>
             <Route path='*' element={<PageNotFound/>}/>
         </Route>
     )

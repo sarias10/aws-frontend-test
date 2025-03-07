@@ -32,8 +32,8 @@ export interface LoginType {
 
 export interface AuthProviderProps {
     username: string | null,
-    name: string,
-    token: string,
+    name: string | null,
+    token: string | null,
     login (data: LoginType): void,
     logout(): void,
 };

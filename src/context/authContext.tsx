@@ -6,8 +6,8 @@ import { useLocalStorage } from '../utils/useLocalStorage';
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext<AuthProviderProps>({
     username: null,
-    name: '',
-    token: '',
+    name: null,
+    token: null,
     login: () => {},
     logout: () => {}
 });
@@ -15,8 +15,8 @@ export const AuthContext = createContext<AuthProviderProps>({
 export const AuthContextProvider = ({ children }: PropsWithChildren<object>) => {
     const [ username, setUsername ] = useLocalStorage<string|null>('username',null);
     //useState<string | null>(null);
-    const [ name, setName ] = useLocalStorage<string >('name','');
-    const [ token, setToken ] = useLocalStorage<string>('token','');
+    const [ name, setName ] = useLocalStorage<string | null>('name',null);
+    const [ token, setToken ] = useLocalStorage<string | null>('token',null);
 
     const login = async (data:LoginType) => {
         const response = await publicServices.login(data);
@@ -26,9 +26,9 @@ export const AuthContextProvider = ({ children }: PropsWithChildren<object>) => 
         setUsername(usernameResponse);
         setName(nameResponse);
         setToken(tokenResponse);
-        window.localStorage.setItem('username', JSON.stringify(response.data));
-        window.localStorage.setItem('name', JSON.stringify(response.data));
-        window.localStorage.setItem('token', JSON.stringify(response.data));
+        window.localStorage.setItem('username', JSON.stringify(response.data.username));
+        window.localStorage.setItem('name', JSON.stringify(response.data.name));
+        window.localStorage.setItem('token', JSON.stringify(response.data.token));
     };
 
     const logout = () => {
