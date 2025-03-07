@@ -24,3 +24,16 @@ export interface SignUpFormState {
     name: string;
     password: string;
 };
+
+export interface LoginType {
+    username: string;
+    password: string;
+};
+
+export interface AuthProviderProps {
+    username: string | null,
+    name: string,
+    token: string,
+    login (data: LoginType): void,
+    logout(): void,
+};

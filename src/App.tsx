@@ -1,35 +1,29 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import { Login } from './components/Login/Login';
 import { SignUp } from './components/SignUp/SignUp';
 import { PageNotFound } from './components/PageNotFound/PageNotFound';
 import { NoteProvider } from './context/noteContext';
 import { Home } from './components/Home/Home';
+import { AuthContextProvider } from './context/authContext';
 
-const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <Home />
-    },
-    {
-        path: '/login',
-        element: <Login />
-    },
-    {
-        path: '/register',
-        element: <SignUp />
-    },
-    {
-        path: '*',
-        element: <PageNotFound />
-    },
-]
+const router = createBrowserRouter(
+    createRoutesFromElements(
+        <Route path='/'>
+            <Route index element={<Home/>} />
+            <Route path='login' element={<Login/>} />
+            <Route path='signup' element={<SignUp/>}/>
+            <Route path='*' element={<PageNotFound/>}/>
+        </Route>
+    )
 );
 
 const App = () => {
     return (
-        <NoteProvider>
-            <RouterProvider router={router} />
-        </NoteProvider>
+        <AuthContextProvider>
+            <NoteProvider>
+                <RouterProvider router={router}/>
+            </NoteProvider>
+        </AuthContextProvider>
     );
 };
 

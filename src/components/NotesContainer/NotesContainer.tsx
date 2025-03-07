@@ -14,7 +14,9 @@ export const NotesContainer = () => {
             <h1>Public notes</h1>
             <ul>
                 {notes.map((note: Note) => (
-                    <li><NoteCard key={note.id} note={note} /></li>
+                    <li key={note.id}>
+                        <NoteCard  note={note} />
+                    </li>
                 ))
                 }
             </ul>
