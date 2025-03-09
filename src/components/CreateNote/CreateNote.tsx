@@ -1,33 +1,31 @@
 import { ChangeEvent, useContext, useState } from 'react';
-import { LoginType } from '../../types/types';
-import { AuthContext } from '../../context/authContext';
+import { Note } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
+import { NoteContext } from '../../context/noteContext';
 
-export const Login = () => {
-    const [ formData, setFormData ] = useState<LoginType>({
-        username: '',
-        password: '',
+export const CreateNote = () => {
+    const [ formData, setFormData ] = useState<Note>({
+        title: '',
+        content: '',
     });
-    const authContext = useContext(AuthContext);
     const navigate = useNavigate();
-    if(!authContext){
-        throw new Error('Error al cargar login');
+    const noteContext = useContext(NoteContext);
+    if(!noteContext){
+        throw new Error('Error al cargar create twit');
     };
-
-    const { login } = authContext;
+    const { createNote } = noteContext;
     const handleChange = (e: ChangeEvent<HTMLInputElement>)=>{
         const { name, value } = e.target;
         setFormData(prevData => ({ ...prevData, [name]: value }));
     };
-
     const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
         try{
             e.preventDefault();
-            await login(formData);
             setFormData({
-                username: '',
-                password: '',
+                title: '',
+                content: '',
             });
+            createNote(formData);
             navigate('/');
         }catch(error){
             console.error(error);
@@ -36,34 +34,34 @@ export const Login = () => {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <h1>Login</h1>
+                <h1>Create tweet</h1>
                 <div>
-                    <label htmlFor='username'>Username:</label>
+                    <label htmlFor='title'>Title:</label>
                     <input
                         type='text'
-                        name='username'
-                        id='username'
+                        name='title'
+                        id='title'
                         onChange={handleChange}
-                        value={formData.username}
+                        value={formData.title}
                         required
                         maxLength={40}
                     />
                 </div>
 
                 <div>
-                    <label htmlFor='password'>Password:</label>
+                    <label htmlFor='content'>Content:</label>
                     <input
-                        type='password'
-                        name='password'
-                        id='password'
+                        type='text'
+                        name='content'
+                        id='content'
                         onChange={handleChange}
-                        value={formData.password}
+                        value={formData.content}
                         required
                         maxLength={40}
                     />
                 </div>
 
-                <button>Login</button>
+                <button>Create Twit</button>
             </form>
         </>
     );

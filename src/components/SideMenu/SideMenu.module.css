@@ -1,0 +1,8 @@
+.side-menu {
+    width: 250px; /* Ancho del menú */
+    background-color:aqua;
+    padding: 20px;
+    height: 100vh; /* Para que el menú ocupe toda la altura */
+    left: 0;
+    top: 0;
+}

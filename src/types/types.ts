@@ -1,22 +1,17 @@
-export interface Note {
-    id: number;
+export interface Note{
+    id?: number;
     title: string;
     content: string;
-    visible?: boolean;
-    userId: number;
-    createdAt?: string; // ISO string de fecha
-    updatedAt?: string; // ISO string de fecha
 };
 
-export type NoteCreationAttributes = Omit<Note, 'id' | 'createdAt' | 'updatedAt'>;
+export interface NoteProps {
+    note: Note;
+};
 
 export type NoteContextType = {
     notes: Note[];
-    saveNote: (todo: Note) => void;
-};
-
-export interface NoteProp {
-    note: Note;
+    notesByUser: Note[];
+    createNote: (todo: Note) => void;
 };
 
 export interface SignUpFormState {

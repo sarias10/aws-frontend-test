@@ -7,15 +7,20 @@ import { Home } from './components/Home/Home';
 import { AuthContextProvider } from './context/authContext';
 import { Protected } from './routes/Protected';
 import { UserProfile } from './components/User/UserProfile';
+import { Layout } from './components/Layout/Layout';
+import { CreateNote } from './components/CreateNote/CreateNote';
+import { NotesByUser } from './components/NotesByUser/NotesByUser';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
-        <Route path='/'>
+        <Route path='/' element={<Layout/>}>
             <Route index element={<Home/>} />
             <Route path='login' element={<Login/>} />
             <Route path='signup' element={<SignUp/>}/>
             <Route element={<Protected/>}>
                 <Route path='/user-profile' element={<UserProfile/>} />
+                <Route path='/create-tweet' element={<CreateNote/>} />
+                <Route path='/your-tweets' element={<NotesByUser/>} />
             </Route>
             <Route path='*' element={<PageNotFound/>}/>
         </Route>

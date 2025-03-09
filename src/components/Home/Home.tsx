@@ -1,27 +1,27 @@
-import { useNavigate } from 'react-router-dom';
 import { NotesContainer } from '../NotesContainer/NotesContainer';
-import { config } from '../../config/env';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/authContext';
 export const Home = () => {
-    const navigate = useNavigate();
+    const authContext = useContext(AuthContext);
+    if(!authContext){
+        throw new Error('Error al cargar main page');
+    }
+    const { name } = authContext;
 
-    const handleLoginButton = () => {
-        navigate('/login');
-    };
-
-    const handleSignUpButton = () => {
-        navigate('/signup');
-    };
-    console.log(config.api_url);
     return (
         <div>
-            <button onClick={handleLoginButton}>
-                login
-            </button>
-            <br/>
-            <button onClick={handleSignUpButton}>
-                sign up
-            </button>
-            <NotesContainer/>
+            {name && (
+                <>
+                    <h1>Hello {name}</h1>
+                    <br/>
+                    <NotesContainer/>
+                </>
+            )}
+            {!name && (
+                <>
+                    <NotesContainer/>
+                </>
+            )}
         </div>
     );
 };
