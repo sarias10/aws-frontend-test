@@ -1,15 +1,15 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
-import { Login } from './components/Login/Login';
-import { SignUp } from './components/SignUp/SignUp';
-import { PageNotFound } from './components/PageNotFound/PageNotFound';
+import { Login } from './routes/Login/Login';
+import { SignUp } from './routes/SignUp/SignUp';
+import { PageNotFound } from './routes/PageNotFound/PageNotFound';
 import { NoteProvider } from './context/noteContext';
-import { Home } from './components/Home/Home';
+import { Home } from './routes/Home/Home';
 import { AuthContextProvider } from './context/authContext';
-import { Protected } from './routes/Protected';
-import { UserProfile } from './components/User/UserProfile';
+import { Protected } from './utils/Protected';
+import { UserProfile } from './routes/UserProfile/UserProfile';
 import { Layout } from './components/Layout/Layout';
-import { CreateNote } from './components/CreateNote/CreateNote';
-import { NotesByUser } from './components/NotesByUser/NotesByUser';
+import { CreateNote } from './routes/CreateNote/CreateNote';
+import { NotesByUser } from './routes/NotesByUser/NotesByUser';
 
 const router = createBrowserRouter(
     createRoutesFromElements(

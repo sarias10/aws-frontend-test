@@ -16,9 +16,9 @@ export const SideMenu = () => {
             <ul>
                 {token? (
                     <>
-                        <li><Link to='/'>Public twits</Link></li>
+                        <li><Link to='/'>Public tweets</Link></li>
                         <li><Link to='/your-tweets'>Your tweets</Link></li>
-                        <li><Link to='/create-tweet'>Create twit</Link></li>
+                        <li><Link to='/create-tweet'>Create tweet</Link></li>
                         <li><Link to='user-profile'>User profile</Link></li>
                         <li onClick={handleLogout}><Link to='/'>Log out</Link></li>
                     </>

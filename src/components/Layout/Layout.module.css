@@ -11,7 +11,7 @@
 }
 
 .outlet-container {
-    margin-left: 100px; /* Deja espacio para el menú */
+    margin-left: 250px; /* Deja espacio para el menú */
     flex-grow: 1; /* Hace que el contenido ocupe el resto del espacio */
-    padding: 20px;
+    padding: 40px;
 }
