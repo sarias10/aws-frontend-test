@@ -14,7 +14,7 @@ const router = createBrowserRouter(
         <Route path='/'>
             <Route path='login' element={<Login/>} />
             <Route path='signup' element={<SignUp/>}/>
-            <Route element={<Protected><Layout/></Protected>}>
+            <Route element={<Protected><PostProvider><Layout/></PostProvider></Protected>}>
                 <Route index element={<Home/>} />
                 <Route path='/user-profile' element={<UserProfile/>} />
             </Route>
@@ -26,9 +26,7 @@ const router = createBrowserRouter(
 const App = () => {
     return (
         <AuthContextProvider>
-            <PostProvider>
-                <RouterProvider router={router}/>
-            </PostProvider>
+            <RouterProvider router={router}/>
         </AuthContextProvider>
     );
 };

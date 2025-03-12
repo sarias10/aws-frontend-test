@@ -5,57 +5,32 @@ import { Post } from '../types/types';
 const baseUrl = `${config.api_url}/api/protected`;
 
 const getAllPostsFromLoggedUser = async (token: string | null) => {
-    const config = {
-        headers: { Authorization: token }
-    };
-    const url = `${baseUrl}/get-all-notes-by-user`;
-    const response = await axios.get(url, config);
-    return response;
+    return;
 };
 
 const getAllVisiblePosts = async (token: string | null) => {
     const config = {
         headers: { Authorization: token }
     };
-    const url = `${baseUrl}/get-all-notes-by-user`;
+    const url = `${baseUrl}/get-all-visible-posts`;
     const response = await axios.get(url, config);
     return response;
 };
 
 const getAllVisiblePostsFromUser = async (token: string | null) => {
-    const config = {
-        headers: { Authorization: token }
-    };
-    const url = `${baseUrl}/get-all-notes-by-user`;
-    const response = await axios.get(url, config);
-    return response;
+    return;
 };
 
 const createPost = async (token: string | null, data: Post) => {
-    const config = {
-        headers: { Authorization: token }
-    };
-    const url = `${baseUrl}/create-note`;
-    const response = await axios.post(url, data, config);
-    return response;
+    return;
 };
 
 const createComment = async (token: string | null) => {
-    const config = {
-        headers: { Authorization: token }
-    };
-    const url = `${baseUrl}/get-all-notes-by-user`;
-    const response = await axios.get(url, config);
-    return response;
+    return;
 };
 
 const createLike = async (token: string | null) => {
-    const config = {
-        headers: { Authorization: token }
-    };
-    const url = `${baseUrl}/get-all-notes-by-user`;
-    const response = await axios.get(url, config);
-    return response;
+    return;
 };
 
 export default {

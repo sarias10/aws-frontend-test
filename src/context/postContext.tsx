@@ -14,18 +14,16 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
     if(!authContext){
         throw new Error('Error al cargar authContext en PostProvider');
     };
-    const { username, token } = authContext;
+    const { token } = authContext;
 
     useEffect(()=>{
         const getVisiblePosts = async () => {
             const response = await protectedServices.getAllVisiblePosts(token);
             const data = response.data;
-            console.log(data);
+            console.log('data',data);
         };
-        if(username){
-            getVisiblePosts();
-        }
-    },[ token, username ]);
+        getVisiblePosts();
+    },[ token ]);
 
     const createPost = () => {
 
