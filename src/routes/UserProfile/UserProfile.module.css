@@ -1,0 +1,13 @@
+.info-btn {
+    width: 32px;
+    height: 32px;
+    background-color: #e5e7eb;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+  }

@@ -14,7 +14,6 @@ export const AuthContext = createContext<AuthProviderProps>({
 
 export const AuthContextProvider = ({ children }: PropsWithChildren<object>) => {
     const [ username, setUsername ] = useLocalStorage<string|null>('username',null);
-    //useState<string | null>(null);
     const [ name, setName ] = useLocalStorage<string | null>('name',null);
     const [ token, setToken ] = useLocalStorage<string | null>('token',null);
 

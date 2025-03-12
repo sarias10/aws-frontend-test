@@ -1,10 +1,37 @@
 import axios from 'axios';
 import { config } from '../config/env';
-import { Note } from '../types/types';
+import { Post } from '../types/types';
 
 const baseUrl = `${config.api_url}/api/protected`;
 
-const createNote = async (token: string | null, data: Note) => {
+const getAllPostsFromLoggedUser = async (token: string | null) => {
+    const config = {
+        headers: { Authorization: token }
+    };
+    const url = `${baseUrl}/get-all-notes-by-user`;
+    const response = await axios.get(url, config);
+    return response;
+};
+
+const getAllVisiblePosts = async (token: string | null) => {
+    const config = {
+        headers: { Authorization: token }
+    };
+    const url = `${baseUrl}/get-all-notes-by-user`;
+    const response = await axios.get(url, config);
+    return response;
+};
+
+const getAllVisiblePostsFromUser = async (token: string | null) => {
+    const config = {
+        headers: { Authorization: token }
+    };
+    const url = `${baseUrl}/get-all-notes-by-user`;
+    const response = await axios.get(url, config);
+    return response;
+};
+
+const createPost = async (token: string | null, data: Post) => {
     const config = {
         headers: { Authorization: token }
     };
@@ -13,7 +40,16 @@ const createNote = async (token: string | null, data: Note) => {
     return response;
 };
 
-const getNotesByUser = async (token: string | null) => {
+const createComment = async (token: string | null) => {
+    const config = {
+        headers: { Authorization: token }
+    };
+    const url = `${baseUrl}/get-all-notes-by-user`;
+    const response = await axios.get(url, config);
+    return response;
+};
+
+const createLike = async (token: string | null) => {
     const config = {
         headers: { Authorization: token }
     };
@@ -23,6 +59,10 @@ const getNotesByUser = async (token: string | null) => {
 };
 
 export default {
-    createNote,
-    getNotesByUser
+    getAllPostsFromLoggedUser,
+    getAllVisiblePosts,
+    getAllVisiblePostsFromUser,
+    createPost,
+    createComment,
+    createLike
 };

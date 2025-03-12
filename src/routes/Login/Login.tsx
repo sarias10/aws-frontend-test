@@ -33,38 +33,50 @@ export const Login = () => {
             console.error(error);
         }
     };
+
+    const handleSignup = () => {
+        navigate('/signup');
+    };
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                <h1>Login</h1>
-                <div>
-                    <label htmlFor='username'>Username:</label>
-                    <input
-                        type='text'
-                        name='username'
-                        id='username'
-                        onChange={handleChange}
-                        value={formData.username}
-                        required
-                        maxLength={40}
-                    />
-                </div>
+            <fieldset>
+                <form onSubmit={handleSubmit}>
+                    <h1>Login</h1>
+                    <div>
+                        <label htmlFor='username'>Username:</label>
+                        <input
+                            type='text'
+                            name='username'
+                            id='username'
+                            onChange={handleChange}
+                            value={formData.username}
+                            required
+                            maxLength={40}
+                        />
+                    </div>
 
-                <div>
-                    <label htmlFor='password'>Password:</label>
-                    <input
-                        type='password'
-                        name='password'
-                        id='password'
-                        onChange={handleChange}
-                        value={formData.password}
-                        required
-                        maxLength={40}
-                    />
-                </div>
+                    <div>
+                        <label htmlFor='password'>Password:</label>
+                        <input
+                            type='password'
+                            name='password'
+                            id='password'
+                            onChange={handleChange}
+                            value={formData.password}
+                            required
+                            maxLength={40}
+                        />
+                    </div>
 
-                <button>Login</button>
-            </form>
+                    <button>Log in</button>
+                </form>
+            </fieldset>
+
+            <fieldset>
+                <p>Don't have an account? </p>
+                <p onClick={handleSignup}>Sign up</p>
+            </fieldset>
+
         </>
     );
 };

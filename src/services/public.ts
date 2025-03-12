@@ -15,14 +15,7 @@ const login = async (data: LoginType) => {
     return response;
 };
 
-const getAllPublicNotes = async () => {
-    const url = `${baseUrl}/visible-notes`;
-    const response = await axios.get(url);
-    return response.data;
-};
-
 export default {
-    getAllPublicNotes,
     signUp,
     login
 };

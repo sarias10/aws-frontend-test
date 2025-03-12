@@ -1,17 +1,16 @@
-export interface Note{
+export interface Post{
     id?: number;
     title: string;
     content: string;
 };
 
-export interface NoteProps {
-    note: Note;
+export interface PostProps {
+    post: Post;
 };
 
-export type NoteContextType = {
-    notes: Note[];
-    notesByUser: Note[];
-    createNote: (todo: Note) => void;
+export type PostContextType = {
+    posts: Post[];
+    createPost: (todo: Post) => void;
 };
 
 export interface SignUpFormState {
