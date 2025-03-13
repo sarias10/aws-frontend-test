@@ -14,6 +14,9 @@ export const SideMenu = () => {
     const searchRef = useRef<HTMLLIElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
+    const createRef = useRef<HTMLLIElement>(null);
+    const createDropdownRef = useRef<HTMLDivElement>(null);
+
     // Verificar si el contexto de autenticación está disponible
     if(!authContex){
         throw new Error('Error al cargar SideMenu');
@@ -49,6 +52,14 @@ export const SideMenu = () => {
             ) {
                 setIsSearchOpen(false);
             }
+            if (
+                createDropdownRef.current &&
+                !createDropdownRef.current.contains(event.target as Node) &&
+                createRef.current &&
+                !createRef.current.contains(event.target as Node)
+            ) {
+                setIsCreateOpen(false);
+            }
         };
 
         // Agregar el event listener al montar el componente
@@ -69,15 +80,15 @@ export const SideMenu = () => {
                         <li><Link to='/'>Home</Link></li>
                         <li ref={searchRef} onClick={toggleSearch} className={styles['searchStyles']}>Search</li>
                         {isSearchOpen && (
-                            <div ref={dropdownRef}  className={styles['dropdown']}>
+                            <div ref={dropdownRef} className={styles['dropdown']}>
                                 <input type="text" placeholder='Search...' />
                             </div>
                         )
                         }
                         <li><Link to='user-profile'>Profile</Link></li>
-                        <li onClick={toggleCreate} className={styles['createStyles']}>Create</li>
+                        <li ref={createRef} onClick={toggleCreate} className={styles['createStyles']}>Create</li>
                         {isCreateOpen && (
-                            <div className={styles['createDropdown']}>
+                            <div ref={createDropdownRef} className={styles['createDropdown']}>
                                 <li>Post</li>
                                 <li>Story</li>
                             </div>
