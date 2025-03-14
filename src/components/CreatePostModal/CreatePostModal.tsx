@@ -2,6 +2,7 @@ import { Box, Typography, Button, TextField, IconButton } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
+import { toast } from 'react-toastify';
 
 const style = {
     position: 'absolute' as const,
@@ -40,8 +41,8 @@ export const CreatePostModal = ({ open, onClose }: CreatePostModalProps) => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!files) {
-            alert('Please select at least one file.');
+        if (!files || files.length === 0) {
+            toast.error('Please select at least one file.');
             return;
         }
 
@@ -54,6 +55,7 @@ export const CreatePostModal = ({ open, onClose }: CreatePostModalProps) => {
 
         console.log('Formulario enviado', { description, files });
 
+        toast.success('Post created successfully!');
         setDescription('');
         setFiles(null);
         onClose();
@@ -103,7 +105,8 @@ export const CreatePostModal = ({ open, onClose }: CreatePostModalProps) => {
                         type="file"
                         hidden
                         multiple
-                        accept="image/*,video/*"
+                        accept="image/*"
+                        /*,video/**/
                         onChange={handleFilesChange}
                     />
                 </Button>

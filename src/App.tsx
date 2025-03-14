@@ -8,6 +8,7 @@ import { AuthContextProvider } from './context/authContext';
 import { Protected } from './utils/Protected';
 import { UserProfile } from './routes/UserProfile/UserProfile';
 import { Layout } from './components/Layout/Layout';
+import { ToastContainer } from 'react-toastify';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -26,6 +27,7 @@ const router = createBrowserRouter(
 const App = () => {
     return (
         <AuthContextProvider>
+            <ToastContainer autoClose={2000}/>
             <RouterProvider router={router}/>
         </AuthContextProvider>
     );
