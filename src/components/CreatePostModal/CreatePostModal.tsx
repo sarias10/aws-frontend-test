@@ -71,13 +71,14 @@ export const CreatePostModal = ({ open, onClose }: CreatePostModalProps) => {
         }
     };
 
+    // Ejecuta lógica después de renderizar: Cuando el componente se renderiza, el código dentro del useEffect se ejecuta.
     useEffect(() => {
         if (!open) {
             setDescription('');
             setFiles([]);
             setCurrentIndex(0);
         }
-    }, [ open ]);
+    }, [ open ]); // Cuando open cambia, vuelve a disparar el efecto
 
     return (
         <Modal
