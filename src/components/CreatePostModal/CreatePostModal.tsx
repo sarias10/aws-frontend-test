@@ -1,6 +1,7 @@
-import { Box, Typography, Button, TextField } from '@mui/material';
+import { Box, Typography, Button, TextField, IconButton } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import { ChangeEvent, useState } from 'react';
+import { ArrowBack, ArrowForward } from '@mui/icons-material';
 
 const style = {
     position: 'absolute' as const,
@@ -20,13 +21,15 @@ interface CreatePostModalProps {
 }
 
 export const CreatePostModal = ({ open, onClose }: CreatePostModalProps) => {
-    const [ description, setDescription ] = useState('');
-    const [ files, setFiles ] = useState<File[]| null>(null);
+    const [description, setDescription] = useState('');
+    const [files, setFiles] = useState<File[] | null>(null);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     const handleFilesChange = (e: ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
-        if(files){
+        if (files) {
             setFiles(Array.from(files));
+            setCurrentIndex(0); // Reinicia el índice al seleccionar nuevos archivos
         }
     };
 
@@ -49,17 +52,25 @@ export const CreatePostModal = ({ open, onClose }: CreatePostModalProps) => {
             formData.append('files', file);
         });
 
-        // Aquí deberías hacer la petición a tu backend usando fetch o axios, por ejemplo.
-        console.log('Formulario enviado');
-        console.log({ description, files });
+        console.log('Formulario enviado', { description, files });
 
-        // Reiniciamos el formulario
         setDescription('');
         setFiles(null);
         onClose();
     };
 
-    console.log(files);
+    const handleNext = () => {
+        if (files && currentIndex < files.length - 1) {
+            setCurrentIndex(currentIndex + 1);
+        }
+    };
+
+    const handlePrevious = () => {
+        if (currentIndex > 0) {
+            setCurrentIndex(currentIndex - 1);
+        }
+    };
+
     return (
         <Modal
             open={open}
@@ -83,36 +94,41 @@ export const CreatePostModal = ({ open, onClose }: CreatePostModalProps) => {
                         type="file"
                         hidden
                         multiple
+                        accept="image/*,video/*"
                         onChange={handleFilesChange}
                     />
                 </Button>
 
-                {files &&files.length > 0 && (
-                    <div style={{ marginTop: '20px' }}>
-                        <Typography variant="body1">Selected files:</Typography>
-                        <ul>
-                            {files.map((file, index) => (
-                                <li key={index}>
-                                    {file.type.startsWith('image/') ? (
-                                        <img
-                                            src={URL.createObjectURL(file)}
-                                            alt={file.name}
-                                            width="100"
-                                            style={{ marginBottom: '10px', borderRadius: '8px' }}
-                                        />
-                                    ) : (
-                                        <video
-                                            src={URL.createObjectURL(file)}
-                                            width="150"
-                                            controls
-                                            style={{ marginBottom: '10px', borderRadius: '8px' }}
-                                        />
-                                    )}
-                                </li>
-                            ))}
-                        </ul>
+                {files && files.length > 0 && (
+                    <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                        <Typography variant="body1">Preview:</Typography>
+                        <div style={{ position: 'relative', marginTop: '10px' }}>
+                            {files[currentIndex].type.startsWith('image/') ? (
+                                <img
+                                    src={URL.createObjectURL(files[currentIndex])}
+                                    alt={files[currentIndex].name}
+                                    style={{ maxWidth: '100%', maxHeight: '300px', borderRadius: '8px' }}
+                                />
+                            ) : (
+                                <video
+                                    src={URL.createObjectURL(files[currentIndex])}
+                                    controls
+                                    style={{ maxWidth: '100%', maxHeight: '300px', borderRadius: '8px' }}
+                                />
+                            )}
+                            
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
+                                <IconButton onClick={handlePrevious} disabled={currentIndex === 0}>
+                                    <ArrowBack />
+                                </IconButton>
+                                <IconButton onClick={handleNext} disabled={currentIndex === files.length - 1}>
+                                    <ArrowForward />
+                                </IconButton>
+                            </div>
+                        </div>
                     </div>
                 )}
+
                 <TextField
                     label="Description"
                     fullWidth
