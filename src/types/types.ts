@@ -31,6 +31,7 @@ export interface PostCreationAttributes{
 
 export type PostContextType = {
     visiblePosts: PostResponse[];
+    postsFromLoggedUser: PostResponse[];
     createPost: (todo: PostCreationAttributes) => void;
 };
 

@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
 import { useNavigate } from 'react-router-dom';
 import styles from './SideMenu.module.css';
+import { CreatePostModal } from '../CreatePostModal/CreatePostModal';
 
 export const SideMenu = () => {
     // Obtener el contexto de autenticación
@@ -10,6 +11,8 @@ export const SideMenu = () => {
     const [ isSearchOpen, setIsSearchOpen ] = useState(false);
 
     const [ isCreateOpen, setIsCreateOpen ] = useState(false);
+
+    const [ isPostModalOpen, setIsPostModalOpen ] = useState(false);
     // Referencias para el botón de búsqueda y el dropdown
     const searchRef = useRef<HTMLLIElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -40,6 +43,15 @@ export const SideMenu = () => {
     const toggleCreate = (event: React.MouseEvent) => {
         event.preventDefault();
         setIsCreateOpen(!isCreateOpen);
+    };
+
+    const handleCreatePost = () => {
+        setIsPostModalOpen(true);
+        setIsCreateOpen(false);
+    };
+
+    const handleCloseModal = () => {
+        setIsPostModalOpen(false);
     };
 
     // Cerrar el dropdown si se hace clic fuera de él
@@ -96,12 +108,13 @@ export const SideMenu = () => {
                     </li>
                     {isCreateOpen && (
                         <div ref={createDropdownRef} className={styles['create-dropdown']}>
-                            <li>Post</li>
-                            <li>Story</li>
+                            <li onClick={handleCreatePost}>Post</li>
                         </div>
                     )}
 
                     <li onClick={handleLogout}>Log out</li>
+
+                    <CreatePostModal open={isPostModalOpen} onClose={handleCloseModal}/>
                 </>
             </ul>
         </div>

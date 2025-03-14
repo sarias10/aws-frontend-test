@@ -1,11 +1,15 @@
 import axios from 'axios';
 import { config } from '../config/env';
-import { Post } from '../types/types';
 
 const baseUrl = `${config.api_url}/api/protected`;
 
 const getAllPostsFromLoggedUser = async (token: string | null) => {
-    return;
+    const config = {
+        headers: { Authorization: token }
+    };
+    const url = `${baseUrl}/get-all-posts-from-logged-user`;
+    const response = await axios.get(url, config);
+    return response;
 };
 
 const getAllVisiblePosts = async (token: string | null) => {

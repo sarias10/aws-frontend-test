@@ -1,0 +1,7 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Siempre 3 columnas */
+    gap: 16px; /* Espaciado entre los elementos */
+    padding: 16px; /* Espaciado interno opcional */
+    min-height: 100px; /* Opcional: asegura que las filas tengan un tamaño mínimo */
+}
