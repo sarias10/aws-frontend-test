@@ -7,7 +7,7 @@ import { AuthContext } from './authContext';
 export const PostContext = createContext<PostContextType| null>(null);
 
 export const PostProvider = ({ children }: PropsWithChildren<object>) => {
-    const [ posts, setPosts ] = useState<PostResponse[]>([]);
+    const [ visiblePosts, setVisiblePosts ] = useState<PostResponse[]>([]);
 
     const authContext = useContext(AuthContext);
 
@@ -20,7 +20,7 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
         const getVisiblePosts = async () => {
             const response = await protectedServices.getAllVisiblePosts(token);
             const data = response.data;
-            setPosts(data);
+            setVisiblePosts(data);
         };
         getVisiblePosts();
     },[ token ]);
@@ -30,7 +30,7 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
     };
 
     return(
-        <PostContext.Provider value={{ posts, createPost }}>
+        <PostContext.Provider value={{ visiblePosts, createPost }}>
             {children}
         </PostContext.Provider>
     );

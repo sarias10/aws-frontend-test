@@ -9,11 +9,11 @@ export const PostsContainer = () => {
     if(!postContext){
         throw new Error('Error al cargar PostsContainer');
     };
-    const { posts } = postContext;
+    const { visiblePosts } = postContext;
     return (
         <div className={styles['posts-container']}>
-            {posts && (
-                posts.map((post : PostResponse) => (
+            {visiblePosts && (
+                visiblePosts.map((post : PostResponse) => (
                     <Post key={post.id} post={post}/>
                 ))
             )}

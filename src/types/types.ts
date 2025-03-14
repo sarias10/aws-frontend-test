@@ -30,7 +30,7 @@ export interface PostCreationAttributes{
 };
 
 export type PostContextType = {
-    posts: PostResponse[];
+    visiblePosts: PostResponse[];
     createPost: (todo: PostCreationAttributes) => void;
 };
 
