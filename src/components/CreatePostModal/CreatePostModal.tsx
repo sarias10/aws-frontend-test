@@ -1,6 +1,6 @@
 import { Box, Typography, Button, TextField, IconButton } from '@mui/material';
 import Modal from '@mui/material/Modal';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 
 const style = {
@@ -21,9 +21,9 @@ interface CreatePostModalProps {
 }
 
 export const CreatePostModal = ({ open, onClose }: CreatePostModalProps) => {
-    const [description, setDescription] = useState('');
-    const [files, setFiles] = useState<File[] | null>(null);
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [ description, setDescription ] = useState('');
+    const [ files, setFiles ] = useState<File[] | null>(null);
+    const [ currentIndex, setCurrentIndex ] = useState(0);
 
     const handleFilesChange = (e: ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
@@ -71,6 +71,14 @@ export const CreatePostModal = ({ open, onClose }: CreatePostModalProps) => {
         }
     };
 
+    useEffect(() => {
+        if (!open) {
+            setDescription('');
+            setFiles([]);
+            setCurrentIndex(0);
+        }
+    }, [ open ]);
+
     return (
         <Modal
             open={open}
@@ -116,7 +124,7 @@ export const CreatePostModal = ({ open, onClose }: CreatePostModalProps) => {
                                     style={{ maxWidth: '100%', maxHeight: '300px', borderRadius: '8px' }}
                                 />
                             )}
-                            
+
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
                                 <IconButton onClick={handlePrevious} disabled={currentIndex === 0}>
                                     <ArrowBack />
