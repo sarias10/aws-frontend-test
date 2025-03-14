@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from './SideMenu.module.css';
 
 export const SideMenu = () => {
@@ -17,6 +17,7 @@ export const SideMenu = () => {
     const createRef = useRef<HTMLLIElement>(null);
     const createDropdownRef = useRef<HTMLDivElement>(null);
 
+    const navigate = useNavigate();
     // Verificar si el contexto de autenticación está disponible
     if(!authContex){
         throw new Error('Error al cargar SideMenu');
@@ -27,6 +28,7 @@ export const SideMenu = () => {
     // Función para manejar el cierre de sesión
     const handleLogout = () => {
         logout();
+        navigate('/');
     };
 
     // Función para alternar la visibilidad del desplegable de búsqueda
@@ -73,29 +75,33 @@ export const SideMenu = () => {
         <div className={styles['side-menu']}>
             <ul>
                 <>
-                    <div className={styles['div-logo']}>
-                        <li><Link to='/'>InstagramDemake</Link></li>
-                    </div>
-                    <div className={styles['div-other-options']}>
-                        <li><Link to='/'>Home</Link></li>
-                        <li ref={searchRef} onClick={toggleSearch} className={styles['searchStyles']}>Search</li>
-                        {isSearchOpen && (
-                            <div ref={dropdownRef} className={styles['dropdown']}>
-                                <input type="text" placeholder='Search...' />
-                            </div>
-                        )
-                        }
-                        <li><Link to='user-profile'>Profile</Link></li>
-                        <li ref={createRef} onClick={toggleCreate} className={styles['createStyles']}>Create</li>
-                        {isCreateOpen && (
-                            <div ref={createDropdownRef} className={styles['createDropdown']}>
-                                <li>Post</li>
-                                <li>Story</li>
-                            </div>
-                        )
-                        }
-                        <li onClick={handleLogout}><Link to='/'>Log out</Link></li>
-                    </div>
+                    <li className={styles['div-logo']}>
+                        InstagramDemake
+                    </li>
+                    <li onClick={() => navigate('/')}>
+                        Home
+                    </li>
+                    <li ref={searchRef} onClick={toggleSearch} className={styles['searchStyles']}>
+                        Search
+                    </li>
+                    {isSearchOpen && (
+                        <div ref={dropdownRef} className={styles['dropdown']}>
+                            <input type="text" placeholder='Search...' />
+                        </div>
+                    )}
+                    <li onClick={() => navigate('/user-profile')}>Profile
+                    </li>
+                    <li ref={createRef} onClick={toggleCreate} className={styles['create-styles']}>
+                        Create
+                    </li>
+                    {isCreateOpen && (
+                        <div ref={createDropdownRef} className={styles['create-dropdown']}>
+                            <li>Post</li>
+                            <li>Story</li>
+                        </div>
+                    )}
+
+                    <li onClick={handleLogout}>Log out</li>
                 </>
             </ul>
         </div>

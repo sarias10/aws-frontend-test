@@ -1,0 +1,14 @@
+.post {
+    width: 100%; /* Ajusta el ancho según sea necesario */
+    max-width: 600px; /* Limita el ancho máximo */
+    border-bottom: 1px solid #ccc; /* Agrega un borde solo abajo */
+    padding: 10px 0; /* Espaciado interno */
+}
+
+.post-image {
+    width: 100%; /* Ajusta al ancho del contenedor */
+    max-width: 468px; /* Tamaño máximo basado en Instagram */
+    aspect-ratio: 4 / 5; /* Mantiene la proporción 4:5 */
+    object-fit: cover; /* Recorta la imagen si no encaja perfectamente */
+    border-radius: 3px; /* Opcional: bordes redondeados */
+}

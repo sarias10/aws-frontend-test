@@ -1,5 +1,5 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
-import { Post, PostContextType } from '../types/types';
+import { PostContextType, PostResponse } from '../types/types';
 import protectedServices from '../services/protected';
 
 import { AuthContext } from './authContext';
@@ -7,7 +7,7 @@ import { AuthContext } from './authContext';
 export const PostContext = createContext<PostContextType| null>(null);
 
 export const PostProvider = ({ children }: PropsWithChildren<object>) => {
-    const [ posts, setPosts ] = useState<Post[]>([]);
+    const [ posts, setPosts ] = useState<PostResponse[]>([]);
 
     const authContext = useContext(AuthContext);
 
@@ -20,7 +20,7 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
         const getVisiblePosts = async () => {
             const response = await protectedServices.getAllVisiblePosts(token);
             const data = response.data;
-            console.log('data',data);
+            setPosts(data);
         };
         getVisiblePosts();
     },[ token ]);

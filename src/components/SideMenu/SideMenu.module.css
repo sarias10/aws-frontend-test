@@ -1,29 +1,23 @@
 li {
+    position: relative;
     list-style-type: none; /* Quitar los puntos de la lista */
     cursor: pointer;
     text-decoration: none; /* Quitar el subrayado de los enlaces */
     color: inherit; /* Mantener el color del texto */
-}
-
-li a {
-    text-decoration: none; /* Quitar el subrayado de los enlaces */
-    color: inherit; /* Mantener el color del texto */
-}
-
-.div-other-options li {
     margin-top: 0;
     margin-bottom: 50px; /* Ajusta el valor para controlar la separación */
     border-radius: 10px;
-    padding: 10px 20px; /* Top y Bottom: 10px, Left y Right: 20px */
     font-size: 20px;
+    overflow: hidden; /* Asegura que el contenido no se desborde */
+    padding: 10px 20px; /* Aplica el padding aquí */
 }
 
 /* Opcional: elimina el margen del último elemento */
-.div-other-options li:last-child {
+li:last-child {
     margin-bottom: 0;
 }
 
-.div-other-options li:hover {
+li:hover {
     background-color: rgba(0, 0, 0, 0.1); /* Oscurecer un poco el fondo al hacer hover */
 }
 
@@ -32,21 +26,16 @@ li a {
     margin-bottom: 50px; /* Ajusta el valor para controlar la separación */
 }
 
-.div-other-options {
-    /* Opcional: puedes agregar un margen superior si necesitas más control */
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
 .side-menu {
     position: fixed;
     width: 250px; /* Ancho del menú */
-    background-color:aqua;
+    background-color:white;
     padding: 20px;
     height: 100vh; /* Para que el menú ocupe toda la altura */
     left: 0;
     top: 0;
     z-index: 1000;
+    border-right: 1px solid #ccc; /* Borde gris claro en el lado derecho */
 }
 
 .dropdown {
@@ -61,8 +50,9 @@ li a {
     z-index: 1000;
 }
 
-.createDropdown {
+.create-dropdown {
     position: absolute; /* Asegura que el dropdown se posicione de manera absoluta */
+    top: 440px;
     z-index: 1000; /* Un valor alto para que aparezca por encima de otros elementos */
     background-color: white; /* Fondo blanco para el dropdown */
     border: 1px solid #ccc; /* Borde para el dropdown */
@@ -72,6 +62,6 @@ li a {
     padding-left: 10px; /* Quitar el padding izquierdo */
 }
 
-.createDropdown li {
+.create-dropdown li {
     margin: 5px 0; /* Espaciado entre los elementos de la lista */
 }
