@@ -87,7 +87,7 @@ export const SideMenu = () => {
         <div className={styles['side-menu']}>
             <ul>
                 <>
-                    <li className={styles['div-logo']}>
+                    <li onClick={() => navigate('/')} className={styles['div-logo']}>
                         InstagramDemake
                     </li>
                     <li onClick={() => navigate('/')}>

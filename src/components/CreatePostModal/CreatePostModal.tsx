@@ -1,8 +1,9 @@
 import { Box, Typography, Button, TextField, IconButton } from '@mui/material';
 import Modal from '@mui/material/Modal';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import { toast } from 'react-toastify';
+import { PostContext } from '../../context/postContext';
 
 const style = {
     position: 'absolute' as const,
@@ -25,6 +26,13 @@ export const CreatePostModal = ({ open, onClose }: CreatePostModalProps) => {
     const [ description, setDescription ] = useState('');
     const [ files, setFiles ] = useState<File[] | null>(null);
     const [ currentIndex, setCurrentIndex ] = useState(0);
+
+    const postContext = useContext(PostContext);
+    if(!postContext){
+        throw new Error('Error al cargar CreatePostModalProps');
+    };
+
+    const { createPost } = postContext;
 
     const handleFilesChange = (e: ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
@@ -50,12 +58,11 @@ export const CreatePostModal = ({ open, onClose }: CreatePostModalProps) => {
         formData.append('description', description);
 
         Array.from(files).forEach(file => {
-            formData.append('files', file);
+            formData.append('media', file);
         });
 
-        console.log('Formulario enviado', { description, files });
+        createPost(formData);
 
-        toast.success('Post created successfully!');
         setDescription('');
         setFiles(null);
         onClose();

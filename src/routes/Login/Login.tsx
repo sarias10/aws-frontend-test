@@ -20,10 +20,10 @@ export const Login = () => {
         setFormData(prevData => ({ ...prevData, [name]: value }));
     };
 
-    const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
         try{
             e.preventDefault();
-            await login(formData);
+            login(formData);
             setFormData({
                 username: '',
                 password: '',

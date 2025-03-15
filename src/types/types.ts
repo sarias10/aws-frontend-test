@@ -24,15 +24,11 @@ export interface PostResponse {
 export interface PostResponseProps {
     post: PostResponse
 }
-export interface PostCreationAttributes{
-    id?: number;
-    description: string
-};
 
 export type PostContextType = {
     visiblePosts: PostResponse[];
     postsFromLoggedUser: PostResponse[];
-    createPost: (todo: PostCreationAttributes) => void;
+    createPost: (data: FormData) => void;
 };
 
 export interface SignUpFormState {

@@ -18,8 +18,8 @@ export const UserProfile = () => {
             <br/>
             <div>
                 <button onClick={() => setShowComponent('posts')}>POSTS</button>
-                <button onClick={() => setShowComponent('saved')}>SAVED</button>
-                <button onClick={() => setShowComponent('tagged')}>TAGGED</button>
+                {/* <button onClick={() => setShowComponent('saved')}>SAVED</button>
+                <button onClick={() => setShowComponent('tagged')}>TAGGED</button> */}
             </div>
             {showComponent==='posts' && (
                 <PostsFromLoggedUserContainer/>

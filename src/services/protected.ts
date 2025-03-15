@@ -25,8 +25,13 @@ const getAllVisiblePostsFromUser = async (token: string | null) => {
     return;
 };
 
-const createPost = async (token: string | null, data: Post) => {
-    return;
+const createPost = async (token: string | null, data: FormData) => {
+    const config = {
+        headers: { Authorization: token }
+    };
+    const url = `${baseUrl}/create-post`;
+    const response = await axios.post(url, data, config);
+    return response;
 };
 
 const createComment = async (token: string | null) => {
