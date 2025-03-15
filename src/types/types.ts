@@ -20,7 +20,9 @@ export interface PostResponse {
     author: Author,
     media: Media[]
 }
-
+export interface PostsResponseProps {
+    posts: PostResponse[]
+}
 export interface PostResponseProps {
     post: PostResponse
 }
@@ -28,6 +30,7 @@ export interface PostResponseProps {
 export type PostContextType = {
     visiblePosts: PostResponse[];
     postsFromLoggedUser: PostResponse[];
+    getVisiblePostsFromUser: (username: string) => Promise<PostResponse[]>;
     createPost: (data: FormData) => void;
 };
 

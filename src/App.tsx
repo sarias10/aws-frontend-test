@@ -22,7 +22,7 @@ const router = createBrowserRouter(
             <Route element={<ProtectedRoutes><PostProvider><Layout/></PostProvider></ProtectedRoutes>}>
 
                 <Route index element={<Home/>} />
-                <Route path={':usernamestring'} element={<UserProfile/>} />
+                <Route path={':usernameParam'} element={<UserProfile/>} />
             </Route>
             <Route path='*' element={<PageNotFound/>}/>
         </Route>
