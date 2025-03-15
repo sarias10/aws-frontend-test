@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import { PostContext } from '../../context/postContext';
 import {  PostResponse } from '../../types/types';
-import { PostFromUserProfile } from '../PostFromUserProfile/PostFromUserProfile';
-import styles from './PostsFromUserProfileContainer.module.css';
+import { PostFromUserProfile } from '../PostFromUser/PostFromUser';
+import styles from './PostsFromUserContainer.module.css';
 
-export const PostsFromUserProfileContainer = () => {
+export const PostsFromUserContainer = () => {
     const postContext = useContext(PostContext);
     if(!postContext){
         throw new Error('Error al cargar PostsFromLoggedUserContainer');

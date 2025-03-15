@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
 import styles from './UserProfile.module.css';
 import { CustomModal } from '../../components/CustomModal/CustomModal';
-import { PostsFromUserProfileContainer } from '../../components/PostsFromUserProfileContainer/PostsFromUserProfileContainer';
+import { PostsFromUserContainer } from '../../components/PostsFromUserContainer/PostsFromUserContainer';
 import { useParams } from 'react-router-dom';
 
 export const UserProfile = () => {
@@ -27,7 +27,7 @@ export const UserProfile = () => {
                             <button onClick={() => setShowComponent('tagged')}>TAGGED</button> */}
                     </div>
                     {showComponent==='posts' && (
-                        <PostsFromUserProfileContainer />
+                        <PostsFromUserContainer />
                     )}
                     {/* <fieldset>
                         <legend>Settigns</legend>
@@ -47,7 +47,7 @@ export const UserProfile = () => {
                             <button onClick={() => setShowComponent('tagged')}>TAGGED</button> */}
                         </div>
                         {showComponent==='posts' && (
-                            <PostsFromUserProfileContainer/>
+                            <PostsFromUserContainer/>
                         )}
                         {/* <fieldset>
                         <legend>Settigns</legend>

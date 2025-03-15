@@ -1,5 +1,5 @@
 import { PostResponseProps } from '../../types/types';
-import styles from './PostFromUserProfile.module.css';
+import styles from './PostFromUser.module.css';
 
 export const PostFromUserProfile = ({ post }: PostResponseProps) => {
     return (
