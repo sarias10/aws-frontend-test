@@ -15,7 +15,7 @@ export const Post = ({ post }: PostResponseProps) => {
             <div>
                 <span><strong>{post.author.username}</strong> {post.description}</span>
             </div>
-            <div><a>View all {post.likesCount} comments</a></div>
+            <div><a>View all {post.commentsCount} comments</a></div>
         </div>
     );
 };

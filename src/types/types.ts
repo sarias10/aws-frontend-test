@@ -16,9 +16,9 @@ export interface PostResponse {
     id: number,
     description: string,
     likesCount: number,
+    commentsCount: number,
     author: Author,
-    media: Media[],
-    comments: Comment[]
+    media: Media[]
 }
 
 export interface PostResponseProps {

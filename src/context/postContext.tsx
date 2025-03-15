@@ -39,7 +39,7 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
         try{
             const response = await protectedServices.createPost(token, data);
             toast.success('Post created successfully!');
-            
+
         } catch(error){
             if (error instanceof AxiosError && error.response?.data?.message) {
                 toast.error(error.response.data.message || 'An unexpected error occurred.');

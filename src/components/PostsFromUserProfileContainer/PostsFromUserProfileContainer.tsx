@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import { PostContext } from '../../context/postContext';
 import {  PostResponse } from '../../types/types';
-import { PostFromLoggedUser } from '../PostFromLoggedUser/PostFromLoggedUser';
-import styles from './PostsFromLoggedUserContainer.module.css';
+import { PostFromUserProfile } from '../PostFromUserProfile/PostFromUserProfile';
+import styles from './PostsFromUserProfileContainer.module.css';
 
-export const PostsFromLoggedUserContainer = () => {
+export const PostsFromUserProfileContainer = () => {
     const postContext = useContext(PostContext);
     if(!postContext){
         throw new Error('Error al cargar PostsFromLoggedUserContainer');
@@ -14,7 +14,7 @@ export const PostsFromLoggedUserContainer = () => {
         <div className={styles['container']}>
             {postsFromLoggedUser.length>0 && (
                 postsFromLoggedUser.map((post: PostResponse) => (
-                    <PostFromLoggedUser key={post.id} post={post}/>
+                    <PostFromUserProfile key={post.id} post={post}/>
                 ))
             )}
             {postsFromLoggedUser.length===0 && (

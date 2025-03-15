@@ -35,7 +35,7 @@ export const Login = () => {
     };
 
     const handleSignup = () => {
-        navigate('/signup');
+        navigate('/accounts/signup');
     };
     return (
         <>

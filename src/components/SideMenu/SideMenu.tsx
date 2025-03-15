@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from './SideMenu.module.css';
 import { CreatePostModal } from '../CreatePostModal/CreatePostModal';
 
@@ -13,6 +13,7 @@ export const SideMenu = () => {
     const [ isCreateOpen, setIsCreateOpen ] = useState(false);
 
     const [ isPostModalOpen, setIsPostModalOpen ] = useState(false);
+
     // Referencias para el botón de búsqueda y el dropdown
     const searchRef = useRef<HTMLLIElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -26,7 +27,7 @@ export const SideMenu = () => {
         throw new Error('Error al cargar SideMenu');
     }
 
-    const { logout } = authContex;
+    const { username, logout } = authContex;
 
     // Función para manejar el cierre de sesión
     const handleLogout = () => {
@@ -101,7 +102,7 @@ export const SideMenu = () => {
                             <input type="text" placeholder='Search...' />
                         </div>
                     )}
-                    <li onClick={() => navigate('/user-profile')}>Profile
+                    <li onClick={() => navigate(`${username}`)}>Profile
                     </li>
                     <li ref={createRef} onClick={toggleCreate} className={styles['create-styles']}>
                         Create
