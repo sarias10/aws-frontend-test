@@ -1,5 +1,5 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
-import { PostContextType, PostResponse } from '../types/types';
+import { PostContextType, PostResponse, User } from '../types/types';
 import protectedServices from '../services/protected';
 
 import { AuthContext } from './authContext';
@@ -11,6 +11,7 @@ export const PostContext = createContext<PostContextType| null>(null);
 export const PostProvider = ({ children }: PropsWithChildren<object>) => {
     const [ postsFromLoggedUser, setPostsFromLoggedUser ] = useState<PostResponse[]>([]);
     const [ visiblePosts, setVisiblePosts ] = useState<PostResponse[]>([]);
+    const [ users, setUsers ] = useState<User[]>([]);
 
     const authContext = useContext(AuthContext);
 
@@ -31,13 +32,19 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
             const data = response.data;
             setPostsFromLoggedUser(data);
         };
+        const getAllUsers = async () => {
+            const response = await protectedServices.getAllUsers(token);
+            const data = response.data;
+            setUsers(data);
+        };
         getVisiblePosts();
         getPostsFromLoggedUser();
+        getAllUsers();
     },[ token ]);
 
     const createPost = async (data: FormData) => {
         try{
-            const response = await protectedServices.createPost(token, data);
+            await protectedServices.createPost(token, data);
             toast.success('Post created successfully!');
 
         } catch(error){
@@ -62,7 +69,7 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
         }
     };
     return(
-        <PostContext.Provider value={{ visiblePosts, postsFromLoggedUser, getVisiblePostsFromUser, createPost }}>
+        <PostContext.Provider value={{ visiblePosts, postsFromLoggedUser, users, getVisiblePostsFromUser, createPost }}>
             {children}
         </PostContext.Provider>
     );

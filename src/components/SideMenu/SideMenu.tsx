@@ -1,8 +1,9 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from './SideMenu.module.css';
 import { CreatePostModal } from '../CreatePostModal/CreatePostModal';
+import { Search } from '../Search/Search';
 
 export const SideMenu = () => {
     // Obtener el contexto de autenticación
@@ -99,7 +100,7 @@ export const SideMenu = () => {
                     </li>
                     {isSearchOpen && (
                         <div ref={dropdownRef} className={styles['dropdown']}>
-                            <input type="text" placeholder='Search...' />
+                            <Search/>
                         </div>
                     )}
                     <li onClick={() => navigate(`${username}`)}>Profile

@@ -47,11 +47,21 @@ const createLike = async (token: string | null) => {
     return;
 };
 
+const getAllUsers = async (token: string| null) => {
+    const config = {
+        headers: { Authorization: token }
+    };
+    const url = `${baseUrl}/get-all-users`;
+    const response = await axios.get(url, config);
+    return response;
+};
+
 export default {
     getAllPostsFromLoggedUser,
     getAllVisiblePosts,
     getAllVisiblePostsFromUser,
     createPost,
     createComment,
-    createLike
+    createLike,
+    getAllUsers,
 };

@@ -27,9 +27,17 @@ export interface PostResponseProps {
     post: PostResponse
 }
 
+export interface User {
+    id: number,
+    username: string,
+    name: string,
+    visible: boolean,
+}
+
 export type PostContextType = {
     visiblePosts: PostResponse[];
     postsFromLoggedUser: PostResponse[];
+    users: User[];
     getVisiblePostsFromUser: (username: string) => Promise<PostResponse[]>;
     createPost: (data: FormData) => void;
 };

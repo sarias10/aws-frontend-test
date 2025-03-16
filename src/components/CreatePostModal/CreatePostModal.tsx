@@ -29,7 +29,7 @@ export const CreatePostModal = ({ open, onClose }: CreatePostModalProps) => {
 
     const postContext = useContext(PostContext);
     if(!postContext){
-        throw new Error('Error al cargar CreatePostModalProps');
+        throw new Error('Error al cargar PostContext en CreatePostModalProps');
     };
 
     const { createPost } = postContext;
