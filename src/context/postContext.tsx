@@ -55,9 +55,9 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
             return response.data;
         }catch(error){
             if (error instanceof AxiosError && error.response?.data?.message) {
-                toast.error(error.response.data.message || 'An unexpected error occurred.');
+                throw new Error(error.response.data.message || 'An unexpected error occurred.');
             } else {
-                toast.error('An unexpected error occurred.');
+                throw new Error('An unexpected error occurred.');
             }
         }
     };
