@@ -77,17 +77,16 @@ export const UserProfile = () => {
                 <>
                     <h2>User profile</h2>
                     {otherUser.name}
-                    <>
-                        <br/>
-                        <div>
-                            <button onClick={() => setShowComponent('posts')}>POSTS</button>
-                            {/* <button onClick={() => setShowComponent('saved')}>SAVED</button>
+                    <br/>
+                    <div>
+                        <button onClick={() => setShowComponent('posts')}>POSTS</button>
+                        {/* <button onClick={() => setShowComponent('saved')}>SAVED</button>
                             <button onClick={() => setShowComponent('tagged')}>TAGGED</button> */}
-                        </div>
-                        {showComponent==='posts' && (
-                            <PostsFromUserContainer posts={visiblePostsFromOtherUser} />
-                        )}
-                    </>
+                    </div>
+                    {showComponent==='posts' && (
+                        <PostsFromUserContainer posts={visiblePostsFromOtherUser} />
+                    )}
+
                 </>
             ) : ( // Sino encuentra ningún usuario con ese usernameParam
                 <>
