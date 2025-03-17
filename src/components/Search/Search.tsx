@@ -4,7 +4,10 @@ import { User } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 import styles from './Search.module.css';
 
-export const Search = forwardRef<HTMLDivElement>((_,ref) => {
+interface SearchProps {
+    closeDropdown: () => void;
+}
+export const Search = forwardRef<HTMLDivElement, SearchProps>(({ closeDropdown },ref) => {
     const [ search, setSearch ] = useState<string>('');
     const [ filterUsers, setFilterUsers ] = useState<User[]>([]);
 
@@ -36,6 +39,7 @@ export const Search = forwardRef<HTMLDivElement>((_,ref) => {
 
     const handleSearchLiClick = (username: string) => {
         navigate(`/${username}`);
+        closeDropdown();
     };
 
     /*

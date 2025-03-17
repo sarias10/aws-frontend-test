@@ -99,10 +99,7 @@ export const SideMenu = () => {
                         Search
                     </li>
                     {isSearchOpen && (
-                        <Search ref={dropdownRef} />
-                        // <div ref={dropdownRef} className={styles['dropdown']}>
-                        // <Search />
-                        // </div>
+                        <Search ref={dropdownRef} closeDropdown={() => setIsSearchOpen(false)}/>
                     )}
                     <li onClick={() => navigate(`${username}`)}>Profile
                     </li>
