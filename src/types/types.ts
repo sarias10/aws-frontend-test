@@ -41,6 +41,7 @@ export type PostContextType = {
     getVisiblePostsFromUser: (username: string) => Promise<PostResponse[]>;
     getUser: (username: string) => Promise<User>;
     createPost: (data: FormData) => void;
+    refreshVisiblePosts: () => void;
 };
 
 export interface SignUpFormState {

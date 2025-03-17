@@ -4,10 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import styles from './SideMenu.module.css';
 import { CreatePostModal } from '../CreatePostModal/CreatePostModal';
 import { Search } from '../Search/Search';
+import { PostContext } from '../../context/postContext';
 
 export const SideMenu = () => {
     // Obtener el contexto de autenticación
     const authContex = useContext(AuthContext);
+    const postContext = useContext(PostContext);
+
     // Estado para controlar si el desplegable de búsqueda está abierto
     const [ isSearchOpen, setIsSearchOpen ] = useState(false);
 
@@ -25,11 +28,20 @@ export const SideMenu = () => {
     const navigate = useNavigate();
     // Verificar si el contexto de autenticación está disponible
     if(!authContex){
-        throw new Error('Error al cargar SideMenu');
+        throw new Error('Error al cargar AuthContext in SideMenu');
+    }
+    // Verificar si el contexto de autenticación está disponible
+    if(!postContext){
+        throw new Error('Error al cargar PostContext in SideMenu');
     }
 
     const { username, logout } = authContex;
+    const { refreshVisiblePosts } = postContext;
 
+    const handleLogoClick = () => {
+        refreshVisiblePosts();
+        navigate('/');
+    };
     // Función para manejar el cierre de sesión
     const handleLogout = () => {
         logout();
@@ -89,7 +101,7 @@ export const SideMenu = () => {
         <div className={styles['side-menu']}>
             <ul>
                 <>
-                    <li onClick={() => navigate('/')} className={styles['div-logo']}>
+                    <li onClick={handleLogoClick} className={styles['div-logo']}>
                         InstagramDemake
                     </li>
                     <li onClick={() => navigate('/')}>

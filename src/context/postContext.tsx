@@ -90,8 +90,23 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
             }
         }
     };
+
+    const refreshVisiblePosts = async () => {
+        try{
+            const respose = await protectedServices.getAllVisiblePosts(token);
+            const data = respose.data;
+            setVisiblePosts(data);
+        } catch(error) {
+            if (error instanceof AxiosError && error.response?.data?.message) {
+                throw new Error(error.response.data.message || 'An unexpected error occurred.');
+            } else {
+                throw new Error('An unexpected error occurred.');
+            }
+        }
+    };
+
     return(
-        <PostContext.Provider value={{ visiblePosts, postsFromLoggedUser, users, getVisiblePostsFromUser, getUser, createPost }}>
+        <PostContext.Provider value={{ visiblePosts, postsFromLoggedUser, users, getVisiblePostsFromUser, getUser, createPost, refreshVisiblePosts }}>
             {children}
         </PostContext.Provider>
     );
