@@ -1,10 +1,13 @@
 import { useContext, useState } from 'react';
 import { PostContext } from '../../context/postContext';
 import { User } from '../../types/types';
+import { useNavigate } from 'react-router-dom';
 
 export const Search = () => {
     const [ search, setSearch ] = useState<string>('');
     const [ filterUsers, setFilterUsers ] = useState<User[]>([]);
+
+    const navigate = useNavigate();
 
     const postContext = useContext(PostContext);
 
@@ -28,6 +31,10 @@ export const Search = () => {
             user.name.toLowerCase().includes(value.toLowerCase())
         );
         setFilterUsers(filtered);
+    };
+
+    const handleSearchLiClick = (username: string) => {
+        navigate(`/${username}`);
     };
 
     /*
@@ -60,7 +67,7 @@ export const Search = () => {
             {filterUsers && filterUsers.length > 0 ? (
                 <ul>
                     {filterUsers.slice(0, 5).map((user) => ( // Mostrar solo los primeros 5 usuarios filtrados
-                        <li key={user.id}>
+                        <li key={user.id} onClick={() => handleSearchLiClick(user.username)}>
                             <p>{user.username}</p>
                             <p style={{ color: 'gray' }}>{user.name}</p>
                         </li>
