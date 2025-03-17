@@ -10,11 +10,10 @@ interface SearchProps {
 export const Search = forwardRef<HTMLDivElement, SearchProps>(({ closeDropdown },ref) => {
     const [ search, setSearch ] = useState<string>('');
     const [ filterUsers, setFilterUsers ] = useState<User[]>([]);
+    const [ selectedIndex, setSelectedIndex ] = useState<number>(-1); // Índice seleccionado
 
     const navigate = useNavigate();
-
     const postContext = useContext(PostContext);
-
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -33,6 +32,7 @@ export const Search = forwardRef<HTMLDivElement, SearchProps>(({ closeDropdown }
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setSearch(value);
+        setSelectedIndex(-1); //Reiniciar selección al cambiar el texto
 
         if (value === '') {
             setFilterUsers([]); // Si el campo de búsqueda está vacío, el filtro se resetea
@@ -49,7 +49,30 @@ export const Search = forwardRef<HTMLDivElement, SearchProps>(({ closeDropdown }
 
     const handleSearchLiClick = (username: string) => {
         navigate(`/${username}`);
-        closeDropdown();
+        closeDropdown(); // Cerrar el dropdown al hacer click en un li
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if(!filterUsers.length) return;
+
+        if(event.key === 'ArrowDown') {
+            event.preventDefault();
+            setSelectedIndex((prevIndex) =>
+                prevIndex < filterUsers.length -1 ? prevIndex + 1 : 0
+            );
+        }
+
+        if(event.key === 'ArrowUp') {
+            event.preventDefault();
+            setSelectedIndex((prevIndex) =>
+                prevIndex > 0 ? prevIndex -1 : filterUsers.length -1
+            );
+        }
+
+        if(event.key === 'Enter' && selectedIndex >=0) {
+            event.preventDefault();
+            handleSearchLiClick(filterUsers[selectedIndex].username);
+        }
     };
 
     /*
@@ -77,15 +100,18 @@ export const Search = forwardRef<HTMLDivElement, SearchProps>(({ closeDropdown }
                 name="search"
                 type="text"
                 placeholder='Search...'
+                autoComplete="off"  // Desactiva el autocompletado del navegador
                 onChange={handleChange}
                 value={search}
+                onKeyDown={handleKeyDown}
             />
             {filterUsers && filterUsers.length > 0 ? (
                 <ul>
-                    {filterUsers.slice(0, 5).map((user) => ( // Mostrar solo los primeros 5 usuarios filtrados
+                    {filterUsers.slice(0, 5).map((user, index) => ( // Mostrar solo los primeros 5 usuarios filtrados
                         <li
                             key={user.id}
                             onClick={() => handleSearchLiClick(user.username)}
+                            className={selectedIndex === index ? styles['selected'] : ''}
                         >
                             <p>{user.username}</p>
                             <p style={{ color: 'gray' }}>{user.name}</p>
