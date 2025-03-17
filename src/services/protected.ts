@@ -56,6 +56,15 @@ const getAllUsers = async (token: string| null) => {
     return response;
 };
 
+const getUser = async (token: string | null, username: string) => {
+    const config = {
+        headers: { Authorization: token }
+    };
+    const url = `${baseUrl}/get-user/${username}`;
+    const response = await axios.get(url, config);
+    return response;
+};
+
 export default {
     getAllPostsFromLoggedUser,
     getAllVisiblePosts,
@@ -64,4 +73,5 @@ export default {
     createComment,
     createLike,
     getAllUsers,
+    getUser,
 };

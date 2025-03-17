@@ -10,7 +10,7 @@ export const PostContext = createContext<PostContextType| null>(null);
 
 export const PostProvider = ({ children }: PropsWithChildren<object>) => {
     const [ postsFromLoggedUser, setPostsFromLoggedUser ] = useState<PostResponse[]>([]);
-    const [ visiblePosts, setVisiblePosts ] = useState<PostResponse[]>([]);
+    const [ visiblePosts, setVisiblePosts ] = useState<PostResponse[]>([]); // Guarda todos los posts visibles
     const [ users, setUsers ] = useState<User[]>([]);
 
     const authContext = useContext(AuthContext);
@@ -22,25 +22,34 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
     const { token } = authContext;
 
     useEffect(()=>{
-        const getVisiblePosts = async () => {
-            const response = await protectedServices.getAllVisiblePosts(token);
-            const data = response.data;
-            setVisiblePosts(data);
-        };
         const getPostsFromLoggedUser = async () => {
-            const response = await protectedServices.getAllPostsFromLoggedUser(token);
-            const data = response.data;
-            setPostsFromLoggedUser(data);
+            if(postsFromLoggedUser.length === 0) { // Consulta solo si aún no se ha cargado
+                const response = await protectedServices.getAllPostsFromLoggedUser(token);
+                const data = response.data;
+                setPostsFromLoggedUser(data);
+            }
         };
+
+        const getVisiblePosts = async () => {
+            if(visiblePosts.length === 0) { // Consulta solo si aún no se ha cargado
+                const response = await protectedServices.getAllVisiblePosts(token);
+                const data = response.data;
+                setVisiblePosts(data);
+            }
+        };
+
         const getAllUsers = async () => {
-            const response = await protectedServices.getAllUsers(token);
-            const data = response.data;
-            setUsers(data);
+            if(users.length === 0) { // Consulta solo si aún no se ha cargado
+                const response = await protectedServices.getAllUsers(token);
+                const data = response.data;
+                setUsers(data);
+            }
         };
+
         getVisiblePosts();
         getPostsFromLoggedUser();
         getAllUsers();
-    },[ token ]);
+    }, [ token ]);
 
     const createPost = async (data: FormData) => {
         try{
@@ -68,8 +77,21 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
             }
         }
     };
+
+    const getUser = async (username: string) => {
+        try{
+            const response = await protectedServices.getUser(token, username);
+            return response.data;
+        }catch(error){
+            if (error instanceof AxiosError && error.response?.data?.message) {
+                throw new Error(error.response.data.message || 'An unexpected error occurred.');
+            } else {
+                throw new Error('An unexpected error occurred.');
+            }
+        }
+    };
     return(
-        <PostContext.Provider value={{ visiblePosts, postsFromLoggedUser, users, getVisiblePostsFromUser, createPost }}>
+        <PostContext.Provider value={{ visiblePosts, postsFromLoggedUser, users, getVisiblePostsFromUser, getUser, createPost }}>
             {children}
         </PostContext.Provider>
     );

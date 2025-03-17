@@ -30,6 +30,7 @@ export const Search = forwardRef<HTMLDivElement, SearchProps>(({ closeDropdown }
     const { users } = postContext;
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        event.preventDefault();
         const value = event.target.value;
         setSearch(value);
         setSelectedIndex(-1); //Reiniciar selección al cambiar el texto

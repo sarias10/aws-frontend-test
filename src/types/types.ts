@@ -39,6 +39,7 @@ export type PostContextType = {
     postsFromLoggedUser: PostResponse[];
     users: User[];
     getVisiblePostsFromUser: (username: string) => Promise<PostResponse[]>;
+    getUser: (username: string) => Promise<User>;
     createPost: (data: FormData) => void;
 };
 
