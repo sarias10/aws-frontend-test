@@ -5,6 +5,7 @@ import { PostsFromUserContainer } from '../../components/PostsFromUserContainer/
 import { useParams } from 'react-router-dom';
 import { PostContext } from '../../context/postContext';
 import { PostResponse, User } from '../../types/types';
+import { Loading } from '../../components/Loading/Loading';
 
 export const UserProfile = () => {
     const [ showComponent, setShowComponent ] = useState('posts');
@@ -50,11 +51,13 @@ export const UserProfile = () => {
 
     }, [ usernameParam ]);
 
+    if (loading){
+        return <Loading message="Fetching data, please wait..." />; // Aquí se muestra el spinner
+    }
+
     return (
         <div className={styles['container']}>
-            {loading ? (
-                <h1>cargando</h1>
-            ) : username===usernameParam ? ( // se muestra el usuario loggeado
+            { username===usernameParam ? ( // se muestra el usuario loggeado
                 <>
                     <h2>User profile</h2>
                     <h3>{name}</h3>
