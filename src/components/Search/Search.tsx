@@ -83,7 +83,10 @@ export const Search = forwardRef<HTMLDivElement, SearchProps>(({ closeDropdown }
             {filterUsers && filterUsers.length > 0 ? (
                 <ul>
                     {filterUsers.slice(0, 5).map((user) => ( // Mostrar solo los primeros 5 usuarios filtrados
-                        <li key={user.id} onClick={() => handleSearchLiClick(user.username)}>
+                        <li
+                            key={user.id}
+                            onClick={() => handleSearchLiClick(user.username)}
+                        >
                             <p>{user.username}</p>
                             <p style={{ color: 'gray' }}>{user.name}</p>
                         </li>
