@@ -1,7 +1,7 @@
 import { PostResponseProps } from '../../types/types';
-import styles from './Post.module.css';
+import styles from './PostFromHome.module.css';
 
-export const Post = ({ post }: PostResponseProps) => {
+export const PostFromHome = ({ post }: PostResponseProps) => {
     return (
         <div className={styles['post']}>
             <div>{post.author.username}</div>

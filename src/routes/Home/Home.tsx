@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../context/authContext';
-import { PostsContainer } from '../../components/PostsContainer/PostsContainer';
+import { PostsFromHomeContainer } from '../../components/PostsHomeContainer/PostsFromHomeContainer';
 export const Home = () => {
     const authContext = useContext(AuthContext);
     if(!authContext){
@@ -11,7 +11,7 @@ export const Home = () => {
     return (
         <div>
             <h1>Home</h1>
-            <PostsContainer/>
+            <PostsFromHomeContainer/>
         </div>
     );
 };
