@@ -149,6 +149,7 @@ export const CreatePostModal = ({ open, onClose }: CreatePostModalProps) => {
                 )}
 
                 <TextField
+                    autoComplete='off' // Desactiva el autocompletado del navegador
                     label="Description"
                     fullWidth
                     margin="normal"
