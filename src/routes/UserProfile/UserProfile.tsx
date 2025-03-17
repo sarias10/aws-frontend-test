@@ -35,7 +35,7 @@ export const UserProfile = () => {
         };
         fetchPosts();
         console.log(visiblePosts);
-    }, []);
+    }, [ usernameParam, username, visiblePosts, getVisiblePostsFromUser ]);
     return (
         <div className={styles['container']}>
             <h2>User profile</h2>
@@ -60,7 +60,7 @@ export const UserProfile = () => {
             )}
             {username!==usernameParam && ( // se muestra otro usuario público
                 <>
-                    usuario diferente
+                    {usernameParam}
                     <>
                         <br/>
                         <div>

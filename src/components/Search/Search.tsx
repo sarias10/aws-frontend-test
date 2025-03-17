@@ -1,9 +1,10 @@
-import { useContext, useState } from 'react';
+import { forwardRef, useContext, useState } from 'react';
 import { PostContext } from '../../context/postContext';
 import { User } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
+import styles from './Search.module.css';
 
-export const Search = () => {
+export const Search = forwardRef<HTMLDivElement>((_,ref) => {
     const [ search, setSearch ] = useState<string>('');
     const [ filterUsers, setFilterUsers ] = useState<User[]>([]);
 
@@ -56,7 +57,7 @@ export const Search = () => {
     console.log(arr.slice(0, 3)); // Output: [1, 2, 3]
     */
     return (
-        <>
+        <div ref={ref} className={styles['dropdown']}>
             <input
                 name="search"
                 type="text"
@@ -76,6 +77,6 @@ export const Search = () => {
             ) : (
                 <p>No users to display</p>
             )}
-        </>
+        </div>
     );
-};
+});
