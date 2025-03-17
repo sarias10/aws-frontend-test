@@ -1,4 +1,4 @@
-import { forwardRef, useContext, useState } from 'react';
+import { forwardRef, useContext, useEffect, useRef, useState } from 'react';
 import { PostContext } from '../../context/postContext';
 import { User } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
@@ -15,11 +15,21 @@ export const Search = forwardRef<HTMLDivElement, SearchProps>(({ closeDropdown }
 
     const postContext = useContext(PostContext);
 
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        // Enfoca el input automáticamente cuando se abre el dropdown
+        if(inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, []);
+
     if(!postContext){
         throw new Error('Error al cargar PostContext en Search');
     };
 
     const { users } = postContext;
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setSearch(value);
@@ -63,6 +73,7 @@ export const Search = forwardRef<HTMLDivElement, SearchProps>(({ closeDropdown }
     return (
         <div ref={ref} className={styles['dropdown']}>
             <input
+                ref={inputRef} // Referencia al input para poner el foco en el
                 name="search"
                 type="text"
                 placeholder='Search...'
