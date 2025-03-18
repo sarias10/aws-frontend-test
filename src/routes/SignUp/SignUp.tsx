@@ -2,6 +2,8 @@ import { ChangeEvent, useState } from 'react';
 import { SignUpFormState } from '../../types/types';
 import publicService from '../../services/public';
 import { useNavigate } from 'react-router-dom';
+import { Loading } from '../../components/Loading/Loading';
+import { toast } from 'react-toastify';
 
 export const SignUp = () => {
     const [ formData, setFormData ] = useState<SignUpFormState>({
@@ -9,30 +11,39 @@ export const SignUp = () => {
         name: '',
         password: '',
     });
+    const [ isLoading, setIsLoading ] = useState(false); // Estado para controlar la carga
     const navigate = useNavigate();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>)=>{
         const { name, value } = e.target;
         setFormData(prevData => ({ ...prevData, [name]: value }));
     };
+
     const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
         try{
-            const response = await publicService.signUp(formData);
-            console.log(response);
+            setIsLoading(true); // Activa el estado de carga
+            await publicService.signUp(formData);
+            setIsLoading(false); // Desactiva el estado de carga
             setFormData({
                 username: '',
                 name: '',
                 password: '',
             });
+            toast.success('Sign up successfully');
             navigate('/login');
         }catch(error){
             console.error(error);
+            setIsLoading(false); // Desactiva el estado de carga en caso de error
         }
     };
+
     const handleLogin = () => {
         navigate('/accounts/login');
     };
+
+    if (isLoading) return <Loading/>;
+
     return (
         <>
             <fieldset>

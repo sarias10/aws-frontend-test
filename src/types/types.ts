@@ -59,6 +59,6 @@ export interface AuthProviderProps {
     username: string | null,
     name: string | null,
     token: string | null,
-    login (data: LoginType): void,
+    login (data: LoginType): Promise<void>,
     logout(): void,
 };

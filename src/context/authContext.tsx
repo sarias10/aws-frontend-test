@@ -6,13 +6,7 @@ import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const AuthContext = createContext<AuthProviderProps>({
-    username: null,
-    name: null,
-    token: null,
-    login: () => {},
-    logout: () => {}
-});
+export const AuthContext = createContext<AuthProviderProps | null>(null);
 
 export const AuthContextProvider = ({ children }: PropsWithChildren<object>) => {
     const [ username, setUsername ] = useLocalStorage<string|null>('username',null);
