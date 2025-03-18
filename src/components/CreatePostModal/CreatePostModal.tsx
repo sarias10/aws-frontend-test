@@ -28,6 +28,7 @@ export const CreatePostModal = ({ open, onClose }: CreatePostModalProps) => {
     const [ currentIndex, setCurrentIndex ] = useState(0);
 
     const postContext = useContext(PostContext);
+
     if(!postContext){
         throw new Error('Error al cargar PostContext en CreatePostModalProps');
     };

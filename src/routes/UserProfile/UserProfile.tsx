@@ -70,11 +70,6 @@ export const UserProfile = () => {
                     {showComponent==='posts' && (
                         <PostsFromUserContainer posts={postsFromLoggedUser}/>
                     )}
-                    {/* <fieldset>
-                        <legend>Settigns</legend>
-                        <span>Activate private account: <button>true</button> <button className={styles['info-btn']} >i</button></span>
-                        <CustomModal/>
-                    </fieldset> */}
                 </>
             ) : otherUser ? ( // Se muestra otro usuario público
                 <>

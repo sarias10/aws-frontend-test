@@ -10,6 +10,7 @@ import { UserProfile } from './routes/UserProfile/UserProfile';
 import { Layout } from './components/Layout/Layout';
 import { ToastContainer } from 'react-toastify';
 import { PublicRoutes } from './utils/PublicRoutes';
+import { ModalProvider } from './context/modalContext';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -19,7 +20,7 @@ const router = createBrowserRouter(
                 <Route path='accounts/signup' element={<SignUp/>}/>
             </Route>
 
-            <Route element={<ProtectedRoutes><PostProvider><Layout/></PostProvider></ProtectedRoutes>}>
+            <Route element={<ProtectedRoutes><ModalProvider><PostProvider><Layout/></PostProvider></ModalProvider></ProtectedRoutes>}>
 
                 <Route index element={<Home/>} />
                 <Route path={':usernameParam'} element={<UserProfile/>} />

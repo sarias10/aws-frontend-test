@@ -3,10 +3,12 @@ import { PostResponseProps } from '../../types/types';
 import styles from './PostFromHome.module.css';
 import { IconButton } from '@mui/material';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
+import { useModal } from '../../context/modalContext';
 
 export const PostFromHome = ({ post }: PostResponseProps) => {
     const files = post.media; // Array con las imagenes y videos
     const [ currentIndex, setCurrentIndex ] = useState(0);
+    const { handleOpen } = useModal();
 
     const handlePrevious = () => {
         if (currentIndex>0){
@@ -22,7 +24,7 @@ export const PostFromHome = ({ post }: PostResponseProps) => {
     };
 
     return (
-        <div className={styles['post']}>
+        <div onClick={handleOpen} className={styles['post']}>
             <div>{post.author.username}</div>
             <div>
                 {files[currentIndex].mediaType === 'image' ? (
