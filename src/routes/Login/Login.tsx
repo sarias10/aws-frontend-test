@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Loading } from '../../components/Loading/Loading';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import { AxiosError } from 'axios';
 export const Login = () => {
     const [ formData, setFormData ] = useState<LoginType>({
         username: '',
@@ -38,8 +39,12 @@ export const Login = () => {
             toast.success('Log in successfully!');
             navigate('/');
         }catch(error){
-            console.error(error);
             setIsLoading(false); // Desactiva el estado de carga en caso de error
+            if (error instanceof AxiosError && error.response?.data?.message) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('An unexpected error occurred.');
+            }
         }
     };
 

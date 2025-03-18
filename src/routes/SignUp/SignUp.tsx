@@ -5,6 +5,7 @@ import { Loading } from '../../components/Loading/Loading';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../context/authContext';
 import { Link } from 'react-router-dom';
+import { AxiosError } from 'axios';
 
 export const SignUp = () => {
     const [ formData, setFormData ] = useState<SignupType>({
@@ -41,8 +42,12 @@ export const SignUp = () => {
             toast.success('Sign up successfully');
             navigate('/login');
         }catch(error){
-            console.error(error);
             setIsLoading(false); // Desactiva el estado de carga en caso de error
+            if (error instanceof AxiosError && error.response?.data?.message) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('An unexpected error occurred.');
+            }
         }
     };
 
