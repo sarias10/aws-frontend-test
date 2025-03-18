@@ -3,6 +3,7 @@ import { LoginType } from '../../types/types';
 import { AuthContext } from '../../context/authContext';
 import { useNavigate } from 'react-router-dom';
 import { Loading } from '../../components/Loading/Loading';
+import { toast } from 'react-toastify';
 export const Login = () => {
     const [ formData, setFormData ] = useState<LoginType>({
         username: '',
@@ -13,7 +14,7 @@ export const Login = () => {
     const navigate = useNavigate();
 
     if(!authContext){
-        throw new Error('Error al cargar Authcontext en login');
+        throw new Error('Error al cargar Authcontext en Login');
     };
 
     const { login } = authContext;
@@ -33,6 +34,7 @@ export const Login = () => {
                 username: '',
                 password: '',
             });
+            toast.success('Log in successfully!');
             navigate('/');
         }catch(error){
             console.error(error);

@@ -1,18 +1,25 @@
-import { ChangeEvent, useState } from 'react';
-import { SignUpFormState } from '../../types/types';
-import publicService from '../../services/public';
+import { ChangeEvent, useContext, useState } from 'react';
+import { SignupType } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 import { Loading } from '../../components/Loading/Loading';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../../context/authContext';
 
 export const SignUp = () => {
-    const [ formData, setFormData ] = useState<SignUpFormState>({
+    const [ formData, setFormData ] = useState<SignupType>({
         username: '',
         name: '',
         password: '',
     });
     const [ isLoading, setIsLoading ] = useState(false); // Estado para controlar la carga
+    const authContext = useContext(AuthContext);
     const navigate = useNavigate();
+
+    if(!authContext){
+        throw new Error('Error al cargar Authcontext en SignUp');
+    };
+
+    const { signup } = authContext;
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>)=>{
         const { name, value } = e.target;
@@ -23,7 +30,7 @@ export const SignUp = () => {
         e.preventDefault();
         try{
             setIsLoading(true); // Activa el estado de carga
-            await publicService.signUp(formData);
+            await signup(formData);
             setIsLoading(false); // Desactiva el estado de carga
             setFormData({
                 username: '',

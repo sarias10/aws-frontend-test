@@ -44,7 +44,7 @@ export type PostContextType = {
     refreshVisiblePosts: () => void;
 };
 
-export interface SignUpFormState {
+export interface SignupType {
     username: string;
     name: string;
     password: string;
@@ -59,6 +59,7 @@ export interface AuthProviderProps {
     username: string | null,
     name: string | null,
     token: string | null,
+    signup (data: SignupType): Promise<void>,
     login (data: LoginType): Promise<void>,
     logout(): void,
 };

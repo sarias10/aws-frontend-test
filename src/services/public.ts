@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { config } from '../config/env';
-import { LoginType, SignUpFormState } from '../types/types';
+import { LoginType, SignupType } from '../types/types';
 const baseUrl = `${config.api_url}/api/public`;
 
-const signUp = async (data: SignUpFormState) => {
+const signUp = async (data: SignupType) => {
     const url = `${baseUrl}/register`;
     const response = await axios.post(url, data);
-    return response.data;
+    return response;
 };
 
 const login = async (data: LoginType) => {
