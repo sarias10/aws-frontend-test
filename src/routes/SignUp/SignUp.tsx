@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Loading } from '../../components/Loading/Loading';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../context/authContext';
+import { Link } from 'react-router-dom';
 
 export const SignUp = () => {
     const [ formData, setFormData ] = useState<SignupType>({
@@ -45,11 +46,7 @@ export const SignUp = () => {
         }
     };
 
-    const handleLogin = () => {
-        navigate('/accounts/login');
-    };
-
-    if (isLoading) return <Loading/>;
+    if (isLoading) return <Loading/>; // Si isLoading es true entonces renderiza el componente loading
 
     return (
         <>
@@ -100,7 +97,7 @@ export const SignUp = () => {
             </fieldset>
             <fieldset>
                 <p>Have an account?</p>
-                <p onClick={handleLogin}>Log in</p>
+                <Link to='/accounts/login'>Log in</Link>
             </fieldset>
         </>
     );

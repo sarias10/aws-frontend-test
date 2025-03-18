@@ -4,6 +4,7 @@ import { AuthContext } from '../../context/authContext';
 import { useNavigate } from 'react-router-dom';
 import { Loading } from '../../components/Loading/Loading';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 export const Login = () => {
     const [ formData, setFormData ] = useState<LoginType>({
         username: '',
@@ -40,10 +41,6 @@ export const Login = () => {
             console.error(error);
             setIsLoading(false); // Desactiva el estado de carga en caso de error
         }
-    };
-
-    const handleSignup = () => {
-        navigate('/accounts/signup');
     };
 
     if (isLoading) return <Loading/>; // Muestra el componente Loading mientras está cargando
@@ -85,7 +82,7 @@ export const Login = () => {
 
             <fieldset>
                 <p>Don't have an account? </p>
-                <p onClick={handleSignup}>Sign up</p>
+                <Link to='/accounts/signup'>Sign up</Link>
             </fieldset>
 
         </>
