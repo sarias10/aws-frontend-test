@@ -1,7 +1,7 @@
-import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
+import { createContext, PropsWithChildren, useCallback, useContext, useEffect, useState } from 'react';
 import { PostContextType, PostResponse, User } from '../types/types';
 import protectedServices from '../services/protected';
-
+import { throttle } from 'lodash';
 import { AuthContext } from './authContext';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
@@ -91,23 +91,41 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
         }
     };
 
-    const refreshVisiblePosts = async () => {
-        try{
-            const respose = await protectedServices.getAllVisiblePosts(token);
-            const data = respose.data;
+    const throttledRefresh = throttle(async (token: string | null) => {
+        try {
+            const response = await protectedServices.getAllVisiblePosts(token);
+            const data = response.data;
             setVisiblePosts(data);
-        } catch(error) {
+        } catch (error) {
             if (error instanceof AxiosError && error.response?.data?.message) {
                 throw new Error(error.response.data.message || 'An unexpected error occurred.');
             } else {
                 throw new Error('An unexpected error occurred.');
             }
         }
-    };
+    }, 30000); // Solo se puede consultar cada 30 segundos
+
+    // useCallback se utiliza para memorizar una función y evitar que se recree
+    // en cada renderizado del componente, a menos que cambie alguna de sus dependencias.
+    // En este caso, refreshVisiblePosts solo se recreará si cambia el token.
+    // Esto mejora el rendimiento al evitar que se creen nuevas funciones throttled innecesariamente.
+
+    // Sin este useCallback lo que pasaba antes es que al clickear instagramDemake(el logo) igual se hacia la petición al backend
+    const refreshVisiblePosts = useCallback(() => {
+        throttledRefresh(token);
+    }, [ token ]);
 
     return(
         <PostContext.Provider value={{ visiblePosts, postsFromLoggedUser, users, getVisiblePostsFromUser, getUser, createPost, refreshVisiblePosts }}>
             {children}
         </PostContext.Provider>
     );
+};
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const usePost = () => {
+    const context = useContext(PostContext);
+    if(!context){
+        throw new Error('usePost must be used within a PostProvider');
+    }
 };
