@@ -21,3 +21,11 @@
     aspect-ratio: 4 / 5; /* Mantiene la proporción 4:5 */
     object-fit: contain; /* Recorta la imagen si no encaja perfectamente */
 }
+
+.view-comments, .add-comment {
+    cursor: pointer;
+}
+
+.add-comment {
+    color: gray;
+}

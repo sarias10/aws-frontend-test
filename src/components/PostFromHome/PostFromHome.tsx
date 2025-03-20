@@ -56,8 +56,8 @@ export const PostFromHome = ({ post }: PostResponseProps) => {
             <div>
                 <span><strong>{post.author.username}</strong> {post.description}</span>
             </div>
-            <div onClick={() => handleOpen(post)}>View all {post.commentsCount} comments</div>
-            <div onClick={() => handleOpen(post)}>Add comment</div>
+            <div className={styles['view-comments']} onClick={() => handleOpen(post)}>View all {post.commentsCount} comments</div>
+            <div className={styles['add-comment']} onClick={() => handleOpen(post)}>Add comment</div>
         </div>
     );
 };
