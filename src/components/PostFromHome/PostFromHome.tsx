@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { PostResponseProps } from '../../types/types';
 import styles from './PostFromHome.module.css';
-import { IconButton } from '@mui/material';
-import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import { useModal } from '../../context/modalContext';
 import { ImageIndicators } from '../ImageIndicators/ImageIndicators';
+import { SliceArrowImageButtons } from '../SliceArrowImageButtons/SliceArrowImageButtons';
 
 export const PostFromHome = ({ post }: PostResponseProps) => {
     const files = post.media; // Array con las imagenes y videos
@@ -42,23 +41,7 @@ export const PostFromHome = ({ post }: PostResponseProps) => {
                 )}
                 {files.length > 1 && (
                     <>
-
-                        <div className={styles['button-container']}>
-                            <button
-                                onClick={handlePrevious}
-                                disabled={currentIndex === 0} // disabled solo acepta valores booleanos. Aquí evalua la condición.
-                                className={styles['custom-button']}
-                            >
-                                &lt;
-                            </button>
-                            <button
-                                onClick={handleNext}
-                                disabled={currentIndex === files.length -1}
-                                className={styles['custom-button']}
-                            >
-                                &gt;
-                            </button>
-                        </div>
+                        <SliceArrowImageButtons handlePrevious={handlePrevious} handleNext={handleNext} disabledLeft={currentIndex===0} disabledRight={currentIndex === files.length -1}/>
                         <ImageIndicators total={files.length} currentIndex={currentIndex}/>
                     </>
                 )}
