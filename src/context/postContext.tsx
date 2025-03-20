@@ -9,9 +9,9 @@ import { toast } from 'react-toastify';
 export const PostContext = createContext<PostContextType| null>(null);
 
 export const PostProvider = ({ children }: PropsWithChildren<object>) => {
-    const [ postsFromLoggedUser, setPostsFromLoggedUser ] = useState<PostResponse[]>([]);
+    const [ postsFromLoggedUser, setPostsFromLoggedUser ] = useState<PostResponse[]>([]); // Guarda todos los post del usuario loggeado
     const [ visiblePosts, setVisiblePosts ] = useState<PostResponse[]>([]); // Guarda todos los posts visibles
-    const [ users, setUsers ] = useState<User[]>([]);
+    const [ users, setUsers ] = useState<User[]>([]); // lo utilizo en el componente Search para buscar los usuarios
 
     const authContext = useContext(AuthContext);
 

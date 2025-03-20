@@ -24,21 +24,23 @@ export const PostFromHome = ({ post }: PostResponseProps) => {
     };
 
     return (
-        <div onClick={handleOpen} className={styles['post']}>
+        <div className={styles['post']}>
             <div>{post.author.username}</div>
             <div>
-                {files[currentIndex].mediaType === 'image' ? (
-                    <img
-                        className={styles['post-image']}
-                        src={files[currentIndex].mediaUrl}
-                    />
-                ) : (
-                    <video
-                        className={styles['post-image']}
-                        src={files[currentIndex].mediaUrl}
-                        controls // El atributo 'controls' permite que el navegador muestre controles predeterminados para reproducir, pausar, ajustar el volumen y cambiar a pantalla completa, entre otras funciones.
-                    />
-                )}
+                <div className={styles['image-container']}>
+                    {files[currentIndex].mediaType === 'image' ? (
+                        <img
+                            className={styles['image']}
+                            src={files[currentIndex].mediaUrl}
+                        />
+                    ) : (
+                        <video
+                            className={styles['image']}
+                            src={files[currentIndex].mediaUrl}
+                            controls // El atributo 'controls' permite que el navegador muestre controles predeterminados para reproducir, pausar, ajustar el volumen y cambiar a pantalla completa, entre otras funciones.
+                        />
+                    )}
+                </div>
                 <div>
                     <IconButton onClick={handlePrevious} disabled={currentIndex === 0}>
                         <ArrowBack />
@@ -57,7 +59,8 @@ export const PostFromHome = ({ post }: PostResponseProps) => {
             <div>
                 <span><strong>{post.author.username}</strong> {post.description}</span>
             </div>
-            <div><a>View all {post.commentsCount} comments</a></div>
+            <div onClick={() => handleOpen(post)}>View all {post.commentsCount} comments</div>
+            <div onClick={() => handleOpen(post)}>Add comment</div>
         </div>
     );
 };

@@ -1,0 +1,40 @@
+.box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 56vw; /* Relación 4:5 respecto a 70vh */
+    height: 70vh;
+    background-color: white;
+    border-radius: 3px;
+    overflow:hidden;/* Evita el scroll */
+    display: flex;
+}
+
+.left-container {
+    width: 60%;
+    height: 100%;
+}
+.image-container {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 4 / 5; /* Mantiene la proporción 4:5 */
+    object-fit: contain; /* Recorta la imagen si no encaja perfectamente */
+}
+
+.details {
+    width: 40%;
+    height: 100%;
+    padding: 16px;
+}
+
+.username {
+    border-bottom: 1px solid #ccc; /* Agrega un borde solo abajo */
+}

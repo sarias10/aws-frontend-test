@@ -5,10 +5,18 @@
     padding: 10px 0; /* Espaciado interno */
 }
 
-.post-image {
+.image-container {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image {
     width: 100%; /* Ajusta al ancho del contenedor */
-    max-width: 468px; /* Tamaño máximo basado en Instagram */
+    height: 100%; /* Ajusta al ancho del contenedor */
     aspect-ratio: 4 / 5; /* Mantiene la proporción 4:5 */
-    object-fit: cover; /* Recorta la imagen si no encaja perfectamente */
-    border-radius: 3px; /* Opcional: bordes redondeados */
+    object-fit: contain; /* Recorta la imagen si no encaja perfectamente */
 }

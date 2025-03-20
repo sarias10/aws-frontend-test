@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren } from 'react';
+import { createContext, PropsWithChildren, useContext } from 'react';
 import { AuthProviderProps, LoginType, SignupType } from '../types/types';
 import publicServices from '../services/public';
 import { useLocalStorage } from '../utils/useLocalStorage';
@@ -38,4 +38,13 @@ export const AuthContextProvider = ({ children }: PropsWithChildren<object>) => 
             {children}
         </AuthContext.Provider>
     );
+};
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+    if(!context){
+        throw new Error('useAuth must be used within a AuthProvider');
+    }
+    return context;
 };
