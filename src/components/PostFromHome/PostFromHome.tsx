@@ -4,6 +4,7 @@ import styles from './PostFromHome.module.css';
 import { IconButton } from '@mui/material';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import { useModal } from '../../context/modalContext';
+import { ImageIndicators } from '../ImageIndicators/ImageIndicators';
 
 export const PostFromHome = ({ post }: PostResponseProps) => {
     const files = post.media; // Array con las imagenes y videos
@@ -26,29 +27,42 @@ export const PostFromHome = ({ post }: PostResponseProps) => {
     return (
         <div className={styles['post']}>
             <div>{post.author.username}</div>
-            <div>
-                <div className={styles['image-container']}>
-                    {files[currentIndex].mediaType === 'image' ? (
-                        <img
-                            className={styles['image']}
-                            src={files[currentIndex].mediaUrl}
-                        />
-                    ) : (
-                        <video
-                            className={styles['image']}
-                            src={files[currentIndex].mediaUrl}
-                            controls // El atributo 'controls' permite que el navegador muestre controles predeterminados para reproducir, pausar, ajustar el volumen y cambiar a pantalla completa, entre otras funciones.
-                        />
-                    )}
-                </div>
-                <div>
-                    <IconButton onClick={handlePrevious} disabled={currentIndex === 0}>
-                        <ArrowBack />
-                    </IconButton>
-                    <IconButton onClick={handleNext} disabled={currentIndex === files.length -1}>{/* Se desactiva cuando currentIndex es igual a la ultima posición del array files */}
-                        <ArrowForward />
-                    </IconButton>
-                </div>
+            <div className={styles['image-container']}>
+                {files[currentIndex].mediaType === 'image' ? (
+                    <img
+                        className={styles['image']}
+                        src={files[currentIndex].mediaUrl}
+                    />
+                ) : (
+                    <video
+                        className={styles['image']}
+                        src={files[currentIndex].mediaUrl}
+                        controls // El atributo 'controls' permite que el navegador muestre controles predeterminados para reproducir, pausar, ajustar el volumen y cambiar a pantalla completa, entre otras funciones.
+                    />
+                )}
+                {files.length > 1 && (
+                    <>
+
+                        <div className={styles['button-container']}>
+                            <button
+                                onClick={handlePrevious}
+                                disabled={currentIndex === 0} // disabled solo acepta valores booleanos. Aquí evalua la condición.
+                                className={styles['custom-button']}
+                            >
+                                &lt;
+                            </button>
+                            <button
+                                onClick={handleNext}
+                                disabled={currentIndex === files.length -1}
+                                className={styles['custom-button']}
+                            >
+                                &gt;
+                            </button>
+                        </div>
+                        <ImageIndicators total={files.length} currentIndex={currentIndex}/>
+                    </>
+                )}
+
             </div>
             <div>
                 <button>Like</button>

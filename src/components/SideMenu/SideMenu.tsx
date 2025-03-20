@@ -102,7 +102,7 @@ export const SideMenu = () => {
             <ul>
                 <>
                     <li onClick={handleLogoClick} className={styles['div-logo']}>
-                        InstagramDemake
+                        Instagram demake
                     </li>
                     <li onClick={() => navigate('/')}>
                         Home

@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
 li {
     position: relative;
     list-style-type: none; /* Quitar los puntos de la lista */
@@ -7,7 +10,8 @@ li {
     margin-top: 0;
     margin-bottom: 50px; /* Ajusta el valor para controlar la separación */
     border-radius: 10px;
-    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
     overflow: hidden; /* Asegura que el contenido no se desborde */
     padding: 10px 20px; /* Aplica el padding aquí */
 }
@@ -24,6 +28,8 @@ li:hover {
 .div-logo {
     /* Estilo para el logo */
     margin-bottom: 50px; /* Ajusta el valor para controlar la separación */
+    font-family: 'Pacifico', cursive;
+    font-size: 21px;
 }
 
 .side-menu {
