@@ -42,6 +42,12 @@ export const SideMenu = () => {
         refreshVisiblePosts();
         navigate('/');
     };
+
+    const handleHomeClick = () => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        navigate('/');
+    };
+
     // Función para manejar el cierre de sesión
     const handleLogout = () => {
         logout();
@@ -104,7 +110,7 @@ export const SideMenu = () => {
                     <li onClick={handleLogoClick} className={styles['div-logo']}>
                         Instagram demake
                     </li>
-                    <li onClick={() => navigate('/')}>
+                    <li onClick={handleHomeClick}>
                         Home
                     </li>
                     <li ref={searchRef} onClick={toggleSearch} className={styles['searchStyles']}>
