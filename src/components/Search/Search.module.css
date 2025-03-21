@@ -16,3 +16,11 @@
     background-color: lightgray;
     cursor: pointer;
 }
+
+.no-users-to-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* O un tamaño específico si lo prefieres */
+    text-align: center;
+}

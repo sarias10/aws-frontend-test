@@ -90,7 +90,6 @@ export const SideMenu = () => {
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             // Verificar si el clic fue fuera del dropdown y del botón de búsqueda
-            setActive('');
             if (
                 dropdownRef.current &&
                 !dropdownRef.current.contains(event.target as Node) &&
@@ -98,6 +97,7 @@ export const SideMenu = () => {
                 !searchRef.current.contains(event.target as Node)
             ) {
                 setIsSearchOpen(false);
+                setActive('');
             }
             if (
                 createDropdownRef.current &&
@@ -106,6 +106,7 @@ export const SideMenu = () => {
                 !createRef.current.contains(event.target as Node)
             ) {
                 setIsCreateOpen(false);
+                setActive('');
             }
         };
 

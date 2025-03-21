@@ -96,6 +96,7 @@ export const Search = forwardRef<HTMLDivElement, SearchProps>(({ closeDropdown }
     */
     return (
         <div ref={ref} className={styles['dropdown']}>
+            <h1>Search</h1>
             <input
                 ref={inputRef} // Referencia al input para poner el foco en el
                 name="search"
@@ -120,7 +121,7 @@ export const Search = forwardRef<HTMLDivElement, SearchProps>(({ closeDropdown }
                     ))}
                 </ul>
             ) : (
-                <p>No users to display</p>
+                <div className={styles['no-users-to-display']}>No users to display</div>
             )}
         </div>
     );
