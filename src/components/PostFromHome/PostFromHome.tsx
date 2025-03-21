@@ -25,7 +25,7 @@ export const PostFromHome = ({ post }: PostResponseProps) => {
 
     return (
         <div className={styles['post']}>
-            <div>{post.author.username}</div>
+            <div><strong>{post.author.username}</strong></div>
             <div className={styles['image-container']}>
                 {files[currentIndex].mediaType === 'image' ? (
                     <img

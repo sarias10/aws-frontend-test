@@ -25,6 +25,10 @@ li:hover {
     background-color: rgba(0, 0, 0, 0.1); /* Oscurecer un poco el fondo al hacer hover */
 }
 
+.active {
+    font-weight: bold;
+}
+
 .div-logo {
     /* Estilo para el logo */
     margin-bottom: 50px; /* Ajusta el valor para controlar la separación */
@@ -59,3 +63,4 @@ li:hover {
 .create-dropdown li {
     margin: 5px 0; /* Espaciado entre los elementos de la lista */
 }
+

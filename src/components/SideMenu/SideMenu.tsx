@@ -7,9 +7,6 @@ import { Search } from '../Search/Search';
 import { PostContext } from '../../context/postContext';
 
 export const SideMenu = () => {
-    // Obtener el contexto de autenticación
-    const authContex = useContext(AuthContext);
-    const postContext = useContext(PostContext);
 
     // Estado para controlar si el desplegable de búsqueda está abierto
     const [ isSearchOpen, setIsSearchOpen ] = useState(false);
@@ -17,6 +14,12 @@ export const SideMenu = () => {
     const [ isCreateOpen, setIsCreateOpen ] = useState(false);
 
     const [ isPostModalOpen, setIsPostModalOpen ] = useState(false);
+
+    const [ active, setActive ] = useState('home');
+
+    // Obtener el contexto de autenticación
+    const authContex = useContext(AuthContext);
+    const postContext = useContext(PostContext);
 
     // Referencias para el botón de búsqueda y el dropdown
     const searchRef = useRef<HTMLLIElement>(null);
@@ -39,33 +42,42 @@ export const SideMenu = () => {
     const { refreshVisiblePosts } = postContext;
 
     const handleLogoClick = () => {
+        setActive('home');
         refreshVisiblePosts();
         navigate('/');
     };
 
     const handleHomeClick = () => {
+        setActive('home');
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
         navigate('/');
     };
 
     // Función para manejar el cierre de sesión
     const handleLogout = () => {
+        setActive('');
         logout();
         navigate('/');
     };
 
     // Función para alternar la visibilidad del desplegable de búsqueda
-    const toggleSearch = (event: React.MouseEvent) => {
-        event.preventDefault();
+    const toggleSearch = () => {
+        setActive('search');
         setIsSearchOpen(!isSearchOpen);
     };
 
-    const toggleCreate = (event: React.MouseEvent) => {
-        event.preventDefault();
+    const handleProfile = () => {
+        setActive('profile');
+        navigate(`${username}`);
+    };
+
+    const toggleCreate = () => {
+        setActive('create');
         setIsCreateOpen(!isCreateOpen);
     };
 
     const handleCreatePost = () => {
+        setActive('');
         setIsPostModalOpen(true);
         setIsCreateOpen(false);
     };
@@ -78,6 +90,7 @@ export const SideMenu = () => {
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             // Verificar si el clic fue fuera del dropdown y del botón de búsqueda
+            setActive('');
             if (
                 dropdownRef.current &&
                 !dropdownRef.current.contains(event.target as Node) &&
@@ -103,6 +116,8 @@ export const SideMenu = () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+
+    console.log(active);
     return (
         <div className={styles['side-menu']}>
             <ul>
@@ -110,18 +125,19 @@ export const SideMenu = () => {
                     <li onClick={handleLogoClick} className={styles['div-logo']}>
                         Instagram demake
                     </li>
-                    <li onClick={handleHomeClick}>
+                    <li onClick={handleHomeClick} className={`${active === 'home' ? styles['active']: ''}`}>
                         Home
                     </li>
-                    <li ref={searchRef} onClick={toggleSearch} className={styles['searchStyles']}>
+                    <li ref={searchRef} onClick={toggleSearch} className={`${styles['searchStyles']} ${active === 'search'? styles['active']:''}`}>
                         Search
                     </li>
                     {isSearchOpen && (
                         <Search ref={dropdownRef} closeDropdown={() => setIsSearchOpen(false)}/>
                     )}
-                    <li onClick={() => navigate(`${username}`)}>Profile
+                    <li onClick={handleProfile} className={`${active === 'profile' ? styles['active']: ''}`}>
+                        Profile
                     </li>
-                    <li ref={createRef} onClick={toggleCreate} className={styles['create-styles']}>
+                    <li ref={createRef} onClick={toggleCreate} className={`${styles['create-styles']} ${active === 'create' ? styles['active']:''}`}>
                         Create
                     </li>
                     {isCreateOpen && (

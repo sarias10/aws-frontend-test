@@ -5,6 +5,7 @@ import { throttle } from 'lodash';
 import { AuthContext } from './authContext';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
+
 // eslint-disable-next-line react-refresh/only-export-components
 export const PostContext = createContext<PostContextType| null>(null);
 
@@ -19,7 +20,7 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
         throw new Error('Error al cargar authContext en PostProvider');
     };
 
-    const { token } = authContext;
+    const { username, token } = authContext;
 
     useEffect(()=>{
         const getPostsFromLoggedUser = async () => {
@@ -53,7 +54,17 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
 
     const createPost = async (data: FormData) => {
         try{
-            await protectedServices.createPost(token, data);
+            if (!username){
+                throw new Error ('username does not exist');
+            }
+            const newPost = await protectedServices.createPost(token, data);
+
+            const postData = newPost.data;
+            console.log(postData);
+            const newVisiblePosts = [ postData,...visiblePosts ];
+            setVisiblePosts(newVisiblePosts);
+            const newPostsFromLoggedUser = [ postData, ...postsFromLoggedUser ];
+            setPostsFromLoggedUser(newPostsFromLoggedUser);
             toast.success('Post created successfully!');
 
         } catch(error){
@@ -93,9 +104,12 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
 
     const throttledRefresh = throttle(async (token: string | null) => {
         try {
-            const response = await protectedServices.getAllVisiblePosts(token);
-            const data = response.data;
-            setVisiblePosts(data);
+            const responseVisiblePosts = await protectedServices.getAllVisiblePosts(token);
+            const dataVisiblePosts = responseVisiblePosts.data;
+            setVisiblePosts(dataVisiblePosts);
+            const responsePostFromLoggedUser = await protectedServices.getAllPostsFromLoggedUser(token);
+            const dataPostFromLoggedUser = responsePostFromLoggedUser.data;
+            setPostsFromLoggedUser(dataPostFromLoggedUser);
         } catch (error) {
             if (error instanceof AxiosError && error.response?.data?.message) {
                 throw new Error(error.response.data.message || 'An unexpected error occurred.');
