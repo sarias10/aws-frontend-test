@@ -72,7 +72,6 @@ export const SideMenu = () => {
     };
 
     const toggleCreate = () => {
-        setActive('create');
         setIsCreateOpen(!isCreateOpen);
     };
 
