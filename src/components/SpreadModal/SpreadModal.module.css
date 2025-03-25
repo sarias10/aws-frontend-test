@@ -1,0 +1,31 @@
+.box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 3px;
+    overflow:hidden;/* Evita el scroll */
+    display: flex;
+    flex-direction: column; /* Asegura que los <li> se apilen sin espacio */
+    padding: 0;
+    list-style: none;
+    font-weight: bold;
+}
+
+.box li{
+    width: 100%;
+    text-align: center;
+    padding: 10px 100px; /* Agrega espacio dentro de cada item */
+    margin: 0;
+    border-bottom: 1px solid #ccc; /* Línea divisoria entre elementos */
+    border-radius: 0; /* Sin bordes redondeados */
+}
+
+.box li:last-child {
+    border-bottom: none; /* Quita el borde del último elemento */
+}
+
+.delete {
+    color: red;
+}

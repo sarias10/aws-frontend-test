@@ -1,10 +1,21 @@
 import { createContext, PropsWithChildren, useCallback, useContext, useEffect, useState } from 'react';
-import { PostContextType, PostResponse, User } from '../types/types';
+import { PostResponse, User } from '../types/types';
 import protectedServices from '../services/protected';
 import { throttle } from 'lodash';
 import { AuthContext } from './authContext';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
+
+export type PostContextType = {
+    visiblePosts: PostResponse[];
+    postsFromLoggedUser: PostResponse[];
+    users: User[];
+    getVisiblePostsFromUser: (username: string) => Promise<PostResponse[]>;
+    getUser: (username: string) => Promise<User>;
+    createPost: (data: FormData) => void;
+    refreshVisiblePosts: () => void;
+    deletePostById: (id: number) => Promise<void>
+};
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const PostContext = createContext<PostContextType| null>(null);
@@ -16,7 +27,7 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
 
     const authContext = useContext(AuthContext);
 
-    if(!authContext){
+    if(!authContext) {
         throw new Error('Error al cargar authContext en PostProvider');
     };
 
@@ -129,8 +140,25 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
         throttledRefresh(token);
     }, [ token ]);
 
+    const deletePostById = async (id: number)=>{
+        try{
+            await protectedServices.deletePostById(token, id);
+            const newPostsFromLoggedUser = postsFromLoggedUser.filter(post => post.id !== id);
+            setPostsFromLoggedUser(newPostsFromLoggedUser);
+            const newVisiblePosts = visiblePosts.filter(post => post.id !== id);
+            setVisiblePosts(newVisiblePosts);
+
+            toast.success('post deleted successfully');
+        }catch(error){
+            if (error instanceof AxiosError && error.response?.data?.message) {
+                toast.error(error.response.data.message || 'An unexpected error occurred.');
+            } else {
+                toast.error('An unexpected error occurred.');
+            }
+        }
+    };
     return(
-        <PostContext.Provider value={{ visiblePosts, postsFromLoggedUser, users, getVisiblePostsFromUser, getUser, createPost, refreshVisiblePosts }}>
+        <PostContext.Provider value={{ visiblePosts, postsFromLoggedUser, users, getVisiblePostsFromUser, getUser, createPost, refreshVisiblePosts, deletePostById }}>
             {children}
         </PostContext.Provider>
     );
@@ -142,4 +170,5 @@ export const usePost = () => {
     if(!context){
         throw new Error('usePost must be used within a PostProvider');
     }
+    return context;
 };

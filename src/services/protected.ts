@@ -65,6 +65,15 @@ const getUser = async (token: string | null, username: string) => {
     return response;
 };
 
+const deletePostById = async (token: string | null, id: number) => {
+    const config = {
+        headers: { Authorization: token }
+    };
+    const url = `${baseUrl}/deletePostById/${id}`;
+    const response = await axios.delete(url, config);
+    return response;
+};
+
 export default {
     getAllPostsFromLoggedUser,
     getAllVisiblePosts,
@@ -74,4 +83,5 @@ export default {
     createLike,
     getAllUsers,
     getUser,
+    deletePostById
 };

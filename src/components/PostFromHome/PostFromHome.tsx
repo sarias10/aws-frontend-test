@@ -4,11 +4,14 @@ import styles from './PostFromHome.module.css';
 import { useModal } from '../../context/modalContext';
 import { ImageIndicators } from '../ImageIndicators/ImageIndicators';
 import { SliceArrowImageButtons } from '../SliceArrowImageButtons/SliceArrowImageButtons';
+import { useSpreadModal } from '../../context/spreadModalContext';
 
 export const PostFromHome = ({ post }: PostResponseProps) => {
     const files = post.media; // Array con las imagenes y videos
     const [ currentIndex, setCurrentIndex ] = useState(0);
-    const { handleOpen } = useModal();
+    const { handleOpen: handleModalOpen } = useModal();
+
+    const { handleOpen: handleSpreadModalOpen } = useSpreadModal();
 
     const handlePrevious = () => {
         if (currentIndex>0){
@@ -25,7 +28,10 @@ export const PostFromHome = ({ post }: PostResponseProps) => {
 
     return (
         <div className={styles['post']}>
-            <div><strong>{post.author.username}</strong></div>
+            <div className={styles['username']}>
+                <div><strong>{post.author.username}</strong></div>
+                <div onClick={() => handleSpreadModalOpen(post)} className={styles['spread-button']}>···</div>
+            </div>
             <div className={styles['image-container']}>
                 {files[currentIndex].mediaType === 'image' ? (
                     <img
@@ -56,8 +62,8 @@ export const PostFromHome = ({ post }: PostResponseProps) => {
             <div>
                 <span><strong>{post.author.username}</strong> {post.description}</span>
             </div>
-            <div className={styles['view-comments']} onClick={() => handleOpen(post)}>View all {post.commentsCount} comments</div>
-            <div className={styles['add-comment']} onClick={() => handleOpen(post)}>Add comment</div>
+            <div className={styles['view-comments']} onClick={() => handleModalOpen(post)}>View all {post.commentsCount} comments</div>
+            <div className={styles['add-comment']} onClick={() => handleModalOpen(post)}>Add comment</div>
         </div>
     );
 };

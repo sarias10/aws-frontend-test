@@ -33,4 +33,18 @@
 
 .username {
     border-bottom: 1px solid #ccc; /* Agrega un borde solo abajo */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.spread-button {
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px 0;
+}
+
+.spread-button:hover {
+    color: gray;
 }

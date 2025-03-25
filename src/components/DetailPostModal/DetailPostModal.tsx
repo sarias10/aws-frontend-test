@@ -3,15 +3,19 @@ import { useModal } from '../../context/modalContext';
 import styles from './DetailPostModal.module.css';
 import { ImageIndicators } from '../ImageIndicators/ImageIndicators';
 import { SliceArrowImageButtons } from '../SliceArrowImageButtons/SliceArrowImageButtons';
+import { useSpreadModal } from '../../context/spreadModalContext';
 
 export const DetailPostModal = () => {
-    const { open, postData, currentIndex, handleClose, handlePrevious, handleNext } = useModal();
+    const { open: openModal, postData, currentIndex, handleClose, handlePrevious, handleNext } = useModal();
+    const { handleOpen: handleSpreadModalOpen } = useSpreadModal();
+
     if (!postData) {
         return null; // Si postData es null, no renderiza nada
     }
+
     return (
         <Modal
-            open={open}
+            open={openModal}
             onClose={handleClose}
         >
             <Box className={styles['box']}>
@@ -25,7 +29,11 @@ export const DetailPostModal = () => {
                     )}
                 </div>
                 <div className={styles['right-container']}>
-                    <p className={styles['username']}><strong>{postData.author.username}</strong></p>
+                    <div className={styles['username']}>
+                        <div><strong>{postData.author.username}</strong></div>
+                        <div onClick={() => handleSpreadModalOpen(postData)} className={styles['spread-button']}>···</div>
+                    </div>
+
                     <p className={styles['description']}><strong>{postData.author.username}</strong> {postData.description}</p>
                 </div>
             </Box>

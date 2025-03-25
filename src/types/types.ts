@@ -34,16 +34,6 @@ export interface User {
     visible: boolean,
 }
 
-export type PostContextType = {
-    visiblePosts: PostResponse[];
-    postsFromLoggedUser: PostResponse[];
-    users: User[];
-    getVisiblePostsFromUser: (username: string) => Promise<PostResponse[]>;
-    getUser: (username: string) => Promise<User>;
-    createPost: (data: FormData) => void;
-    refreshVisiblePosts: () => void;
-};
-
 export interface SignupType {
     username: string;
     name: string;
@@ -53,13 +43,4 @@ export interface SignupType {
 export interface LoginType {
     username: string;
     password: string;
-};
-
-export interface AuthProviderProps {
-    username: string | null,
-    name: string | null,
-    token: string | null,
-    signup (data: SignupType): Promise<void>,
-    login (data: LoginType): Promise<void>,
-    logout(): void,
 };
