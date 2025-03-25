@@ -49,6 +49,7 @@ export const SideMenu = () => {
 
     const handleHomeClick = () => {
         setActive('home');
+        refreshVisiblePosts();
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
         navigate('/');
     };
