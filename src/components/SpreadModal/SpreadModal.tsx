@@ -1,10 +1,7 @@
 import { Modal } from '@mui/material';
 import styles from './SpreadModal.module.css';
 import { useSpreadModal } from '../../context/spreadModalContext';
-import { usePost } from '../../context/postContext';
-import { useModal } from '../../context/modalContext';
 import { useAuth } from '../../context/authContext';
-import { PrincipalMenu } from '../PrincipalMenu/PrincipalMenu';
 import { ConfirmDelete } from '../ConfirmDelete/ConfirmDelete';
 
 export const SpreadModal = () => {
@@ -16,21 +13,11 @@ export const SpreadModal = () => {
         handleActiveMenu
     } = useSpreadModal();
 
-    const { deletePostById } = usePost();
-
-    const { handleClose: handleModalClose } = useModal();
-
     const { userId: loggedUserId } = useAuth();
 
     if(!postData){
         return null;
     }
-
-    const handleDelete = async () => {
-        await deletePostById(postData.id);
-        handleSpreadModalClose();
-        handleModalClose();
-    };
 
     const openConfirmDeleteButton = () =>{
         handleActiveMenu('confirmDelete');

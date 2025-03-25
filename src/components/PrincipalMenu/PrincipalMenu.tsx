@@ -1,4 +1,4 @@
-import styles from './PrincipalMenu.module.css';
+//import styles from './PrincipalMenu.module.css';
 
 export const PrincipalMenu = () => {
     return (
