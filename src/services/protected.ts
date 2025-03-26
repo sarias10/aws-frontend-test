@@ -39,12 +39,22 @@ const createPost = async (token: string | null, data: FormData) => {
     return response;
 };
 
-const createComment = async (token: string | null) => {
-    return;
+const createComment = async (token: string | null, data: FormData) => {
+    const config = {
+        headers: { Authorization: token }
+    };
+    const url = `${baseUrl}/create-comment`;
+    const response = await axios.post(url, data, config);
+    return response;
 };
 
-const createLike = async (token: string | null) => {
-    return;
+const createLike = async (token: string | null, data: FormData) => {
+    const config = {
+        headers: { Authorization: token }
+    };
+    const url = `${baseUrl}/create-like`;
+    const response = await axios.post(url, data, config);
+    return response;
 };
 
 const getAllUsers = async (token: string| null) => {

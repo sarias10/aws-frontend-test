@@ -65,13 +65,9 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
 
     const createPost = async (data: FormData) => {
         try{
-            if (!username){
-                throw new Error ('username does not exist');
-            }
             const newPost = await protectedServices.createPost(token, data);
 
             const postData = newPost.data;
-            console.log(postData);
             const newVisiblePosts = [ postData,...visiblePosts ];
             setVisiblePosts(newVisiblePosts);
             const newPostsFromLoggedUser = [ postData, ...postsFromLoggedUser ];
