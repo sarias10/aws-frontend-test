@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../../context/authContext';
+import { useEffect, useState } from 'react';
+import {  useAuth } from '../../context/authContext';
 import styles from './UserProfile.module.css';
 import { PostsFromUserContainer } from '../../components/PostsFromUserContainer/PostsFromUserContainer';
 import { useParams } from 'react-router-dom';
-import { PostContext } from '../../context/postContext';
+import {  usePost } from '../../context/postContext';
 import { PostResponse, User } from '../../types/types';
 import { Loading } from '../../components/Loading/Loading';
 
@@ -13,18 +13,10 @@ export const UserProfile = () => {
     const [ otherUser, setOtherUser ] = useState<User | null>(null);
     const [ loading, setLoading ] = useState<boolean>(false);
 
-    const { usernameParam } =useParams();
-    const authContext = useContext(AuthContext);
-    const postContext = useContext(PostContext);
+    const { usernameParam } = useParams();
 
-    if(!authContext){
-        throw new Error('Error al cargar AuthContext en UserProfile');
-    };
-    if(!postContext){
-        throw new Error('Error al cargar PostContext en UserProfile');
-    };
-    const { name, username } = authContext; // Del usuario loggeado
-    const { getVisiblePostsFromUser, getUser, postsFromLoggedUser } = postContext;
+    const { name, username } = useAuth(); // Del usuario loggeado
+    const { getVisiblePostsFromUser, getUser, postsFromLoggedUser } = usePost();
 
     useEffect(() => {
         const fetchData = async () => {
