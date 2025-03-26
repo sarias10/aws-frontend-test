@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { PostResponse } from '../types/types';
+import { useAuth } from './authContext';
 interface ModalContextProps {
     open: boolean;
     postData: PostResponse | null;
@@ -16,6 +17,12 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     const [ open, setOpen ] = useState(false); // Establece si el modal esta abierto o cerrado. El componente se renderiza en el Layout
     const [ postData, setPostData ] = useState<PostResponse | null>(null);
     const [ currentIndex, setCurrentIndex ] = useState(0);
+
+    const { token } = useAuth();
+
+    if(!token){
+        return null;
+    }
 
     const handleOpen = (post: PostResponse) => {
         setOpen(true);

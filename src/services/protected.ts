@@ -48,9 +48,12 @@ const createComment = async (token: string | null, data: FormData) => {
     return response;
 };
 
-const createLike = async (token: string | null, data: FormData) => {
+const createLike = async (token: string | null, postId: number) => {
     const config = {
         headers: { Authorization: token }
+    };
+    const data = {
+        postId: postId,
     };
     const url = `${baseUrl}/create-like`;
     const response = await axios.post(url, data, config);

@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { PostResponse } from '../types/types';
+import { useAuth } from './authContext';
 
 interface SpreadModalProps {
     open: boolean;
@@ -20,6 +21,8 @@ export const SpreadModalProvider = ({ children }: { children: ReactNode }) => {
 
     const [ postData, setPostData ] = useState<PostResponse | null>(null);
 
+    const { token } = useAuth();
+
     const handleOpen = (postData: PostResponse) => {
         setPostData(postData);
         setOpen(true);
@@ -34,10 +37,15 @@ export const SpreadModalProvider = ({ children }: { children: ReactNode }) => {
     };
 
     useEffect(()=>{
+        if(!token) return;
         if(open) {
             setActiveMenu('principalMenu');
         }
     }, [ open ]);
+
+    if(!token){
+        return null;
+    }
 
     return (
         <SpreadModalContext.Provider value={{ open, activeMenu, postData, handleOpen, handleClose, handleActiveMenu }}>

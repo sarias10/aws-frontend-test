@@ -1,8 +1,8 @@
-import { createContext, PropsWithChildren, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 import { PostResponse, User } from '../types/types';
 import protectedServices from '../services/protected';
 import { throttle } from 'lodash';
-import { AuthContext } from './authContext';
+import { useAuth } from './authContext';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
@@ -13,6 +13,7 @@ export type PostContextType = {
     getVisiblePostsFromUser: (username: string) => Promise<PostResponse[]>;
     getUser: (username: string) => Promise<User>;
     createPost: (data: FormData) => void;
+    createLike: (postId: number) => void;
     refreshVisiblePosts: () => void;
     deletePostById: (id: number) => Promise<void>
 };
@@ -20,20 +21,16 @@ export type PostContextType = {
 // eslint-disable-next-line react-refresh/only-export-components
 export const PostContext = createContext<PostContextType| null>(null);
 
-export const PostProvider = ({ children }: PropsWithChildren<object>) => {
+export const PostProvider = ({ children }: { children: ReactNode }) => {
+
     const [ postsFromLoggedUser, setPostsFromLoggedUser ] = useState<PostResponse[]>([]); // Guarda todos los post del usuario loggeado
     const [ visiblePosts, setVisiblePosts ] = useState<PostResponse[]>([]); // Guarda todos los posts visibles
     const [ users, setUsers ] = useState<User[]>([]); // lo utilizo en el componente Search para buscar los usuarios
 
-    const authContext = useContext(AuthContext);
-
-    if(!authContext) {
-        throw new Error('Error al cargar authContext en PostProvider');
-    };
-
-    const { token } = authContext;
+    const { token } = useAuth();
 
     useEffect(()=>{
+        if(!token) return;
         const getPostsFromLoggedUser = async () => {
             if(postsFromLoggedUser.length === 0) { // Consulta solo si aún no se ha cargado
                 const response = await protectedServices.getAllPostsFromLoggedUser(token);
@@ -79,6 +76,50 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
                 toast.error(error.response.data.message || 'An unexpected error occurred.');
             } else {
                 toast.error('An unexpected error occurred.');
+            }
+        }
+    };
+
+    const createLike = async (postId: number) => {
+        try {
+            // Optimistic update (actualiza antes de esperar la respuesta)
+            const newVisiblePosts = visiblePosts.map(post => {
+                if (post.id === postId) {
+                    return {
+                        ...post,
+                        likesCount: post.hasLiked ? post.likesCount - 1 : post.likesCount + 1,
+                        hasLiked: !post.hasLiked, // Cambia el estado de like inmediatamente
+                    };
+                }
+                return post;
+            });
+            setVisiblePosts(newVisiblePosts);
+
+            // Esperar la respuesta del servidor
+            const likeResponse = await protectedServices.createLike(token, postId);
+
+            // Si la respuesta es incorrecta, revertir el cambio
+            if (![ 201, 204 ].includes(likeResponse.status)) {
+                throw new Error('Failed to update like status');
+            }
+        } catch (error) {
+            // Revertir el cambio en caso de error
+            const revertedPosts = visiblePosts.map(post => {
+                if (post.id === postId) {
+                    return {
+                        ...post,
+                        likesCount: post.hasLiked ? post.likesCount + 1 : post.likesCount - 1,
+                        hasLiked: !post.hasLiked, // Revierte el cambio de like
+                    };
+                }
+                return post;
+            });
+            setVisiblePosts(revertedPosts);
+
+            if (error instanceof AxiosError && error.response?.data?.message) {
+                throw new Error(error.response.data.message || 'An unexpected error occurred.');
+            } else {
+                throw new Error('An unexpected error occurred.');
             }
         }
     };
@@ -153,8 +194,25 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
             }
         }
     };
+
+    // Si no hay token, no renderiza el provider, pero los hooks ya fueron llamados
+    if (!token) {
+        return null;
+    }
+
     return(
-        <PostContext.Provider value={{ visiblePosts, postsFromLoggedUser, users, getVisiblePostsFromUser, getUser, createPost, refreshVisiblePosts, deletePostById }}>
+        <PostContext.Provider
+            value = {{
+                visiblePosts,
+                postsFromLoggedUser,
+                users,
+                getVisiblePostsFromUser,
+                getUser,
+                createPost,
+                createLike,
+                refreshVisiblePosts,
+                deletePostById
+            }}>
             {children}
         </PostContext.Provider>
     );

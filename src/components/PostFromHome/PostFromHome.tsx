@@ -5,6 +5,8 @@ import { useModal } from '../../context/modalContext';
 import { ImageIndicators } from '../ImageIndicators/ImageIndicators';
 import { SliceArrowImageButtons } from '../SliceArrowImageButtons/SliceArrowImageButtons';
 import { useSpreadModal } from '../../context/spreadModalContext';
+import { FaHeart,FaRegHeart, FaRegComment } from 'react-icons/fa';
+import { usePost } from '../../context/postContext';
 
 export const PostFromHome = ({ post }: PostResponseProps) => {
     const files = post.media; // Array con las imagenes y videos
@@ -12,6 +14,8 @@ export const PostFromHome = ({ post }: PostResponseProps) => {
     const { handleOpen: handleModalOpen } = useModal();
 
     const { handleOpen: handleSpreadModalOpen } = useSpreadModal();
+
+    const { createLike } = usePost();
 
     const handlePrevious = () => {
         if (currentIndex>0){
@@ -24,6 +28,14 @@ export const PostFromHome = ({ post }: PostResponseProps) => {
         if (currentIndex < files.length -1){ // solo se ejecuta si current index es menor a la última posición del array
             setCurrentIndex(currentIndex + 1);
         }
+    };
+
+    const handleLike = () => {
+        createLike(post.id);
+    };
+
+    const handleComment = () => {
+
     };
 
     return (
@@ -53,10 +65,14 @@ export const PostFromHome = ({ post }: PostResponseProps) => {
                 )}
 
             </div>
-            <div>
-                <button>Like</button>
-                <button>Comment</button>
-                <button>Share</button>
+            <div className={styles.actions}>
+                <button onClick={handleLike} className={styles.button}>
+                    {post.hasLiked ? <FaHeart className={styles.liked} /> : <FaRegHeart />}
+                </button>
+                <button onClick={handleComment} className={styles.button}>
+                    <FaRegComment />
+                </button>
+                {/* <button>Share</button> */}
             </div>
             <div>{post.likesCount} likes</div>
             <div>

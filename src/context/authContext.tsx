@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useContext } from 'react';
+import { createContext, PropsWithChildren, ReactNode, useContext } from 'react';
 import { LoginType, SignupType } from '../types/types';
 import publicServices from '../services/public';
 import { useLocalStorage } from '../utils/useLocalStorage';
@@ -16,7 +16,7 @@ export interface AuthProviderProps {
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext<AuthProviderProps | null>(null);
 
-export const AuthContextProvider = ({ children }: PropsWithChildren<object>) => {
+export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     const [ username, setUsername ] = useLocalStorage<string|null>('username',null);
     const [ name, setName ] = useLocalStorage<string | null>('name',null);
     const [ token, setToken ] = useLocalStorage<string | null>('token',null);

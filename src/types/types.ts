@@ -17,6 +17,7 @@ export interface PostResponse {
     description: string,
     likesCount: number,
     commentsCount: number,
+    hasLiked: boolean,
     author: Author,
     media: Media[]
 }
