@@ -31,7 +31,7 @@ export const PostProvider = ({ children }: PropsWithChildren<object>) => {
         throw new Error('Error al cargar authContext en PostProvider');
     };
 
-    const { username, token } = authContext;
+    const { token } = authContext;
 
     useEffect(()=>{
         const getPostsFromLoggedUser = async () => {
