@@ -38,7 +38,7 @@ export const SpreadModalProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(()=>{
         if(!token) return;
-        if(open) {
+        if(!open) {
             setActiveMenu('principalMenu');
         }
     }, [ open ]);

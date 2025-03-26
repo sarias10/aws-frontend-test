@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, ReactNode, useContext } from 'react';
+import { createContext, ReactNode, useContext } from 'react';
 import { LoginType, SignupType } from '../types/types';
 import publicServices from '../services/public';
 import { useLocalStorage } from '../utils/useLocalStorage';

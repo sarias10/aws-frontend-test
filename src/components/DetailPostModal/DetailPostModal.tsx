@@ -4,14 +4,22 @@ import styles from './DetailPostModal.module.css';
 import { ImageIndicators } from '../ImageIndicators/ImageIndicators';
 import { SliceArrowImageButtons } from '../SliceArrowImageButtons/SliceArrowImageButtons';
 import { useSpreadModal } from '../../context/spreadModalContext';
+import { Comments } from '../Comments/Comments';
+import { PostActions } from '../PostsActions/PostActions';
+import { useRef } from 'react';
 
 export const DetailPostModal = () => {
     const { open: openModal, postData, currentIndex, handleClose, handlePrevious, handleNext } = useModal();
     const { handleOpen: handleSpreadModalOpen } = useSpreadModal();
+    const commentInputRef = useRef<HTMLInputElement>(null);
 
     if (!postData) {
         return null; // Si postData es null, no renderiza nada
     }
+
+    const handleComment = () => {
+        commentInputRef.current?.focus(); // Enfocar el input
+    };
 
     return (
         <Modal
@@ -29,13 +37,22 @@ export const DetailPostModal = () => {
                     )}
                 </div>
                 <div className={styles['right-container']}>
-                    <div className={styles['username']}>
+                    <div className={styles['top']}>
                         <div><strong>{postData.author.username}</strong></div>
                         <div onClick={() => handleSpreadModalOpen(postData)} className={styles['spread-button']}>···</div>
                     </div>
-
-                    <p className={styles['description']}><strong>{postData.author.username}</strong> {postData.description}</p>
+                    <div className={styles['middle']}>
+                        <p className={styles['description']}><strong>{postData.author.username}</strong> {postData.description}</p>
+                        <Comments/>
+                    </div>
+                    <div className={styles['bottom']}>
+                        <PostActions post={postData} handleComment={handleComment}/>
+                        <div className={styles['input-container']}>
+                            <input ref={commentInputRef} placeholder='Add a comment...'/><button>Post</button>
+                        </div>
+                    </div>
                 </div>
+
             </Box>
         </Modal>
 

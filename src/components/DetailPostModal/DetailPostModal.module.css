@@ -29,9 +29,11 @@
     width: 40%;
     height: 100%;
     padding: 16px;
+    display: flex;
+    flex-direction: column; /* Hace que los elementos se apilen */
 }
 
-.username {
+.top {
     border-bottom: 1px solid #ccc; /* Agrega un borde solo abajo */
     display: flex;
     justify-content: space-between;
@@ -47,4 +49,25 @@
 
 .spread-button:hover {
     color: gray;
+}
+
+.middle {
+    flex-grow: 1; /* Permite que tome todo el espacio disponible */
+    overflow-y: auto; /* Permite scroll si hay muchos comentarios */
+}
+
+.bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-container {
+    display: flex;
+    gap: 4px;
+    width: 100%; /* Ocupa todo el espacio disponible*/
+}
+
+.input-container input {
+    min-width: 0px;
 }

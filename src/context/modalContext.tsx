@@ -1,10 +1,11 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { PostResponse } from '../types/types';
 import { useAuth } from './authContext';
 interface ModalContextProps {
     open: boolean;
     postData: PostResponse | null;
     currentIndex: number;
+    updatePostData: (updates: Partial<PostResponse>) => void
     handleOpen: (post: PostResponse) => void;
     handleClose: () => void;
     handlePrevious: () => void;
@@ -20,10 +21,27 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 
     const { token } = useAuth();
 
+    // Resetea los estados cuando el modal se cierra
+    useEffect(() => {
+        if(!token) return;
+        if (!open) {
+            setPostData(null);
+            setCurrentIndex(0);
+        }
+    }, [ open ]);
+
     if(!token){
         return null;
     }
 
+    const updatePostData = (updates: Partial<PostResponse>) => {
+        // React permite que setState reciba una función, donde el argumento (currentPost)
+        // es el estado más reciente antes de actualizarse. Esto es útil cuando el estado
+        // se actualiza muchas veces y queremos asegurarnos de trabajar con el valor correcto.
+        setPostData(currentPost => currentPost ? { ...currentPost, ...updates } : currentPost);
+    };
+
+    // Establece un nuevo post cuando se abre que viene de los post del usuario loggeado o de los postvisibles
     const handleOpen = (post: PostResponse) => {
         setOpen(true);
         setPostData(post);
@@ -31,8 +49,6 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 
     const handleClose = () => {
         setOpen(false);
-        setPostData(null);
-        setCurrentIndex(0);
     };
 
     const handlePrevious = () => {
@@ -48,7 +64,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         }
     };
     return (
-        <ModalContext.Provider value={{ open, postData, currentIndex, handleOpen, handleClose, handlePrevious, handleNext }}>
+        <ModalContext.Provider value={{ open, postData, currentIndex, updatePostData, handleOpen, handleClose, handlePrevious, handleNext }}>
             {children}
         </ModalContext.Provider>
     );

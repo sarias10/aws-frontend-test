@@ -5,6 +5,7 @@ import { throttle } from 'lodash';
 import { useAuth } from './authContext';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
+import { useModal } from './modalContext';
 
 export type PostContextType = {
     visiblePosts: PostResponse[];
@@ -28,6 +29,8 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
     const [ users, setUsers ] = useState<User[]>([]); // lo utilizo en el componente Search para buscar los usuarios
 
     const { token } = useAuth();
+
+    const { open: detailModalOpen, postData, updatePostData, handleClose: handleDetailModalClose } = useModal();
 
     useEffect(()=>{
         if(!token) return;
@@ -95,6 +98,19 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
             });
             setVisiblePosts(newVisiblePosts);
 
+            if(detailModalOpen && postData?.id === postId){
+                if(postData?.hasLiked){
+                    updatePostData({
+                        likesCount: postData ? postData.likesCount -1 : 0,
+                        hasLiked: false
+                    });
+                }else{
+                    updatePostData({
+                        likesCount: postData ? postData.likesCount + 1 : 0,
+                        hasLiked: true
+                    });
+                }
+            }
             // Esperar la respuesta del servidor
             const likeResponse = await protectedServices.createLike(token, postId);
 
@@ -103,6 +119,25 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
                 throw new Error('Failed to update like status');
             }
         } catch (error) {
+            console.error('Error liking post:', error);
+
+            if (error instanceof AxiosError) {
+                const status = error.response?.status;
+
+                if (status === 404) {
+                // Si el post no existe, lo eliminamos de la lista
+                    setVisiblePosts(prevPosts => prevPosts.filter(post => post.id !== postId));
+
+                    // Si el modal del detalle esta abierto entonces se cierra y se reinicia
+                    if(detailModalOpen){
+                        handleDetailModalClose();
+                    }
+
+                    toast.error('This post no longer exists.');
+                    return;
+                }
+            }
+
             // Revertir el cambio en caso de error
             const revertedPosts = visiblePosts.map(post => {
                 if (post.id === postId) {
@@ -115,12 +150,6 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
                 return post;
             });
             setVisiblePosts(revertedPosts);
-
-            if (error instanceof AxiosError && error.response?.data?.message) {
-                throw new Error(error.response.data.message || 'An unexpected error occurred.');
-            } else {
-                throw new Error('An unexpected error occurred.');
-            }
         }
     };
 

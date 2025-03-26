@@ -21,7 +21,7 @@ const router = createBrowserRouter(
                 <Route path='accounts/signup' element={<SignUp/>}/>
             </Route>
 
-            <Route element={<ProtectedRoutes><PostProvider><ModalProvider><SpreadModalProvider><Layout/></SpreadModalProvider></ModalProvider></PostProvider></ProtectedRoutes>}>
+            <Route element={<ProtectedRoutes><ModalProvider><SpreadModalProvider><PostProvider><Layout/></PostProvider></SpreadModalProvider></ModalProvider></ProtectedRoutes>}>
 
                 <Route index element={<Home/>} />
                 <Route path={':usernameParam'} element={<UserProfile/>} />
