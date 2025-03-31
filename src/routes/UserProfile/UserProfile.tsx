@@ -4,17 +4,15 @@ import styles from './UserProfile.module.css';
 import { PostsFromUserContainer } from '../../components/PostsFromUserContainer/PostsFromUserContainer';
 import { useParams } from 'react-router-dom';
 import {  usePost } from '../../context/postContext';
-import { PostResponse, User } from '../../types/types';
 import { Loading } from '../../components/Loading/Loading';
 
 export const UserProfile = () => {
     const [ showComponent, setShowComponent ] = useState('posts');
-    const [ visiblePostsFromOtherUser, setVisiblePostsFromOtherUser ] = useState<PostResponse[]>([]);
-    const [ otherUser, setOtherUser ] = useState<User | null>(null);
     const [ loading, setLoading ] = useState<boolean>(false);
 
     const { usernameParam } = useParams();
 
+    const { otherUser, visiblePostsFromOtherUser } = usePost();
     const { name, username } = useAuth(); // Del usuario loggeado
     const { getVisiblePostsFromUser, getUser, postsFromLoggedUser } = usePost();
 
@@ -22,14 +20,10 @@ export const UserProfile = () => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const [ userConsulted, posts ] = await Promise.all([
-                    getUser(usernameParam as string),
-                    getVisiblePostsFromUser(usernameParam as string)
-                ]);
-
-                if (userConsulted) setOtherUser(userConsulted);
-                if (posts) setVisiblePostsFromOtherUser(posts);
-
+                await getUser(usernameParam as string);
+                await getVisiblePostsFromUser(usernameParam as string);
+                console.log(otherUser);
+                console.log(visiblePostsFromOtherUser);
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
@@ -51,31 +45,38 @@ export const UserProfile = () => {
         <div className={styles['container']}>
             { username===usernameParam ? ( // se muestra el usuario loggeado
                 <>
-                    <h2>User profile</h2>
-                    <h3>{name}</h3>
-                    <br/>
-                    <div>
-                        <button onClick={() => setShowComponent('posts')}>POSTS</button>
-                        {/* <button onClick={() => setShowComponent('saved')}>SAVED</button>
-                            <button onClick={() => setShowComponent('tagged')}>TAGGED</button> */}
+                    <div className={styles['top-container']}>
+                        <h3>{name}</h3>
                     </div>
-                    {showComponent==='posts' && (
-                        <PostsFromUserContainer posts={postsFromLoggedUser}/>
-                    )}
+                    <div className={styles['bottom-container']}>
+                        <div className={styles['button-container']}>
+                            <button className={showComponent === 'posts'?styles['active']:styles['']} onClick={() => setShowComponent('posts')}>POSTS</button>
+                            {/*
+                            <button className={showComponent === 'saved'?styles['active']:styles['']} onClick={() => setShowComponent('saved')}>SAVED</button>
+                            <button className={showComponent === 'tagged'?styles['active']:styles['']} onClick={() => setShowComponent('tagged')}>TAGGED</button> */}
+                        </div>
+
+                        {showComponent==='posts' && (
+                            <PostsFromUserContainer posts={postsFromLoggedUser}/>
+                        )}
+                    </div>
                 </>
             ) : otherUser ? ( // Se muestra otro usuario público
                 <>
-                    <h2>User profile</h2>
-                    {otherUser.name}
-                    <br/>
-                    <div>
-                        <button onClick={() => setShowComponent('posts')}>POSTS</button>
-                        {/* <button onClick={() => setShowComponent('saved')}>SAVED</button>
-                            <button onClick={() => setShowComponent('tagged')}>TAGGED</button> */}
+                    <div className={styles['top-container']}>
+                        <h3>{otherUser.name}</h3>
                     </div>
-                    {showComponent==='posts' && (
-                        <PostsFromUserContainer posts={visiblePostsFromOtherUser} />
-                    )}
+                    <div className={styles['bottom-container']}>
+                        <div className={styles['button-container']}>
+                            <button className={showComponent === 'posts'?styles['active']:styles['']} onClick={() => setShowComponent('posts')}>POSTS</button>
+                            {/* <button onClick={() => setShowComponent('saved')}>SAVED</button>
+                            <button onClick={() => setShowComponent('tagged')}>TAGGED</button> */}
+                        </div>
+
+                        {showComponent==='posts' && (
+                            <PostsFromUserContainer posts={visiblePostsFromOtherUser} />
+                        )}
+                    </div>
 
                 </>
             ) : ( // Sino encuentra ningún usuario con ese usernameParam
