@@ -5,17 +5,35 @@
   min-height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
   text-align: center; /* Opcional: centra el texto */
 }
+.top-container {
+  margin-bottom: 50px;
+}
 
-.info-btn {
-    width: 32px;
-    height: 32px;
-    background-color: #e5e7eb;
-    color: black;
-    border: none;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-weight: bold;
-  }
+.bottom-container {
+  width: 620px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly; /* Distribuye los botones uniformemente */
+  align-items: center;
+  border-top: 2px solid lightgray;
+  padding-top: 0px;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  margin-top: -1px;
+  gap: 50px;
+}
+
+.bottom-container button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding-top: 18px;
+}
+
+.bottom-container button.active {
+  border-top: 2px solid black;
+  font-weight: bold;
+}
