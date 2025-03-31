@@ -15,7 +15,7 @@ export const PostsFromHomeContainer = () => {
             if(visiblePosts.length === 0){
                 setShowNoPosts(true);
             }
-        }, 3000);
+        }, 5000); // Muestra loading durante 5 segundos, sino llegan los posts entonces muestra there are no posts
 
         return () =>  clearTimeout(timer); // Limpia el timer si los posts llegan antes
     }, [ visiblePosts ]);
