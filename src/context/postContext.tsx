@@ -11,8 +11,10 @@ export type PostContextType = {
     visiblePosts: PostResponse[];
     postsFromLoggedUser: PostResponse[];
     users: User[];
-    getVisiblePostsFromUser: (username: string) => Promise<PostResponse[]>;
-    getUser: (username: string) => Promise<User>;
+    otherUser: User | null;
+    visiblePostsFromOtherUser: PostResponse[];
+    getVisiblePostsFromUser: (username: string) => Promise<void>;
+    getUser: (username: string) => Promise<void>;
     createPost: (data: FormData) => void;
     createLike: (postId: number) => void;
     refreshVisiblePosts: () => void;
@@ -25,12 +27,18 @@ export const PostContext = createContext<PostContextType| null>(null);
 export const PostProvider = ({ children }: { children: ReactNode }) => {
 
     const [ postsFromLoggedUser, setPostsFromLoggedUser ] = useState<PostResponse[]>([]); // Guarda todos los post del usuario loggeado
+
     const [ visiblePosts, setVisiblePosts ] = useState<PostResponse[]>([]); // Guarda todos los posts visibles
+
+    const [ visiblePostsFromOtherUser, setVisiblePostsFromOtherUser ] = useState<PostResponse[]>([]); // Guarda los post visibles de otros usuarios
+
+    const [ otherUser, setOtherUser ] = useState<User | null>(null); // Guarda otro usuario consultado
+
     const [ users, setUsers ] = useState<User[]>([]); // lo utilizo en el componente Search para buscar los usuarios
 
     const { token } = useAuth();
 
-    const { open: detailModalOpen, postData, updatePostData, handleClose: handleDetailModalClose } = useModal();
+    const { open: detailModalOpen, postData, updatePostData, handleClose: handleDetailModalClose } = useModal(); // Modal de los posts
 
     useEffect(()=>{
         if(!token) return;
@@ -85,7 +93,8 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
 
     const createLike = async (postId: number) => {
         try {
-            // Optimistic update (actualiza antes de esperar la respuesta)
+            // Optimistic update (actualiza antes de esperar la respuesta del servidor)
+            // Si el id del post likeado esta en visiblePosts entonces lo actualiza
             const newVisiblePosts = visiblePosts.map(post => {
                 if (post.id === postId) {
                     return {
@@ -98,6 +107,20 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
             });
             setVisiblePosts(newVisiblePosts);
 
+            // Si el id del post likeado esta en postsFromLoggedUser entonces lo actualiza
+            const newPostsFromLoggedUser = postsFromLoggedUser.map(post => {
+                if(post.id === postId){
+                    return {
+                        ...post,
+                        likesCount: post.hasLiked ? post.likesCount - 1: post.likesCount + 1,
+                        hasLiked: !post.hasLiked, // Cambia el estado de like inmediatamente
+                    };
+                }
+                return post;
+            });
+            setPostsFromLoggedUser(newPostsFromLoggedUser);
+
+            // Si el modal del detalle del post esta abierto y el postData del modal no es null
             if(detailModalOpen && postData?.id === postId){
                 if(postData?.hasLiked){
                     updatePostData({
@@ -138,8 +161,8 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
                 }
             }
 
-            // Revertir el cambio en caso de error
-            const revertedPosts = visiblePosts.map(post => {
+            // Revertir el cambio en visibleosts en caso de error
+            const revertedVisiblePosts = visiblePosts.map(post => {
                 if (post.id === postId) {
                     return {
                         ...post,
@@ -149,14 +172,28 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
                 }
                 return post;
             });
-            setVisiblePosts(revertedPosts);
+            setVisiblePosts(revertedVisiblePosts);
+
+            // Revertir el cambio en postsFromLoggedUser
+            const revertedPostsFromLoggedUser = postsFromLoggedUser.map(post => {
+                if(post.id === postId){
+                    return {
+                        ...post,
+                        likesCount: post.hasLiked ? post.likesCount + 1: post.likesCount - 1,
+                        hasLiked: !post.hasLiked, // Revierte el cambio de like
+                    };
+                }
+                return post;
+            });
+            setPostsFromLoggedUser(revertedPostsFromLoggedUser);
         }
     };
 
     const getVisiblePostsFromUser = async (username: string) => {
         try{
             const response = await protectedServices.getAllVisiblePostsFromUser(token, username);
-            return response.data;
+            console.log('data',response.data);
+            setVisiblePostsFromOtherUser(response.data);
         }catch(error){
             if (error instanceof AxiosError && error.response?.data?.message) {
                 throw new Error(error.response.data.message || 'An unexpected error occurred.');
@@ -169,7 +206,7 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
     const getUser = async (username: string) => {
         try{
             const response = await protectedServices.getUser(token, username);
-            return response.data;
+            setOtherUser(response.data);
         }catch(error){
             if (error instanceof AxiosError && error.response?.data?.message) {
                 throw new Error(error.response.data.message || 'An unexpected error occurred.');
@@ -235,6 +272,8 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
                 visiblePosts,
                 postsFromLoggedUser,
                 users,
+                otherUser,
+                visiblePostsFromOtherUser,
                 getVisiblePostsFromUser,
                 getUser,
                 createPost,
