@@ -118,7 +118,6 @@ export const SideMenu = () => {
         };
     }, []);
 
-    console.log(active);
     return (
         <div className={styles['side-menu']}>
             <ul>
