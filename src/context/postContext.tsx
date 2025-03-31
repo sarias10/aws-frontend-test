@@ -83,6 +83,7 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
             toast.success('Post created successfully!');
 
         } catch(error){
+            console.log('error al crear un post',error);
             if (error instanceof AxiosError && error.response?.data?.message) {
                 toast.error(error.response.data.message || 'An unexpected error occurred.');
             } else {
