@@ -6,7 +6,12 @@ export const PostFromUserProfile = ({ post }: PostResponseProps) => {
     const { handleOpen } = useModal();
     return (
         <div onClick={() => handleOpen(post)} className={styles['post-container']}>
-            <img className={styles['image']} src={post.media[0].mediaUrl}/>
+            <img className={styles['image']} src={post.media[0].mediaUrl} />
+            <div className={styles['overlay']}>
+                <span className={styles['info']}>
+                    ❤️ {post.likesCount} · 💬 {post.commentsCount}
+                </span>
+            </div>
         </div>
     );
 };
