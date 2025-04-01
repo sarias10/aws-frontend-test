@@ -121,6 +121,19 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
             });
             setPostsFromLoggedUser(newPostsFromLoggedUser);
 
+            // Si el id del post likeado esta en visiblePostsFromOtherUser entonces lo actualiza
+            const newVisiblePostsFromOtherUser = visiblePostsFromOtherUser.map(post => {
+                if(post.id === postId){
+                    return {
+                        ...post,
+                        likesCount: post.hasLiked ? post.likesCount - 1: post.likesCount + 1,
+                        hasLiked: !post.hasLiked, // Cambia el estado de like inmediatamente
+                    };
+                }
+                return post;
+            });
+            setVisiblePostsFromOtherUser(newVisiblePostsFromOtherUser);
+
             // Si el modal del detalle del post esta abierto y el postData del modal no es null
             if(detailModalOpen && postData?.id === postId){
                 if(postData?.hasLiked){
@@ -187,6 +200,19 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
                 return post;
             });
             setPostsFromLoggedUser(revertedPostsFromLoggedUser);
+
+            // Revertir el cambio en visiblePostsFromOtherUser
+            const revertedVisiblePostsFromOtherUser = visiblePostsFromOtherUser.map(post => {
+                if(post.id === postId){
+                    return {
+                        ...post,
+                        likesCount: post.hasLiked ? post.likesCount + 1: post.likesCount - 1,
+                        hasLiked: !post.hasLiked, // Revierte el cambio de like
+                    };
+                }
+                return post;
+            });
+            setVisiblePostsFromOtherUser(revertedVisiblePostsFromOtherUser);
         }
     };
 
