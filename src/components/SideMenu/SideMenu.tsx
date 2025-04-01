@@ -1,10 +1,10 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import { AuthContext } from '../../context/authContext';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { useAuth } from '../../context/authContext';
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from './SideMenu.module.css';
 import { CreatePostModal } from '../CreatePostModal/CreatePostModal';
 import { Search } from '../Search/Search';
-import { PostContext } from '../../context/postContext';
+import { usePost } from '../../context/postContext';
 
 export const SideMenu = () => {
 
@@ -17,10 +17,6 @@ export const SideMenu = () => {
 
     const [ active, setActive ] = useState('home');
 
-    // Obtener el contexto de autenticación
-    const authContex = useContext(AuthContext);
-    const postContext = useContext(PostContext);
-
     // Referencias para el botón de búsqueda y el dropdown
     const searchRef = useRef<HTMLLIElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -29,17 +25,17 @@ export const SideMenu = () => {
     const createDropdownRef = useRef<HTMLDivElement>(null);
 
     const navigate = useNavigate();
-    // Verificar si el contexto de autenticación está disponible
-    if(!authContex){
-        throw new Error('Error al cargar AuthContext in SideMenu');
-    }
-    // Verificar si el contexto de autenticación está disponible
-    if(!postContext){
-        throw new Error('Error al cargar PostContext in SideMenu');
-    }
 
-    const { username, logout } = authContex;
-    const { refreshVisiblePosts } = postContext;
+    const { usernameParam } = useParams();
+
+    const { username, logout } = useAuth();
+    const { refreshVisiblePosts } = usePost();
+
+    useEffect(() => {
+        if (usernameParam === username) {
+            setActive('profile');
+        }
+    }, [ usernameParam, username ]); // Se ejecuta cuando cambia usernameParam o username
 
     const handleLogoClick = () => {
         setActive('home');
