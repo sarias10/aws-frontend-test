@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { AuthContext } from '../../context/authContext';
 import { Link } from 'react-router-dom';
 import { AxiosError } from 'axios';
+import styles from './SignUp.module.css';
 
 export const SignUp = () => {
     const [ formData, setFormData ] = useState<SignupType>({
@@ -54,10 +55,10 @@ export const SignUp = () => {
     if (isLoading) return <Loading/>; // Si isLoading es true entonces renderiza el componente loading
 
     return (
-        <>
-            <fieldset>
-                <form onSubmit={handleSubmit}>
-                    <h1>Sign Up</h1>
+        <div className={styles['signup-container']}>
+            <fieldset className={styles['signup-box']}>
+                <form onSubmit={handleSubmit} className={styles['signup-form']}>
+                    <h1 className={styles['logo']}>Sign Up</h1>
                     <div>
                         <label htmlFor='username'>Username:</label>
                         <input
@@ -68,6 +69,7 @@ export const SignUp = () => {
                             value={formData.username}
                             required
                             maxLength={40}
+                            className={styles['input']}
                         />
                     </div>
 
@@ -81,6 +83,7 @@ export const SignUp = () => {
                             value={formData.name}
                             required
                             maxLength={40}
+                            className={styles['input']}
                         />
                     </div>
 
@@ -94,16 +97,18 @@ export const SignUp = () => {
                             value={formData.password}
                             required
                             maxLength={40}
+                            className={styles['input']}
                         />
                     </div>
 
-                    <button>Sign Up</button>
+                    <button className={styles['signup-button']}>Sign Up</button>
                 </form>
             </fieldset>
-            <fieldset>
+
+            <fieldset className={styles['login-box']}>
                 <p>Have an account?</p>
-                <Link to='/accounts/login'>Log in</Link>
+                <Link to='/accounts/login' className={styles['login-link']}>Log in</Link>
             </fieldset>
-        </>
+        </div>
     );
 };

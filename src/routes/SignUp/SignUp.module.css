@@ -1,0 +1,80 @@
+/* Contenedor principal centrado */
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #fafafa;
+}
+
+/* Caja del formulario */
+.signup-box {
+    width: 350px;
+    padding: 40px;
+    background: white;
+    border: 1px solid #dbdbdb;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Logo */
+.logo {
+    font-family: 'Arial', sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Formulario */
+.signup-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Campos de entrada */
+.input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    background: #fafafa;
+}
+
+/* Botón de login */
+.signup-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0095f6;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.signup-button:hover {
+    background-color: #0078c2;
+}
+
+/* Caja de registro */
+.login-box {
+    width: 350px;
+    padding: 15px;
+    background: white;
+    border: 1px solid #dbdbdb;
+    text-align: center;
+}
+
+/* Link de registro */
+.login-link {
+    color: #0095f6;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}

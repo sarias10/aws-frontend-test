@@ -1,25 +1,24 @@
-import { ChangeEvent, useContext, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { LoginType } from '../../types/types';
-import { AuthContext } from '../../context/authContext';
+import { useAuth } from '../../context/authContext';
 import { useNavigate } from 'react-router-dom';
 import { Loading } from '../../components/Loading/Loading';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { AxiosError } from 'axios';
+import styles from './Login.module.css';
+
 export const Login = () => {
     const [ formData, setFormData ] = useState<LoginType>({
         username: '',
         password: '',
     });
+
     const [ isLoading, setIsLoading ] = useState(false); // Estado para controlar la carga
-    const authContext = useContext(AuthContext);
+
     const navigate = useNavigate();
 
-    if(!authContext){
-        throw new Error('Error al cargar Authcontext en Login');
-    };
-
-    const { login } = authContext;
+    const { login } = useAuth();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>)=>{
         const { name, value } = e.target;
@@ -51,10 +50,10 @@ export const Login = () => {
     if (isLoading) return <Loading/>; // Muestra el componente Loading mientras está cargando
 
     return (
-        <>
-            <fieldset>
-                <form onSubmit={handleSubmit}>
-                    <h1>Login</h1>
+        <div className={styles['login-container']}>
+            <fieldset className={styles['login-box']}>
+                <form onSubmit={handleSubmit} className={styles['login-form']}>
+                    <h1 className={styles['logo']}>Login</h1>
                     <div>
                         <label htmlFor='username'>Username:</label>
                         <input
@@ -65,6 +64,7 @@ export const Login = () => {
                             value={formData.username}
                             required
                             maxLength={40}
+                            className={styles['input']}
                         />
                     </div>
 
@@ -78,18 +78,18 @@ export const Login = () => {
                             value={formData.password}
                             required
                             maxLength={40}
+                            className={styles['input']}
                         />
                     </div>
 
-                    <button>Log in</button>
+                    <button className={styles['login-button']}>Log in</button>
                 </form>
             </fieldset>
 
-            <fieldset>
+            <fieldset className={styles['signup-box']}>
                 <p>Don't have an account? </p>
-                <Link to='/accounts/signup'>Sign up</Link>
+                <Link to='/accounts/signup' className={styles['signup-link']}>Sign up</Link>
             </fieldset>
-
-        </>
+        </div>
     );
 };
