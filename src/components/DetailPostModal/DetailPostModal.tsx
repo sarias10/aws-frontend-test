@@ -68,6 +68,7 @@ export const DetailPostModal = () => {
                         <div className={styles['input-container']}>
                             <input
                                 type='text'
+                                autoComplete="off"
                                 name='content'
                                 onChange={handleContentChange}
                                 value={content}
