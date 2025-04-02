@@ -2,7 +2,6 @@ import { FaHeart,FaRegHeart, FaRegComment } from 'react-icons/fa';
 import { usePost } from '../../context/postContext';
 import styles from './PostActions.module.css';
 import { PostResponseProps } from '../../types/types';
-import { useModal } from '../../context/modalContext';
 
 interface PostActionsProps extends PostResponseProps{
     handleComment: () => void;
