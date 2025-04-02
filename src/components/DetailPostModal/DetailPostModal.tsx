@@ -4,14 +4,23 @@ import styles from './DetailPostModal.module.css';
 import { ImageIndicators } from '../ImageIndicators/ImageIndicators';
 import { SliceArrowImageButtons } from '../SliceArrowImageButtons/SliceArrowImageButtons';
 import { useSpreadModal } from '../../context/spreadModalContext';
-import { Comments } from '../Comments/Comments';
+import { CommentsContainer } from '../CommentsContainer/CommentsContainer';
 import { PostActions } from '../PostsActions/PostActions';
-import { useRef } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 export const DetailPostModal = () => {
-    const { open: openModal, postData, currentIndex, handleClose, handlePrevious, handleNext } = useModal();
+    const { open: openModal, postData, currentIndex, handleClose, handlePrevious, handleNext, createComment } = useModal();
     const { handleOpen: handleSpreadModalOpen } = useSpreadModal();
+
+    const [ content, setContent ] = useState<string>('');
+
     const commentInputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if(!openModal) {
+            setContent('');
+        };
+    }, [ openModal ]);
 
     if (!postData) {
         return null; // Si postData es null, no renderiza nada
@@ -19,6 +28,16 @@ export const DetailPostModal = () => {
 
     const handleComment = () => {
         commentInputRef.current?.focus(); // Enfocar el input
+    };
+
+    const handleCreateComment = async () => {
+        await createComment(content);
+        setContent('');
+    };
+
+    const handleContentChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+        setContent(value);
     };
 
     return (
@@ -42,13 +61,21 @@ export const DetailPostModal = () => {
                         <div onClick={() => handleSpreadModalOpen(postData)} className={styles['spread-button']}>···</div>
                     </div>
                     <div className={styles['middle']}>
-                        <p className={styles['description']}><strong>{postData.author.username}</strong> {postData.description}</p>
-                        <Comments/>
+                        <CommentsContainer/>
                     </div>
                     <div className={styles['bottom']}>
                         <PostActions post={postData} handleComment={handleComment}/>
                         <div className={styles['input-container']}>
-                            <input ref={commentInputRef} placeholder='Add a comment...'/><button>Post</button>
+                            <input
+                                type='text'
+                                name='content'
+                                onChange={handleContentChange}
+                                value={content}
+                                ref={commentInputRef}
+                                placeholder='Add a comment...'
+                            /><button onClick={handleCreateComment}>
+                                Post
+                            </button>
                         </div>
                     </div>
                 </div>

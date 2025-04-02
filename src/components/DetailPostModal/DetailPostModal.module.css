@@ -31,6 +31,7 @@
     padding: 16px;
     display: flex;
     flex-direction: column; /* Hace que los elementos se apilen */
+    justify-content: space-between;
 }
 
 .top {
@@ -52,8 +53,13 @@
 }
 
 .middle {
-    flex-grow: 1; /* Permite que tome todo el espacio disponible */
+    height: 100%;
     overflow-y: auto; /* Permite scroll si hay muchos comentarios */
+    overflow-x: hidden; /* Bloquea el scroll horizontal */
+}
+
+.middle::-webkit-scrollbar {
+    display: none; /* No muestra la barra de scroll en Chrome, Safari y Opera */
 }
 
 .bottom {

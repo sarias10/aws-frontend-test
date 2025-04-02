@@ -45,3 +45,9 @@ export interface LoginType {
     username: string;
     password: string;
 };
+
+export interface CommentByPostId {
+    id: number; // id del comentario
+    content: string;
+    author: Author;
+};

@@ -39,12 +39,21 @@ const createPost = async (token: string | null, data: FormData) => {
     return response;
 };
 
-const createComment = async (token: string | null, data: FormData) => {
+const createComment = async (token: string | null, data: { content: string; postId: number }) => {
     const config = {
         headers: { Authorization: token }
     };
     const url = `${baseUrl}/create-comment`;
     const response = await axios.post(url, data, config);
+    return response;
+};
+
+const getCommentsByPostId = async (token: string | null, postId: number) => {
+    const config = {
+        headers: { Authorization: token }
+    };
+    const url = `${baseUrl}/get-comments-by-post-id/${postId}`;
+    const response = await axios.get(url, config);
     return response;
 };
 
@@ -93,6 +102,7 @@ export default {
     getAllVisiblePostsFromUser,
     createPost,
     createComment,
+    getCommentsByPostId,
     createLike,
     getAllUsers,
     getUser,

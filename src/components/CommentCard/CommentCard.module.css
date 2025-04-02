@@ -1,0 +1,21 @@
+.commentCard {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 15px;
+    max-width: 100%;
+    min-width: 0; /* Permite que el contenido se ajuste correctamente */
+}
+
+.commentCard:first-child {
+    margin-top: 15px;
+}
+
+.text {
+    word-break: break-word; /* Fuerza la ruptura de palabras largas */
+    overflow-wrap: anywhere; /* Alternativa para compatibilidad */
+    white-space: normal; /* Permite que el texto haga saltos de línea */
+}
+
+.username {
+    font-weight: bold;
+}

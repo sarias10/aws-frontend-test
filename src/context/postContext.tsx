@@ -219,7 +219,6 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
     const getVisiblePostsFromUser = async (username: string) => {
         try{
             const response = await protectedServices.getAllVisiblePostsFromUser(token, username);
-            console.log('data',response.data);
             setVisiblePostsFromOtherUser(response.data);
         }catch(error){
             if (error instanceof AxiosError && error.response?.data?.message) {
