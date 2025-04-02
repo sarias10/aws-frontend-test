@@ -31,8 +31,8 @@ export const DetailPostModal = () => {
     };
 
     const handleCreateComment = async () => {
+        setContent(''); // Se limpia para no tener que esperar la respuesta
         await createComment(content);
-        setContent('');
     };
 
     const handleContentChange = (e: ChangeEvent<HTMLInputElement>) => {
