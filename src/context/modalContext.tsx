@@ -79,7 +79,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
             const response = await protectedService.createComment(token, newComment);
 
             // Agregar el nuevo comentario al estado actual sin hacer otra petición
-            setPostComments(prevComments => [ ...(prevComments || []), response.data ]);
+            setPostComments(prevComments => [ response.data, ...(prevComments || []) ]);
         }
     };
 
