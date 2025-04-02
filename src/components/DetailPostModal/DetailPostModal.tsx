@@ -40,6 +40,15 @@ export const DetailPostModal = () => {
         setContent(value);
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault(); // Evita el comportamiento por defecto (como saltar de línea)
+            if (content.trim()) { // Asegura que no se envíen comentarios vacíos
+                handleCreateComment();
+            }
+        }
+    };
+
     return (
         <Modal
             open={openModal}
@@ -71,6 +80,7 @@ export const DetailPostModal = () => {
                                 autoComplete="off"
                                 name='content'
                                 onChange={handleContentChange}
+                                onKeyDown={handleKeyDown}
                                 value={content}
                                 ref={commentInputRef}
                                 placeholder='Add a comment...'
