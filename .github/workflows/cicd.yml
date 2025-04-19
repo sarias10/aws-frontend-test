@@ -33,6 +33,7 @@ jobs:
       - name: Build project
         run: npm run build # Genera los archivos en la carpeta dist/
   
+      # 🔼 Sube los archivos del frontend a S3 y borra los que ya no existen localmente
       - name: Sync files to S3
         run: |
           aws s3 sync ${{ vars.SOURCE_DIR }} s3://${{ vars.AWS_S3_FRONTEND_BUCKET }}/ --delete
@@ -40,5 +41,5 @@ jobs:
       - name: Invalidate CloudFront Cache
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} \
             --paths "/*"
