@@ -64,3 +64,52 @@ li:hover {
     margin: 5px 0; /* Espaciado entre los elementos de la lista */
 }
 
+@media (max-width: 768px) {
+    .side-menu ul {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: space-around;
+      padding: 0;
+      margin: 0;
+    }
+
+    .side-menu li {
+      flex: 1;
+      text-align: center;
+    }
+
+    .side-menu {
+      position: fixed;
+      bottom: 0;
+      top: auto;
+      left: 0;
+      width: 100%;
+      height: auto;
+      padding: 10px 0;
+      border-right: none;
+      border-top: 1px solid #ccc;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-direction: row;
+      z-index: 1000;
+    }
+  
+    .side-menu .div-logo {
+      display: none; /* Oculta el logo en vista móvil si no es necesario */
+    }
+  
+    .side-menu li {
+      margin: 0;
+      padding: 10px;
+      font-size: 16px;
+    }
+  
+    .create-dropdown {
+      top: auto;
+      bottom: 60px; /* Ajusta según altura del menú inferior */
+      left: 465px;
+    }
+  }
+  
