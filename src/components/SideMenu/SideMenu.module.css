@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
-li {
+.side-menu>div {
     position: relative;
     list-style-type: none; /* Quitar los puntos de la lista */
     cursor: pointer;
@@ -12,16 +12,15 @@ li {
     border-radius: 10px;
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
-    overflow: hidden; /* Asegura que el contenido no se desborde */
     padding: 10px 20px; /* Aplica el padding aquí */
 }
 
 /* Opcional: elimina el margen del último elemento */
-li:last-child {
+.side-menu>div:last-child {
     margin-bottom: 0;
 }
 
-li:hover {
+.side-menu>div:hover {
     background-color: rgba(0, 0, 0, 0.1); /* Oscurecer un poco el fondo al hacer hover */
 }
 
@@ -29,7 +28,7 @@ li:hover {
     font-weight: bold;
 }
 
-.div-logo {
+.side-menu .logo {
     /* Estilo para el logo */
     margin-bottom: 50px; /* Ajusta el valor para controlar la separación */
     font-family: 'Pacifico', cursive;
@@ -48,37 +47,24 @@ li:hover {
     border-right: 1px solid #ccc; /* Borde gris claro en el lado derecho */
 }
 
-.create-dropdown {
-    position: absolute; /* Asegura que el dropdown se posicione de manera absoluta */
-    top: 440px;
-    z-index: 1000; /* Un valor alto para que aparezca por encima de otros elementos */
-    background-color: white; /* Fondo blanco para el dropdown */
-    border: 1px solid #ccc; /* Borde para el dropdown */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle un efecto de elevación */
-    padding: 10px; /* Espaciado interno */
-    border-radius: 4px; /* Bordes redondeados */
-    padding-left: 10px; /* Quitar el padding izquierdo */
+.create-styles {
+  position: relative;
 }
 
-.create-dropdown li {
-    margin: 5px 0; /* Espaciado entre los elementos de la lista */
+.create-dropdown {
+  position: absolute;
+  bottom: 100%; /* Esto lo coloca debajo del elemento padre */
+  left: 15px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+
 
 @media (max-width: 768px) {
-    .side-menu ul {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      justify-content: space-around;
-      padding: 0;
-      margin: 0;
-    }
-
-    .side-menu li {
-      flex: 1;
-      text-align: center;
-    }
-
     .side-menu {
       position: fixed;
       bottom: 0;
@@ -95,21 +81,29 @@ li:hover {
       flex-direction: row;
       z-index: 1000;
     }
-  
-    .side-menu .div-logo {
-      display: none; /* Oculta el logo en vista móvil si no es necesario */
-    }
-  
-    .side-menu li {
+
+    .side-menu>div {
+      flex: 1;
+      text-align: center;
       margin: 0;
       padding: 10px;
       font-size: 16px;
     }
   
+    .side-menu .logo {
+      display: none; /* Oculta el logo en vista móvil si no es necesario */
+    }
+
     .create-dropdown {
-      top: auto;
-      bottom: 60px; /* Ajusta según altura del menú inferior */
-      left: 465px;
+      position: absolute;
+      bottom: 100%; /* Esto hace que aparezca arriba */
+      margin-bottom: 11px; /* Espacio entre el dropdown y el botón */
+      left: 21px;
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 4px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
   }
   

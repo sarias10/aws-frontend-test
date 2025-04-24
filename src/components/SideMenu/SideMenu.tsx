@@ -18,10 +18,10 @@ export const SideMenu = () => {
     const [ active, setActive ] = useState('home');
 
     // Referencias para el botón de búsqueda y el dropdown
-    const searchRef = useRef<HTMLLIElement>(null);
+    const searchRef = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const createRef = useRef<HTMLLIElement>(null);
+    const createRef = useRef<HTMLDivElement>(null);
     const createDropdownRef = useRef<HTMLDivElement>(null);
 
     const navigate = useNavigate();
@@ -117,37 +117,40 @@ export const SideMenu = () => {
 
     return (
         <div className={styles['side-menu']}>
-            <ul>
-                <>
-                    <li onClick={handleLogoClick} className={styles['div-logo']}>
-                        Instagram demake
-                    </li>
-                    <li onClick={handleHomeClick} className={`${active === 'home' ? styles['active']: ''}`}>
-                        Home
-                    </li>
-                    <li ref={searchRef} onClick={toggleSearch} className={`${styles['searchStyles']} ${active === 'search'? styles['active']:''}`}>
-                        Search
-                    </li>
-                    {isSearchOpen && (
-                        <Search ref={dropdownRef} closeDropdown={() => setIsSearchOpen(false)}/>
-                    )}
-                    <li onClick={handleProfile} className={`${active === 'profile' ? styles['active']: ''}`}>
-                        Profile
-                    </li>
-                    <li ref={createRef} onClick={toggleCreate} className={`${styles['create-styles']} ${active === 'create' ? styles['active']:''}`}>
-                        Create
-                    </li>
-                    {isCreateOpen && (
-                        <div ref={createDropdownRef} className={styles['create-dropdown']}>
-                            <li onClick={handleCreatePost}>Post</li>
-                        </div>
-                    )}
+            <div onClick={handleLogoClick} className={styles['logo']}>
+                Instagram demake
+            </div>
+            <div onClick={handleHomeClick} className={`${active === 'home' ? styles['active']: ''}`}>
+                Home
+            </div>
+            <div ref={searchRef} onClick={toggleSearch} className={`${styles['searchStyles']} ${active === 'search'? styles['active']:''}`}>
+                Search
+            </div>
+            {isSearchOpen && (
+                <Search ref={dropdownRef} closeDropdown={() => setIsSearchOpen(false)}/>
+            )}
+            <div onClick={handleProfile} className={`${active === 'profile' ? styles['active']: ''}`}>
+                Profile
+            </div>
+            <div
+                ref={createRef}
+                onClick={toggleCreate}
+                className={`${styles['create-styles']}${active === 'create' ? styles['active']:''}`}
+            >
+                Create
+                {isCreateOpen && (
+                    <div ref={createDropdownRef} className={styles['create-dropdown']}>
+                        <div onClick={handleCreatePost}>Post</div>
+                    </div>
+                )}
+            </div>
 
-                    <li onClick={handleLogout}>Log out</li>
+            <div
+                onClick={handleLogout}>
+                Log out
+            </div>
 
-                    <CreatePostModal open={isPostModalOpen} onClose={handleCloseModal}/>
-                </>
-            </ul>
+            <CreatePostModal open={isPostModalOpen} onClose={handleCloseModal}/>
         </div>
     );
 };
