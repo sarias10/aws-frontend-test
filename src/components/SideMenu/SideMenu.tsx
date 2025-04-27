@@ -19,7 +19,7 @@ export const SideMenu = () => {
 
     // Referencias para el botón de búsqueda y el dropdown
     const searchRef = useRef<HTMLDivElement>(null);
-    const dropdownRef = useRef<HTMLDivElement>(null);
+    const dropdownSearchRef = useRef<HTMLDivElement>(null);
 
     const createRef = useRef<HTMLDivElement>(null);
     const createDropdownRef = useRef<HTMLDivElement>(null);
@@ -86,10 +86,10 @@ export const SideMenu = () => {
     // Cerrar el dropdown si se hace clic fuera de él
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            // Verificar si el clic fue fuera del dropdown y del botón de búsqueda
+            // Verificar si el click fue fuera del dropdown y del botón de búsqueda
             if (
-                dropdownRef.current &&
-                !dropdownRef.current.contains(event.target as Node) &&
+                dropdownSearchRef.current &&
+                !dropdownSearchRef.current.contains(event.target as Node) &&
                 searchRef.current &&
                 !searchRef.current.contains(event.target as Node)
             ) {
@@ -117,25 +117,50 @@ export const SideMenu = () => {
 
     return (
         <div className={styles['side-menu']}>
-            <div onClick={handleLogoClick} className={styles['logo']}>
+            <div
+                onClick={handleLogoClick}
+                className={`
+                    ${styles['logo']}
+                    ${styles['option']}`}>
                 Instagram demake
             </div>
-            <div onClick={handleHomeClick} className={`${active === 'home' ? styles['active']: ''}`}>
+            <div
+                onClick={handleHomeClick}
+                className={`
+                    ${active === 'home' ? styles['active']: ''}
+                    ${styles['option']}`}>
                 Home
             </div>
-            <div ref={searchRef} onClick={toggleSearch} className={`${styles['searchStyles']} ${active === 'search'? styles['active']:''}`}>
-                Search
+            <div className={styles['div-search']}>
+                <div
+                    ref={searchRef}
+                    onClick={toggleSearch}
+                    className={`
+                        ${styles['search-button']}
+                        ${active === 'search'? styles['active']:''}
+                        ${styles['option']}`}
+                >
+                    Search
+                </div>
+                {isSearchOpen && (
+                    <Search ref={dropdownSearchRef} closeDropdown={() => setIsSearchOpen(false)}/>
+                )}
             </div>
-            {isSearchOpen && (
-                <Search ref={dropdownRef} closeDropdown={() => setIsSearchOpen(false)}/>
-            )}
-            <div onClick={handleProfile} className={`${active === 'profile' ? styles['active']: ''}`}>
+            <div
+                onClick={handleProfile}
+                className={`
+                    ${active === 'profile' ? styles['active']: ''}
+                    ${styles['option']}`}
+            >
                 Profile
             </div>
             <div
                 ref={createRef}
                 onClick={toggleCreate}
-                className={`${styles['create-styles']}${active === 'create' ? styles['active']:''}`}
+                className={`
+                    ${styles['create-styles']}
+                    ${active === 'create' ? styles['active']:''}
+                    ${styles['option']}`}
             >
                 Create
                 {isCreateOpen && (
@@ -146,7 +171,9 @@ export const SideMenu = () => {
             </div>
 
             <div
-                onClick={handleLogout}>
+                onClick={handleLogout}
+                className={styles['option']}
+            >
                 Log out
             </div>
 

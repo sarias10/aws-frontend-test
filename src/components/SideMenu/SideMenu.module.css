@@ -1,27 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
-.side-menu>div {
-    position: relative;
-    list-style-type: none; /* Quitar los puntos de la lista */
-    cursor: pointer;
-    text-decoration: none; /* Quitar el subrayado de los enlaces */
-    color: inherit; /* Mantener el color del texto */
-    margin-top: 0;
-    margin-bottom: 50px; /* Ajusta el valor para controlar la separación */
-    border-radius: 10px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 18px;
-    padding: 10px 20px; /* Aplica el padding aquí */
+.side-menu {
+  position: fixed;
+  width: 250px; /* Ancho del menú */
+  background-color:white;
+  padding: 20px;
+  height: 100vh; /* Para que el menú ocupe toda la altura */
+  left: 0;
+  top: 0;
+  border-right: 1px solid #ccc; /* Borde gris claro en el lado derecho */
+  z-index: 1000;
+}
+
+.option {
+  cursor: pointer;
+  text-decoration: none; /* Quitar el subrayado de los enlaces */
+  color: inherit; /* Mantener el color del texto */
+  margin-top: 0;
+  margin-bottom: 50px; /* Ajusta el valor para controlar la separación */
+  border-radius: 10px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  padding: 10px 20px; /* Aplica el padding aquí */
+}
+.option:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Oscurecer un poco el fondo al hacer hover */
 }
 
 /* Opcional: elimina el margen del último elemento */
 .side-menu>div:last-child {
     margin-bottom: 0;
-}
-
-.side-menu>div:hover {
-    background-color: rgba(0, 0, 0, 0.1); /* Oscurecer un poco el fondo al hacer hover */
 }
 
 .active {
@@ -35,16 +44,8 @@
     font-size: 21px;
 }
 
-.side-menu {
-    position: fixed;
-    width: 250px; /* Ancho del menú */
-    background-color:white;
-    padding: 20px;
-    height: 100vh; /* Para que el menú ocupe toda la altura */
-    left: 0;
-    top: 0;
-    z-index: 1000;
-    border-right: 1px solid #ccc; /* Borde gris claro en el lado derecho */
+.div-search {
+  position: relative;
 }
 
 .create-styles {
@@ -53,7 +54,7 @@
 
 .create-dropdown {
   position: absolute;
-  bottom: 100%; /* Esto lo coloca debajo del elemento padre */
+  top: 100%; /* Esto lo coloca debajo del elemento padre */
   left: 15px;
   background-color: white;
   border: 1px solid #ccc;
@@ -67,43 +68,32 @@
 @media (max-width: 768px) {
     .side-menu {
       position: fixed;
-      bottom: 0;
-      top: auto;
-      left: 0;
+      bottom: 0; /*lo mantiene pegado abajo*/
+      top: auto; /*lo mantiene pegado abajo junto a la propiedad 'bottom'*/
       width: 100%;
-      height: auto;
-      padding: 10px 0;
+      height: 70px;
+      margin-bottom: 0;
       border-right: none;
       border-top: 1px solid #ccc;
       display: flex;
       justify-content: space-around;
       align-items: center;
       flex-direction: row;
-      z-index: 1000;
+      z-index: 1000; /* evita que las imagenes de los posts se superpongan al sidemenu*/
     }
-
-    .side-menu>div {
-      flex: 1;
-      text-align: center;
-      margin: 0;
-      padding: 10px;
-      font-size: 16px;
+    .option {
+      margin-bottom: 0px;
     }
   
     .side-menu .logo {
       display: none; /* Oculta el logo en vista móvil si no es necesario */
     }
 
-    .create-dropdown {
-      position: absolute;
-      bottom: 100%; /* Esto hace que aparezca arriba */
-      margin-bottom: 11px; /* Espacio entre el dropdown y el botón */
-      left: 21px;
-      background-color: white;
-      border: 1px solid #ccc;
-      padding: 10px;
-      border-radius: 4px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    .create-dropdown { /*no hay que repetir todo el .create-dropdown, solo lo que queremos cambiar*/
+      top: auto;       /* quitamos top */
+      bottom: 100%;    /* aparece arriba */
+      margin-bottom: 11px;
+      left: 21px;      /* (puedes ajustar esto si quieres) */
     }
   }
   

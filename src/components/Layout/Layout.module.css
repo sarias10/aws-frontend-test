@@ -7,7 +7,6 @@
 
 .layout-container {
     display: flex; /* Activa flexbox */
-    height: 100vh; /* Ocupa toda la altura de la pantalla */
 }
 
 .outlet-container {
@@ -18,8 +17,8 @@
 
 @media (max-width: 768px) {
     .outlet-container {
-      margin-left: 0;
-      padding: 20px; /* Puedes ajustar el padding si quieres menos espacio */
-      padding-bottom: 800px; /* Deja espacio para el menú abajo */
+        margin-left: 0;
+        padding-bottom: 100px; /* Deja espacio para el menú abajo */
+
     }
   }
