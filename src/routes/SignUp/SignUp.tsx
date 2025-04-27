@@ -7,6 +7,7 @@ import { AuthContext } from '../../context/authContext';
 import { Link } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import styles from './SignUp.module.css';
+import { getImageUrl } from '../../utils/getImage';
 
 export const SignUp = () => {
     const [ formData, setFormData ] = useState<SignupType>({
@@ -57,8 +58,8 @@ export const SignUp = () => {
     return (
         <div className={styles['signup-container']}>
             <fieldset className={styles['signup-box']}>
+                <img className={styles['logo']} src={getImageUrl('instagramDemakeWithoutBackground.png')} />
                 <form onSubmit={handleSubmit} className={styles['signup-form']}>
-                    <h1 className={styles['logo']}>Sign Up</h1>
                     <div>
                         <label htmlFor='username'>Username:</label>
                         <input

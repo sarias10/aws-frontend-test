@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import styles from './Login.module.css';
+import { getImageUrl } from '../../utils/getImage';
 
 export const Login = () => {
     const [ formData, setFormData ] = useState<LoginType>({
@@ -52,8 +53,8 @@ export const Login = () => {
     return (
         <div className={styles['login-container']}>
             <fieldset className={styles['login-box']}>
+                <img className={styles['logo']} src={getImageUrl('instagramDemakeWithoutBackground.png')} />
                 <form onSubmit={handleSubmit} className={styles['login-form']}>
-                    <h1 className={styles['logo']}>Login</h1>
                     <div>
                         <label htmlFor='username'>Username:</label>
                         <input
