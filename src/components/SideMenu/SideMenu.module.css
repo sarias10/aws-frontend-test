@@ -44,11 +44,7 @@
     font-size: 21px;
 }
 
-.div-search {
-  position: relative;
-}
-
-.create-styles {
+.div-search, .div-create{
   position: relative;
 }
 
@@ -58,9 +54,19 @@
   left: 15px;
   background-color: white;
   border: 1px solid #ccc;
-  padding: 10px;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.create-dropdown > div {
+  padding: 10px;
+}
+
+.create-dropdown > div:hover {
+  
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  cursor: pointer;
 }
 
 

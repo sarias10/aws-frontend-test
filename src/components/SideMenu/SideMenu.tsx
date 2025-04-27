@@ -154,18 +154,21 @@ export const SideMenu = () => {
             >
                 Profile
             </div>
-            <div
-                ref={createRef}
-                onClick={toggleCreate}
-                className={`
-                    ${styles['create-styles']}
+            <div className={styles['div-create']}>
+                <div
+                    ref={createRef}
+                    onClick={toggleCreate}
+                    className={`
+                    ${styles['button-create']}
                     ${active === 'create' ? styles['active']:''}
                     ${styles['option']}`}
-            >
-                Create
+                >
+                    Create
+                </div>
                 {isCreateOpen && (
                     <div ref={createDropdownRef} className={styles['create-dropdown']}>
                         <div onClick={handleCreatePost}>Post</div>
+                        <div onClick={handleCreatePost}>Story</div>
                     </div>
                 )}
             </div>
