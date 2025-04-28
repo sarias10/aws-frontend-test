@@ -48,7 +48,13 @@ export const Login = () => {
         }
     };
 
-    if (isLoading) return <Loading/>; // Muestra el componente Loading mientras está cargando
+    if (isLoading) {
+        return (
+            <div className={styles['loading-container']}>
+                <Loading/>
+            </div>
+        );
+    }; // Muestra el componente Loading mientras está cargando la solicitud
 
     return (
         <div className={styles['login-container']}>

@@ -1,5 +1,5 @@
-import { ReactNode, useContext } from 'react';
-import { AuthContext } from '../context/authContext';
+import { ReactNode } from 'react';
+import { useAuth } from '../context/authContext';
 import { Navigate } from 'react-router-dom';
 
 interface PublicRoutesProps {
@@ -7,10 +7,6 @@ interface PublicRoutesProps {
 }
 
 export const PublicRoutes = ({ children }: PublicRoutesProps) => {
-    const authContext = useContext(AuthContext);
-    if(!authContext){
-        throw new Error('No AuthContext found');
-    };
-    const { token } = authContext;
+    const { token } = useAuth();
     return token ? <Navigate to='/' />: <>{children}</>;
 };

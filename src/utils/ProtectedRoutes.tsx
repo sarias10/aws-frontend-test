@@ -1,16 +1,12 @@
-import { ReactNode, useContext } from 'react';
+import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { AuthContext } from '../context/authContext';
+import { useAuth } from '../context/authContext';
 
 interface ProtectedRoutesProps {
     children: ReactNode;
 }
 
 export const ProtectedRoutes = ({ children }: ProtectedRoutesProps) => {
-    const authContext = useContext(AuthContext);
-    if(!authContext){
-        throw new Error('');
-    };
-    const { token } = authContext;
+    const { token } = useAuth();
     return token ? <>{children}</> : <Navigate to='/accounts/login' />;
 };
