@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../../context/authContext';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styles from './SideMenu.module.css';
 import { CreatePostModal } from '../CreatePostModal/CreatePostModal';
 import { Search } from '../Search/Search';
@@ -15,7 +15,7 @@ export const SideMenu = () => {
 
     const [ isPostModalOpen, setIsPostModalOpen ] = useState(false);
 
-    const [ active, setActive ] = useState('home');
+    const [ active, setActive ] = useState('home'); // Este estado me dice cual de los botones esta en negrita
 
     // Referencias para el botón de búsqueda y el dropdown
     const searchRef = useRef<HTMLDivElement>(null);
@@ -25,6 +25,8 @@ export const SideMenu = () => {
     const createDropdownRef = useRef<HTMLDivElement>(null);
 
     const navigate = useNavigate();
+
+    const location = useLocation();
 
     const { usernameParam } = useParams();
 
@@ -38,12 +40,16 @@ export const SideMenu = () => {
     }, [ usernameParam, username ]); // Se ejecuta cuando cambia usernameParam o username
 
     const handleLogoClick = () => {
+        setIsSearchOpen(false);
+        setIsCreateOpen(false);
         setActive('home');
         refreshVisiblePosts();
         navigate('/');
     };
 
     const handleHomeClick = () => {
+        setIsSearchOpen(false);
+        setIsCreateOpen(false);
         setActive('home');
         refreshVisiblePosts();
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -64,19 +70,22 @@ export const SideMenu = () => {
     };
 
     const handleProfile = () => {
+        setIsSearchOpen(false);
+        setIsCreateOpen(false);
         setActive('profile');
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
         navigate(`${username}`);
     };
 
     const toggleCreate = () => {
+        setIsSearchOpen(false);
         setIsCreateOpen(!isCreateOpen);
     };
 
     const handleCreatePost = () => {
-        setActive('');
-        setIsPostModalOpen(true);
+        setIsSearchOpen(false);
         setIsCreateOpen(false);
+        setIsPostModalOpen(true);
     };
 
     const handleCloseModal = () => {
@@ -86,6 +95,14 @@ export const SideMenu = () => {
     // Cerrar el dropdown si se hace clic fuera de él
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
+            const target = event.target as HTMLElement;
+
+            // Cuando usas un atributo data-* en HTML, JavaScript lo convierte en una propiedad del objeto dataset del elemento.
+            // Si el click fue en un botón (data-button="true"), no cerrar
+            if (target.dataset.button === 'true') {
+                return;
+            }
+
             // Verificar si el click fue fuera del dropdown y del botón de búsqueda
             if (
                 dropdownSearchRef.current &&
@@ -94,7 +111,15 @@ export const SideMenu = () => {
                 !searchRef.current.contains(event.target as Node)
             ) {
                 setIsSearchOpen(false);
-                setActive('');
+
+                if (location.pathname === '/') {
+                    setActive('home');
+                } else if (username && location.pathname === `/${username}`) {
+                    setActive('profile');
+                } else {
+                    setActive('');
+                }
+
             }
             if (
                 createDropdownRef.current &&
@@ -103,7 +128,14 @@ export const SideMenu = () => {
                 !createRef.current.contains(event.target as Node)
             ) {
                 setIsCreateOpen(false);
-                setActive('');
+
+                if (location.pathname === '/') {
+                    setActive('home');
+                } else if (username && location.pathname === `/${username}`) {
+                    setActive('profile');
+                } else {
+                    setActive('');
+                }
             }
         };
 
@@ -113,11 +145,13 @@ export const SideMenu = () => {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, []);
+    }, [ active, location.pathname, username ]);
 
     return (
-        <div className={styles['side-menu']}>
+        <div
+            className={styles['side-menu']}>
             <div
+                data-button="true"
                 onClick={handleLogoClick}
                 className={`
                     ${styles['logo']}
@@ -125,6 +159,7 @@ export const SideMenu = () => {
                 Instagram demake
             </div>
             <div
+                data-button="true"
                 onClick={handleHomeClick}
                 className={`
                     ${active === 'home' ? styles['active']: ''}
@@ -133,6 +168,7 @@ export const SideMenu = () => {
             </div>
             <div className={styles['div-search']}>
                 <div
+                    data-button="true"
                     ref={searchRef}
                     onClick={toggleSearch}
                     className={`
@@ -147,6 +183,7 @@ export const SideMenu = () => {
                 )}
             </div>
             <div
+                data-button="true"
                 onClick={handleProfile}
                 className={`
                     ${active === 'profile' ? styles['active']: ''}
@@ -156,6 +193,7 @@ export const SideMenu = () => {
             </div>
             <div className={styles['div-create']}>
                 <div
+                    data-button="true"
                     ref={createRef}
                     onClick={toggleCreate}
                     className={`
@@ -167,13 +205,15 @@ export const SideMenu = () => {
                 </div>
                 {isCreateOpen && (
                     <div ref={createDropdownRef} className={styles['create-dropdown']}>
-                        <div onClick={handleCreatePost}>Post</div>
-                        <div onClick={handleCreatePost}>Story</div>
+                        <div
+                            data-button="true"
+                            onClick={handleCreatePost}>Post</div>
                     </div>
                 )}
             </div>
 
             <div
+                data-button="true"
                 onClick={handleLogout}
                 className={styles['option']}
             >
