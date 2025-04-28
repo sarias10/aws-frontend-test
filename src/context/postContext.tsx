@@ -80,6 +80,7 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
             setVisiblePosts(newVisiblePosts);
             const newPostsFromLoggedUser = [ postData, ...postsFromLoggedUser ];
             setPostsFromLoggedUser(newPostsFromLoggedUser);
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
             toast.success('Post created successfully!');
 
         } catch(error){

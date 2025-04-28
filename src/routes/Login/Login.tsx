@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import styles from './Login.module.css';
+import { getImageUrl } from '../../utils/getImage';
 
 export const Login = () => {
     const [ formData, setFormData ] = useState<LoginType>({
@@ -47,13 +48,19 @@ export const Login = () => {
         }
     };
 
-    if (isLoading) return <Loading/>; // Muestra el componente Loading mientras está cargando
+    if (isLoading) {
+        return (
+            <div className={styles['loading-container']}>
+                <Loading/>
+            </div>
+        );
+    }; // Muestra el componente Loading mientras está cargando la solicitud
 
     return (
         <div className={styles['login-container']}>
             <fieldset className={styles['login-box']}>
+                <img className={styles['logo']} src={getImageUrl('instagramDemakeWithoutBackground.png')} />
                 <form onSubmit={handleSubmit} className={styles['login-form']}>
-                    <h1 className={styles['logo']}>Login</h1>
                     <div>
                         <label htmlFor='username'>Username:</label>
                         <input
