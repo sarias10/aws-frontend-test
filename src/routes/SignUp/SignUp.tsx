@@ -53,7 +53,13 @@ export const SignUp = () => {
         }
     };
 
-    if (isLoading) return <Loading/>; // Si isLoading es true entonces renderiza el componente loading
+    if (isLoading) {
+        return (
+            <div className={styles['loading-container']}>
+                <Loading/>
+            </div>
+        );
+    }; // Si isLoading es true entonces renderiza el componente loading
 
     return (
         <div className={styles['signup-container']}>
