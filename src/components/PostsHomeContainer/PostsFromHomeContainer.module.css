@@ -1,6 +1,7 @@
 .posts-container {
     display: flex;
-    flex-direction: column;
+    justify-content: center; /* centra horizontal */
     align-items: center; /* Centra los posts horizontalmente */
-    margin: 0 auto;
+    min-height: 100%; /* ocupa toda la altura de la pantalla */
+    flex-direction: column;
 }
