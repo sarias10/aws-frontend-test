@@ -4,7 +4,7 @@
   align-items: center; /* Centra horizontalmente */
   min-height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
   text-align: center; /* Opcional: centra el texto */
-  padding: 0 16px; /* espaciado lateral flexible */
+  padding: 40px 16px; /* espaciado lateral flexible */
   box-sizing: border-box; /* asegura que el padding no desborde */
 }
 .top-container {

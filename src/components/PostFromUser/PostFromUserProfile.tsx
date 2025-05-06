@@ -1,6 +1,6 @@
 import { useModal } from '../../context/modalContext';
 import { PostResponseProps } from '../../types/types';
-import styles from './PostFromUser.module.css';
+import styles from './PostFromUserProfile.module.css';
 
 export const PostFromUserProfile = ({ post }: PostResponseProps) => {
     const { handleOpen } = useModal();

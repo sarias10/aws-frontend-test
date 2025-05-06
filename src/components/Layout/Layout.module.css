@@ -12,8 +12,9 @@
 
 .outlet-container {
     margin-left: 250px; /* Deja espacio para el menú */
+    width: 100%;
     flex-grow: 1; /* Hace que el contenido ocupe el resto del espacio */
-    padding: 40px;
+    overflow-x: hidden;
 }
 
 @media (max-width: 768px) {

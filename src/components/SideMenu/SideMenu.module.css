@@ -10,7 +10,6 @@
   left: 0;
   top: 0;
   border-right: 1px solid #ccc; /* Borde gris claro en el lado derecho */
-  z-index: 1000;
 }
 
 .option {
@@ -24,6 +23,7 @@
   font-size: 18px;
   padding: 10px 20px; /* Aplica el padding aquí */
 }
+
 .option:hover {
   background-color: rgba(0, 0, 0, 0.1); /* Oscurecer un poco el fondo al hacer hover */
 }
@@ -63,12 +63,10 @@
 }
 
 .create-dropdown > div:hover {
-  
   background-color: rgba(0, 0, 0, 0.1);
   padding: 10px;
   cursor: pointer;
 }
-
 
 
 @media (max-width: 768px) {
@@ -86,7 +84,8 @@
       align-items: center;
       flex-direction: row;
       overflow-x: auto; /* permite scroll horizontal sino cabe*/
-      z-index: 1000; /* evita que las imagenes de los posts se superpongan al sidemenu*/
+      z-index: 1; /* evita que las imagenes de los posts se superpongan al sidemenu*/
+      overflow: visible; /* permite que se vean elementos fuera del menú, el del create-dropdown */
     }
     .option {
       margin-bottom: 0px;
