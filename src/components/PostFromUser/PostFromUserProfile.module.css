@@ -1,6 +1,7 @@
 .post-container {
-    width: 195.4px; /* Ancho fijo del post */
-    height: 260.525px; /* Alto fijo del post */
+    width: 100%; /* Ancho fijo del post */
+    max-width: 300px; /* Asegura que el post no sea más ancho que 300px */
+    height: auto; /* La altura se ajustará según el contenido */
     overflow: hidden; /* Oculta cualquier contenido que exceda el tamaño del contenedor */
     display: flex; /* Asegura que el contenido interno se alinee correctamente */
     justify-content: center; /* Centra la imagen horizontalmente */
