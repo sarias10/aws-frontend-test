@@ -10,6 +10,8 @@
   left: 0;
   top: 0;
   border-right: 1px solid #ccc; /* Borde gris claro en el lado derecho */
+  overflow: visible; /* permite scroll horizontal sino cabe*/
+  z-index: 1; /* evita que las imagenes de los posts se superpongan al sidemenu*/
 }
 
 .option {
@@ -71,7 +73,6 @@
 
 @media (max-width: 768px) {
     .side-menu {
-      position: fixed;
       bottom: 0; /*lo mantiene pegado abajo*/
       top: auto; /*lo mantiene pegado abajo junto a la propiedad 'bottom'*/
       width: 100%;
@@ -83,10 +84,9 @@
       justify-content: space-around;
       align-items: center;
       flex-direction: row;
-      overflow-x: auto; /* permite scroll horizontal sino cabe*/
-      z-index: 1; /* evita que las imagenes de los posts se superpongan al sidemenu*/
-      overflow: visible; /* permite que se vean elementos fuera del menú, el del create-dropdown */
+      overflow-x: auto;
     }
+
     .option {
       margin-bottom: 0px;
     }
@@ -96,10 +96,10 @@
     }
 
     .create-dropdown { /*no hay que repetir todo el .create-dropdown, solo lo que queremos cambiar*/
-      top: auto;       /* quitamos top */
-      bottom: 100%;    /* aparece arriba */
-      margin-bottom: 11px;
-      left: 21px;      /* (puedes ajustar esto si quieres) */
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
   }
   
